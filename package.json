@@ -6,7 +6,7 @@
   },
   "scripts": {
     "heroku-postbuild": "cd front && npm install",
-    "start": "node front/server/server.ts",
+    "start": "node front/server/server.js",
     "dev": "vite",
     "build": "cd front && tsc && vite build",
     "preview": "vite preview"
