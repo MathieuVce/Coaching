@@ -5,7 +5,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "heroku-postbuild": "cd front && yarn install && yarn build",
+    "heroku-postbuild": "cd front && yarn install && cd ../ && yarn build",
     "start": "node front/server/server.ts",
     "dev": "vite",
     "build": "cd front && tsc && vite build",
