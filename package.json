@@ -5,7 +5,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "cd front && node server/server.js",
+    "start": "node front/server/server.js",
     "dev": "vite",
     "build": "cd front && tsc && vite build",
     "preview": "vite preview"
