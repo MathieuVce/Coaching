@@ -24,7 +24,7 @@ const Dashboard: React.FunctionComponent = () => {
     }
 
     return(
-        <div className="justify-center items-center flex mt-8 flex-col">
+        <div className="justify-center items-center flex mt-8 flex-col w-screen h-screen">
             <label className="my-2">
                 {user?.displayName ? user?.displayName : "No Name Yet"}
             </label>

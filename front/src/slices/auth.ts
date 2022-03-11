@@ -1,41 +1,44 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { User } from "firebase/auth";
+import { LoginState, LoginPayLoad, RegisterPayLoad, RegisterState, AllState } from "../@types/auth";
 import AuthService from "../services/auth";
 
 
 const user = JSON.parse(localStorage.getItem("user")!);
-
-export interface AuthState {
-    password?: string;
-    email?: string;
-    authenticated?: boolean;
-    user?: User;
-  }
   
-  const initialState: AuthState = user ?
-  {
+const initialState: AllState = user ?
+{
     user,
     authenticated: true,
-  } : {
+} : {
     user: undefined,
     authenticated: false,
-  };
-  
-  interface PayLoad {
-    password: string;
-    email: string;
-    user?: User;
-  }
+    registered: false
+};
 
-  export const login = createAsyncThunk<AuthState, PayLoad>(
+export const login = createAsyncThunk<LoginState, LoginPayLoad>(
     'login',
     async (req, thunkAPI) => {
-      try {
-          const user = await AuthService.loginUser(req.email, req.password);
-          return {...req, user} as PayLoad;
-      } catch (error: any) {
-          console.log(error.message)
-          return thunkAPI.rejectWithValue({ error: error.message });
+        try {
+            const user = await AuthService.loginUser(req.email, req.password);
+            return {...req, user} as LoginPayLoad;
+        } catch (error: any) {
+            console.log(error.message)
+            alert(error.message)
+            return thunkAPI.rejectWithValue({ error: error.message });
+      }
+    }
+);
+
+export const register = createAsyncThunk<RegisterState, RegisterPayLoad>(
+    'register',
+    async (req, thunkAPI) => {
+        try {
+            const user = await AuthService.registerUser(req.email, req.password, req.displayName);
+            return {...req, user} as LoginPayLoad;
+        } catch (error: any) {
+            console.log(error.message)
+            alert(error.message)
+            return thunkAPI.rejectWithValue({ error: error.message });
       }
     }
 );
@@ -59,6 +62,13 @@ export const authSlice = createSlice({
         });
         builder.addCase(login.rejected, state => {
             state.authenticated = false;
+        });
+        builder.addCase(register.fulfilled, state => {
+            state.registered = true;
+            state.authenticated = false;
+        });
+        builder.addCase(register.rejected, state => {
+            state.registered = false;
         });
         builder.addCase(logout.fulfilled, state => {
             state.authenticated = false;

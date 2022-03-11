@@ -7,6 +7,7 @@ import { useAlert } from 'react-alert'
 import { login, logout } from "../slices/auth";
 import { RootState } from '../store/storee';
 import { useNavigate } from "react-router-dom";
+import { Form } from '../components/Form';
 
 const Login: React.FunctionComponent = () => {
 
@@ -14,7 +15,7 @@ const Login: React.FunctionComponent = () => {
     const [isValidEmail, setValidEmail] = useState<boolean>(true)
     const [visible, setVisible] = useState<boolean>(false)
     const [isDisabled, setDisabled] = useState<boolean>(true)
-    const { authenticated, user } = useSelector((state: RootState) => state.auth);
+    const { authenticated } = useSelector((state: RootState) => state.auth);
     const { state } = useLocation();
 
     const dispatch = useDispatch();
@@ -45,9 +46,7 @@ const Login: React.FunctionComponent = () => {
             setValues({email: "", password: ""});
             navigate(state?.path || "/dashboard");
         } else {
-            // alert.error(
-            //     <label className='text-blue'>Wrong credentials</label>
-            // )
+            
         }
     };
 
@@ -59,50 +58,25 @@ const Login: React.FunctionComponent = () => {
                 </h1>
                 <div className="max-w-md px-4 mx-auto ">
                     <div>
-                        <label htmlFor="email" className="block py-1 text-gray-500">
-                            Email
-                        </label>
-                        <div className="flex items-center p-2 border rounded-md"
-                            onMouseEnter={() => setValidEmail(true)}
-                            onMouseLeave={() => checkEmail()}
-                        >
-                            <input
-                                value={values.email}
-                                onChange={e => {setValues({...values, email: e.target.value}); setValidEmail(true)}}
-                                type="email"
-                                placeholder="name@email.com"
-                                id="email"
-                                className="w-full p-1 text-gray-500 outline-none bg-transparent"
-                            />
-                        </div>
+                        <Form name="Email" type='email' placeholder='name@email.com' onChange={(e: { target: { value: any; }; }) => { setValues({ ...values, email: e.target.value }); setValidEmail(true); }} value={values.email} onMouseEnter={() => setValidEmail(true)} onMouseLeave={() => checkButton()}/>
                         {!isValidEmail && (
                             <label className='text-red'>
                                 Invalid email adress*
                             </label>
                         ) }
-                        <label htmlFor='password' className="block pb-1 pt-6">Password</label>
-                        <div className="flex items-center text-gray-400 border rounded-md"
-                            onMouseEnter={() => checkEmail()}
-                            onMouseLeave={() => checkButton()}
-                        >
-                            <input 
-                                value={values.password}
-                                onChange={e => setValues({...values, password: e.target.value})}
-                                type={visible ? "text" : "password"}
-                                placeholder="Enter password"
-                                id="password"
-                                className="w-full p-2.5  bg-transparent outline-none"
-                            />
+                        <Form name="Password" type='password' placeholder='Enter password' onChange={(e: { target: { value: any; }; }) => { setValues({ ...values, password: e.target.value })}} value={values.password} onMouseLeave={() => checkButton()}>
                             <button className="pr-2 hover:opacity-75" onClick={() => {setVisible(!visible)}}>
                                 {visible ? 
                                     <AiFillEyeInvisible color='#0AC5CD' size={24}/>
-
-                                : 
+                                    
+                                    : 
                                     <AiFillEye color='#0AC5CD' size={24}/>
                                 }
                             </button>
-                        </div>
-                        <div className='flex justify-center items-center mt-6'>
+                        </Form>
+                        <div className='flex justify-center items-center mt-6'
+                            onMouseEnter={() => {checkEmail(); checkButton()}}
+                        >
                             <button onClick={handleFormSubmit} disabled={isDisabled} className={`bg-blue py-2 px-8 text-sm text-white rounded border border-blue-light focus:outline-none hover:opacity-75`}>
                                 Login
                             </button>

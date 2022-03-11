@@ -1,5 +1,5 @@
 import { auth } from "./firebase";
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 
 
 const loginUser = async (email: string, password: string) => {
@@ -12,19 +12,30 @@ const loginUser = async (email: string, password: string) => {
     throw { message: "Wrong credentials" }
   }
 };
+const registerUser = async (email: string, password: string, displayName: string) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password)
+    updateProfile(res.user, {displayName});
+    return res.user
+  } catch {
+    console.log("User already created")
+    throw { message: "User already created" }
+  }
+};
 
 const logoutUser = () => {
-    signOut(auth)
-    .then(() => {
-      console.log('logged out')
-      localStorage.removeItem("user");
-    })
-    .catch((error: any) => {
-    });
+  signOut(auth)
+  .then(() => {
+    console.log('logged out')
+    localStorage.removeItem("user");
+  })
+  .catch((error: any) => {
+  });
 };
 
 const authService = {
   loginUser,
+  registerUser,
   logoutUser,
 };
 
