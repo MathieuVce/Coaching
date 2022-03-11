@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 import AuthService from "../services/auth";
+
+
 const user = JSON.parse(localStorage.getItem("user")!);
 
 export interface AuthState {
@@ -33,7 +35,6 @@ export interface AuthState {
           return {...req, user} as PayLoad;
       } catch (error: any) {
           console.log(error.message)
-          alert(error.message)
           return thunkAPI.rejectWithValue({ error: error.message });
       }
     }

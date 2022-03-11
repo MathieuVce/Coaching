@@ -1,19 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "./slices/auth";
-import { RootState } from './store/storee';
+import { useLocation } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useAlert } from 'react-alert'
+import { login, logout } from "../slices/auth";
+import { RootState } from '../store/storee';
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login: React.FunctionComponent = () => {
 
     const [values, setValues] = useState({email: "", password: ""});
     const [isValidEmail, setValidEmail] = useState<boolean>(true)
     const [visible, setVisible] = useState<boolean>(false)
     const [isDisabled, setDisabled] = useState<boolean>(true)
-    const { authenticated } = useSelector((state: RootState) => state.auth);
-    const { user } = useSelector((state: RootState) => state.auth);
+    const { authenticated, user } = useSelector((state: RootState) => state.auth);
+    const { state } = useLocation();
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const alert = useAlert()
     
+    useEffect(() => {
+        if (authenticated)
+            dispatch(logout());
+      }, []);
+
     const checkEmail = () => {
         const valid = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(values.email)
         setValidEmail(valid)
@@ -25,37 +37,22 @@ const Login = () => {
         setDisabled(values.password === "" || !isValidEmail)
     };
 
-    const handleFormSubmit = () => {
-        const isValidEmail = checkEmail()
+    const handleFormSubmit = async () => {
+        checkEmail()
         console.log(values);
-        if (isValidEmail) {
-            dispatch(login(values))
+        dispatch(login(values))
+        if (authenticated) {
+            setValues({email: "", password: ""});
+            navigate(state?.path || "/dashboard");
         } else {
-            alert("mail")
+            // alert.error(
+            //     <label className='text-blue'>Wrong credentials</label>
+            // )
         }
     };
 
-    const handleLogout = () => {
-        setValues({email: "", password: ""})
-        dispatch(logout())
-    }
-
     return (
-        authenticated ? 
-            <div className="justify-center items-center flex mt-8 flex-col">
-                <label className="my-2">
-                    {user?.displayName ? user?.displayName : "No Name Yet"}
-                </label>
-                <label className="my-2">
-                    {user?.email}
-                </label>
-                <button className={`bg-primary py-2 my-2 px-8 text-sm text-white rounded border border-primary focus:outline-none`} onClick={() => {handleLogout()}}>
-                    Logout
-                </button>
-            </div>
-        :
          <div className='h-screen w-full flex justify-center items-center'>
-
             <div className='w-full max-w-lg m-auto rounded-lg border border-solid shadow-default py-10 px-16'>
                 <h1 className='text-2xl font-medium text-primary mt-4 mb-8 text-center'>
                     Log in to your account
@@ -96,7 +93,7 @@ const Login = () => {
                                 id="password"
                                 className="w-full p-2.5  bg-transparent outline-none"
                             />
-                            <button className="pr-2" onClick={() => {setVisible(!visible)}}>
+                            <button className="pr-2 hover:opacity-75" onClick={() => {setVisible(!visible)}}>
                                 {visible ? 
                                     <AiFillEyeInvisible color='#0AC5CD' size={24}/>
 
@@ -106,16 +103,16 @@ const Login = () => {
                             </button>
                         </div>
                         <div className='flex justify-center items-center mt-6'>
-                            <button onClick={handleFormSubmit} disabled={isDisabled} className={`bg-blue py-2 px-8 text-sm text-white rounded border border-blue-light focus:outline-none`}>
+                            <button onClick={handleFormSubmit} disabled={isDisabled} className={`bg-blue py-2 px-8 text-sm text-white rounded border border-blue-light focus:outline-none hover:opacity-75`}>
                                 Login
                             </button>
                         </div>
                     </div>
                 </div>
                 <div className="flex items-center mt-8 justify-center">
-                     <button className={"justify-center text-blue-500 hover:underline"}>
-                         Need to register? Sign up for free
-                     </button>
+                     <div className={"justify-center text-blue-500 hover:underline"}>
+                        <Link to="/register">Need to register? Sign up for free</Link>
+                     </div>
                  </div>
             </div>
         </div>

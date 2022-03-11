@@ -5,7 +5,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "heroku-postbuild": "cd front && npm install",
+    "heroku-postbuild": "cd front && npm install && npm run build",
     "start": "node front/server/server.js",
     "dev": "vite",
     "build": "cd front && tsc && vite build",
@@ -16,6 +16,7 @@
     "express": "^4.17.3",
     "firebase": "^9.6.7",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.2.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.6",
