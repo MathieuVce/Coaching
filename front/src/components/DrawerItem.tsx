@@ -1,4 +1,6 @@
-import { IconBaseProps, IconType } from "react-icons";
+import { useEffect, useState } from "react";
+import { IconBaseProps } from "react-icons";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface IDrawerProps {
     title: string;
@@ -8,21 +10,27 @@ export interface IDrawerProps {
 }
 
 
-export const Drawer: React.FC<IDrawerProps> = ({isSelected, title, selectedIcon, outlineIcon}) => {
-    const selected = isSelected ? "mb-2 bg-blue rounded shadow" : "mb-2 rounded hover:shadow hover:bg-blue"
+export const Drawer: React.FC<IDrawerProps> = ({ title, selectedIcon, outlineIcon }) => {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const isSelected = location.pathname.split('/')[2] === title.toLowerCase()
+    const selectedStyle = isSelected ? "mb-2 bg-blue rounded shadow font-bold" : "mb-2 rounded hover:shadow hover:bg-blue hover:font-bold hover:bg-opacity-40"
 
     return (
         <>
-            <li className={selected}>
-                <div className="inline-block w-full h-full px-3 py-2 font-bold text-primary pt-3.5">
-                    <div className="inline-block w-5 h-8 mr-5 align-middle">
+            <li className={selectedStyle} onClick={() => { navigate(title.toLowerCase())}}>
+                <div className="inline-block w-full h-full px-3 py-2 text-primary pt-3.5">
+                    <div className="inline-block w-5 h-8 mr-5 align-middle opacit">
                         {isSelected ?
                             selectedIcon
                         :
                             outlineIcon
                         }
                     </div>
-                    {title}
+                    <label>
+                        {title}
+                    </label>
                 </div>
             </li>
         </>

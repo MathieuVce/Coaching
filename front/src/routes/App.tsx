@@ -1,31 +1,15 @@
 import { useState } from 'react'
-import {useSelector, useDispatch} from 'react-redux'
 import { Link, Outlet } from 'react-router-dom';
-import {selectUser,setUser} from "./store/user"
 import { GiHamburgerMenu } from "react-icons/gi"
 import { MdClose } from "react-icons/md"
-
-// function App() {
-//   const user = useSelector(selectUser)
-//   const dispatch = useDispatch()
-  
-//   return (
-//     // <main>
-//     //   <p>Coaching</p>
-//     //   <p>{user ? user.name : "No user created"}</p>
-//     //   <button className='rounded-md bg-gray-400 p-3' onClick={()=>dispatch(setUser({name:"Loic"}))}>Create user</button>
-//     // </main>
-//     <Login></Login>
-//   )
-// }
 
 const App: React.FunctionComponent = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   return(
       <>
-        <nav className="sticky top-0 z-100 flex flex-wrap items-center justify-between px-2 py-3 bg-blue">
-          <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+        <nav className="sticky top-0 z-100 flex flex-wrap items-center justify-between py-3 bg-blue">
+          <div className="container mx-auto flex flex-wrap items-center justify-between">
             <div className="w-full relative flex justify-between items-center lg:w-auto lg:static lg:block lg:justify-start">
               <div
                 className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"

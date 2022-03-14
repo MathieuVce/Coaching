@@ -46,8 +46,8 @@ const Login: React.FunctionComponent = () => {
         dispatch(login(values))
         if (authenticated) {
             setValues({email: "", password: ""});
-            // navigate(path.path || "/dashboard");
-            navigate("/dashboard");
+            // navigate(path.path || "/home");
+            navigate("/home/dashboard");
         } else {
             await alert.error(message)
         }

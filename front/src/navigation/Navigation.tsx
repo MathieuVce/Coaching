@@ -1,14 +1,20 @@
-import { BrowserRouter } from "react-router-dom";
-import { Routes, Route } from "react-router";
 import React from 'react';
 import { Provider } from "react-redux";
-import App from "../App";
+import { Routes, Route } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+
+import App from "../routes/App";
+import Home from "../routes/Home";
 import store from "../store/storee";
+import Users from "../routes/Users";
 import Login from "../routes/Login";
+import Items from "../routes/Items";
 import NoPage from "../routes/NoPage";
+import Reviews from "../routes/Reviews";
+import Comments from "../routes/Comments";
 import Register from "../routes/Register";
-import Dashboard from "../routes/Dashboard";
 import { RequireAuth } from "./RequireAuth";
+import Dashboard from "../routes/Dashboard";
 
 const Navigation: React.FunctionComponent = () => {
     return (
@@ -19,11 +25,17 @@ const Navigation: React.FunctionComponent = () => {
                         <Route path='login' element={<Login/>}/>
                         <Route path='register' element={<Register/>}/>
                     </Route>
-                    <Route path='/dashboard' element={
+                    <Route path='home' element={
                         <RequireAuth>
-                            <Dashboard/>
+                            <Home/>
                         </RequireAuth> 
-                    }/>
+                    }>
+                        <Route path='dashboard' element={<Dashboard/>}/>
+                        <Route path='items' element={<Items/>}/>
+                        <Route path='users' element={<Users/>}/>
+                        <Route path='comments' element={<Comments/>}/>
+                        <Route path='reviews' element={<Reviews/>}/>
+                    </Route>
                     <Route path="*" element={<NoPage/>}/>
                 </Routes>
             </Provider>
