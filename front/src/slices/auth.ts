@@ -3,16 +3,13 @@ import { LoginState, LoginPayLoad, RegisterPayLoad, RegisterState, AllState } fr
 import AuthService from "../services/auth";
 
 
-const user = JSON.parse(localStorage.getItem("user")!);
+// const user = JSON.parse(localStorage.getItem("user")!);
   
-const initialState: AllState = user ?
-{
-    user,
-    authenticated: true,
-} : {
+const initialState: AllState = {
     user: undefined,
     authenticated: false,
-    registered: false
+    registered: false,
+    message: ''
 };
 
 export const login = createAsyncThunk<LoginState, LoginPayLoad>(
@@ -23,7 +20,6 @@ export const login = createAsyncThunk<LoginState, LoginPayLoad>(
             return {...req, user} as LoginPayLoad;
         } catch (error: any) {
             console.log(error.message)
-            alert(error.message)
             return thunkAPI.rejectWithValue({ error: error.message });
       }
     }
@@ -34,10 +30,9 @@ export const register = createAsyncThunk<RegisterState, RegisterPayLoad>(
     async (req, thunkAPI) => {
         try {
             const user = await AuthService.registerUser(req.email, req.password, req.displayName);
-            return {...req, user} as LoginPayLoad;
+            return {...req, user} as RegisterPayLoad;
         } catch (error: any) {
             console.log(error.message)
-            alert(error.message)
             return thunkAPI.rejectWithValue({ error: error.message });
       }
     }
@@ -60,8 +55,9 @@ export const authSlice = createSlice({
             state.user = action.payload.user;
             state.authenticated = true;
         });
-        builder.addCase(login.rejected, state => {
+        builder.addCase(login.rejected, (state, action) => {
             state.authenticated = false;
+            state.message = (action.payload as LoginPayLoad).error;
         });
         builder.addCase(register.fulfilled, state => {
             state.registered = true;

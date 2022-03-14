@@ -8,6 +8,7 @@ import { login, logout } from "../slices/auth";
 import { RootState } from '../store/storee';
 import { useNavigate } from "react-router-dom";
 import { Form } from '../components/Form';
+import { LocationState } from '../@types/location';
 
 const Login: React.FunctionComponent = () => {
 
@@ -15,8 +16,9 @@ const Login: React.FunctionComponent = () => {
     const [isValidEmail, setValidEmail] = useState<boolean>(true)
     const [visible, setVisible] = useState<boolean>(false)
     const [isDisabled, setDisabled] = useState<boolean>(true)
-    const { authenticated } = useSelector((state: RootState) => state.auth);
-    const { state } = useLocation();
+    const { authenticated, message } = useSelector((state: RootState) => state.auth);
+    const location = useLocation();
+    const path = location.state as LocationState
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -44,9 +46,10 @@ const Login: React.FunctionComponent = () => {
         dispatch(login(values))
         if (authenticated) {
             setValues({email: "", password: ""});
-            navigate(state?.path || "/dashboard");
+            // navigate(path.path || "/dashboard");
+            navigate("/dashboard");
         } else {
-            
+            await alert.error(message)
         }
     };
 
@@ -56,6 +59,7 @@ const Login: React.FunctionComponent = () => {
                 <h1 className='text-2xl font-medium text-primary mt-4 mb-8 text-center'>
                     Log in to your account
                 </h1>
+                <label>{message}</label>
                 <div className="max-w-md px-4 mx-auto ">
                     <div>
                         <Form name="Email" type='email' placeholder='name@email.com' onChange={(e: { target: { value: any; }; }) => { setValues({ ...values, email: e.target.value }); setValidEmail(true); }} value={values.email} onMouseEnter={() => setValidEmail(true)} onMouseLeave={() => checkButton()}/>
@@ -64,7 +68,7 @@ const Login: React.FunctionComponent = () => {
                                 Invalid email adress*
                             </label>
                         ) }
-                        <Form name="Password" type='password' placeholder='Enter password' onChange={(e: { target: { value: any; }; }) => { setValues({ ...values, password: e.target.value })}} value={values.password} onMouseLeave={() => checkButton()}>
+                        <Form name="Password" type={visible ? 'text' : 'password'} placeholder='Enter password' onChange={(e: { target: { value: any; }; }) => { setValues({ ...values, password: e.target.value })}} value={values.password} onMouseLeave={() => checkButton()}>
                             <button className="pr-2 hover:opacity-75" onClick={() => {setVisible(!visible)}}>
                                 {visible ? 
                                     <AiFillEyeInvisible color='#0AC5CD' size={24}/>

@@ -11,6 +11,7 @@ export interface LoginPayLoad {
     password: string;
     email: string;
     user?: User;
+    error?: string;
 }
 
 export interface RegisterState {
@@ -26,7 +27,12 @@ export interface RegisterPayLoad {
 }
 
 export interface AllState {
-    authenticated?: boolean;
-    registered?: boolean;
-    user?: User;
+    authenticated: boolean;
+    registered: boolean;
+    user: User | undefined;
+    message?: string;
 }
+
+export interface FirebaseError {
+    code: string;
+};
