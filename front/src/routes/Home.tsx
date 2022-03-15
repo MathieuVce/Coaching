@@ -21,7 +21,7 @@ const Home: React.FunctionComponent = () => {
 
     const [navbarOpen, setNavbarOpen] = useState(false);
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const alert = useAlert()
 
@@ -50,8 +50,8 @@ const Home: React.FunctionComponent = () => {
                             <img className='h-10' src={longlogo2}/>
                         </div>
                         
-                        <div className="border-b border-b-primary h-15 flex pb-5 md:w-64">
-                            <div className="bg-blue w-12 h-12 rounded-md items-center justify-center flex">
+                        <div className="h-15 flex md:w-64">
+                            <div className="bg-blue bg-opacity-70 w-12 h-12 rounded-md items-center justify-center flex">
                                 <RiUser3Line size={30} color='black'/>
                             </div>
 
@@ -62,12 +62,12 @@ const Home: React.FunctionComponent = () => {
                                 </label>
                             </div>
 
-                            <button className="ml-4" type='button' onClick={() => {handleLogout()}}>
+                            <button className="ml-auto" type='button' onClick={() => {handleLogout()}}>
                                 <FiLogOut size={30}/>
                             </button>
                         </div>
 
-                        <ul className="mt-8">
+                        <ul className="mt-8 border-t border-t-primary pt-8">
                             <Drawer title="Dashboard" isSelected={false} outlineIcon={<AiOutlineHome size={24}/>} selectedIcon={<AiFillHome size={24}/>}/>
                             <Drawer title="Items" isSelected={false} outlineIcon={<MdOutlineDashboardCustomize size={24}/>} selectedIcon={<MdDashboardCustomize size={24}/>}/>
                             <Drawer title="Users" isSelected={false} outlineIcon={<RiUser3Line size={24}/>} selectedIcon={<RiUser3Fill size={24}/>}/>

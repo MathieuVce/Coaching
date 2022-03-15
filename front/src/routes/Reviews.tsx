@@ -3,9 +3,9 @@
 const Reviews: React.FunctionComponent = () => {
 
     return(
-        <body>
+        <div>
             Reviews
-        </body>
+        </div>
     );
 };
 

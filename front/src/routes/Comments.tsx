@@ -3,9 +3,9 @@
 const Comments: React.FunctionComponent = () => {
 
     return(
-        <body>
+        <div>
             Comments
-        </body>
+        </div>
     );
 };
 
