@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi"
 import { MdClose } from "react-icons/md"
+import longlogo from "../assets/longlogo.svg"
+
 
 const App: React.FunctionComponent = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -15,7 +17,7 @@ const App: React.FunctionComponent = () => {
                 className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
               >
                 <Link to="/">
-                  <img className='h-7' src={"src/assets/longlogo.svg"}/>
+                  <img className='h-7' src={longlogo}/>
                 </Link>
               </div>
               <button

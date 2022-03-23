@@ -25,7 +25,7 @@ const loginUser = async (email: string, password: string) => {
     throw { message: getErrors(firebaseError.code) }
   }
 };
-const registerUser = async (email: string, password: string, displayName: string) => {
+const registerUser = async (email: string, password: string, displayName?: string) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
     updateProfile(res.user, {displayName});

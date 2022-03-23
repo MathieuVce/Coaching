@@ -4,7 +4,7 @@ import { LocationState } from "../@types/location";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useAlert } from 'react-alert'
 import { login, register } from "../slices/auth";
-import { checkEmail } from "../utils/Utils";
+import { checkEmail } from "../utils/utils";
 import { AuthTypes, AuthValues } from "../@types/auth";
 
 interface IAuthProps {
