@@ -1,26 +1,17 @@
 import { auth } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
-import { FirebaseError } from "../@types/auth";
+import { FirebaseError } from "../../../common/auth";
+import errorMapping from "../../../common/firebaseErrors.json";
 
-const getErrors = (code: string) => {
-  switch(code) {
-    case 'auth/email-already-exists':
-      return 'The provided email is already in use by an existing user. Each user must have a unique email.';
-    case 'auth/invalid-password':
-      return 'The provided value for the password user property is invalid. It must be a string with at least six characters.';
-    case 'auth/user-not-found':
-      return 'There is no existing user record corresponding to the provided identifier.';
-    case 'auth/wrong-password':
-      return 'The provided value for the password user property is invalid.';
-    case 'auth/weak-password':
-      return 'The provided value for the password user property is invalid. It must be a string with at least six characters.';
-    case 'auth/email-already-in-use':
-      return 'The provided email is already in use by an existing user. Each user must have a unique email.';
-    case 'auth/invalid-email':
-      return 'The provided value fro the email user property is invalid.';
-    default:
-      return 'An unknown error occured. Please try again';
-  }
+const getErrors = (keyWord: string) => {
+    var message = 'An undefined error occured';
+
+    Object.keys(errorMapping).forEach((code, index) => {
+      if (code === keyWord.split('/')[1]) {
+        message = Object.values(errorMapping).at(index)!
+      }
+    })
+    return message;
 };
 
 const loginUser = async (email: string, password: string) => {

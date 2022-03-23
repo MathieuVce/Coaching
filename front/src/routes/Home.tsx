@@ -35,8 +35,8 @@ const Home: React.FunctionComponent = () => {
 
     return(
         <>
-            <div className="flex h-screen">
-                <div className="px-4 py-2 bg-white-light lg:w-1/4 md:1/4">
+            <body className="flex h-screen">
+                <div className="px-4 py-2 bg-white-light lg:w-1/4 md:1/4 sm:1/2">
                     <button className="inline w-8 h-8 lg:hidden" type="button"
                         onClick={() => setNavbarOpen(!navbarOpen)}>
                             {navbarOpen ?
@@ -45,27 +45,27 @@ const Home: React.FunctionComponent = () => {
                                 <GiHamburgerMenu color='black' size={24}/>
                             }
                     </button>
-                    <div className={"lg:block flex-col" + (navbarOpen ? "flex" : " hidden")}>
-                        <div className="mb-6 border-b border-b-primary pb-6">
+                    <section className={"lg:block flex-col" + (navbarOpen ? "flex" : " hidden")}>
+                        <article className="mb-6 border-b border-b-primary pb-6">
                             <img className='h-10' src={longlogo2}/>
-                        </div>
+                        </article>
                         
-                        <div className="h-15 flex md:w-64">
-                            <div className="bg-blue bg-opacity-70 w-12 h-12 rounded-md items-center justify-center flex">
+                        <article className="h-15 flex md:w-64">
+                            <section className="bg-blue bg-opacity-70 w-12 h-12 rounded-md items-center justify-center flex">
                                 <RiUser3Line size={30} color='black'/>
-                            </div>
+                            </section>
 
-                            <div className="flex flex-col pt-0.5">
+                            <section className="flex flex-col pt-0.5">
                                 <label className="mx-2 text-sm">Admin</label>
                                 <label className="mx-2 font-bold text-m">
                                     {user?.displayName ? user?.displayName : ""}
                                 </label>
-                            </div>
+                            </section>
 
                             <button className="ml-auto" type='button' onClick={() => {handleLogout()}}>
                                 <FiLogOut size={30}/>
                             </button>
-                        </div>
+                        </article>
 
                         <ul className="mt-8 border-t border-t-primary pt-8">
                             <Drawer title="Dashboard" isSelected={false} outlineIcon={<AiOutlineHome size={24}/>} selectedIcon={<AiFillHome size={24}/>}/>
@@ -78,10 +78,10 @@ const Home: React.FunctionComponent = () => {
                             <label>© Coaching Studio, 2021.</label>
                             <label>Create by the Creative Studio</label>
                         </div> */}
-                    </div>
+                    </section>
                 </div>
                 <Outlet />
-            </div>
+            </body>
         </>
     );
 };

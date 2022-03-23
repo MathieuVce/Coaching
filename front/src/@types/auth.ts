@@ -1,38 +1,11 @@
-import { User } from "firebase/auth";
+export enum AuthTypes {
+    Login,
+    Register
+};
 
-export interface LoginState {
-    password?: string;
-    email?: string;
-    authenticated?: boolean;
-    user?: User;
-}
-
-export interface LoginPayLoad {
-    password: string;
+export interface AuthValues {
     email: string;
-    user?: User;
-    error?: string;
-}
-
-export interface RegisterState {
-    password?: string;
-    email?: string;
-    registered?: boolean;
-}
-
-export interface RegisterPayLoad {
     password: string;
-    email: string;
-    displayName: string;
-}
-
-export interface AllState {
-    authenticated: boolean;
-    registered: boolean;
-    user: User | undefined;
-    message?: string;
-}
-
-export interface FirebaseError {
-    code: string;
+    confirmedPassword?: string;
+    displayName?: string;
 };

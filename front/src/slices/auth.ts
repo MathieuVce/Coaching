@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { LoginState, LoginPayLoad, RegisterPayLoad, RegisterState, AllState } from "../@types/auth";
+import { LoginState, LoginPayLoad, RegisterPayLoad, RegisterState, AllState } from "../../../common/auth";
 import AuthService from "../services/auth";
 
 
@@ -63,8 +63,9 @@ export const authSlice = createSlice({
             state.registered = true;
             state.authenticated = false;
         });
-        builder.addCase(register.rejected, state => {
+        builder.addCase(register.rejected, (state, action) => {
             state.registered = false;
+            state.message = (action.payload as RegisterPayLoad).error;
         });
         builder.addCase(logout.fulfilled, state => {
             state.authenticated = false;
@@ -72,6 +73,4 @@ export const authSlice = createSlice({
     },
 });
 
-
-const { reducer } = authSlice;
-export default reducer;
+export default authSlice.reducer;

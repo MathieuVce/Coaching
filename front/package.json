@@ -1,9 +1,6 @@
 {
   "name": "coaching-extia",
   "version": "0.0.0",
-  "engines": {
-    "node": "16.x"
-  },
   "scripts": {
     "start": "node server/server.js",
     "dev": "vite",
