@@ -5,6 +5,7 @@ import { Form } from '../components/Form';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Auth } from '../components/Auth';
 import { AuthTypes } from '../@types/auth';
+import { Link } from 'react-router-dom';
 
 const Login: React.FunctionComponent = () => {
 
@@ -44,6 +45,9 @@ const Login: React.FunctionComponent = () => {
                     }
                 </button>
             </Form>
+            <section className="text-right text-brown text-base">
+                <Link to="/password">Forgot your password ?</Link>
+            </section>
         </Auth>
     );
 };

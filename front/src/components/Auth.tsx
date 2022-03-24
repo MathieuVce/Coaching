@@ -21,6 +21,8 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     const { authenticated, message, registered } = useAppSelector(state => state.auth);
     const location = useLocation();
     const path = location.state as LocationState
+    const names = ['Login', 'Register', 'Reset Password']
+    const links = [ <Link to="/register">Need to register? Sign up for free</Link>, <Link to="/login">Already registered ? Log in here</Link>, <Link to="/login">Go back to login</Link>]
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -72,19 +74,15 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
                         <div className='flex justify-center items-center mt-6'
                             onMouseEnter={() => {type === AuthTypes.Login ? checkLoginButton() : checkRegisterButton()}}
                         >
-                            <button onClick={() => {type === AuthTypes.Login ? handleLoginFormSubmit() : handleRegisterFormSubmit()}} disabled={isDisabled} className={`bg-blue py-2 px-8 text-sm text-white rounded border border-blue-light focus:outline-none hover:opacity-75`}>
-                                {type === AuthTypes.Login ? 'Login' : 'Register'}
+                            <button onClick={() => {type === AuthTypes.Login ? handleLoginFormSubmit() : handleRegisterFormSubmit()}} disabled={isDisabled} className={`bg-blue py-2 w-full text-sm text-white rounded border border-blue-light focus:outline-none hover:opacity-75`}>
+                                {names[type]}
                             </button>
                         </div>
                     </div>
                 </div>
                 <div className="flex items-center mt-8 justify-center">
                      <div className={"justify-center text-blue-500 hover:underline"}>
-                        {type === AuthTypes.Login ?
-                        <Link to="/register">Need to register? Sign up for free</Link>
-                        :
-                        <Link to="/login">Already registered ? Log in here</Link>
-                        }
+                        {links[type]}
                      </div>
                  </div>
             </div>

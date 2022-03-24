@@ -15,6 +15,7 @@ import Comments from "../routes/Comments";
 import Register from "../routes/Register";
 import { RequireAuth } from "./RequireAuth";
 import Dashboard from "../routes/Dashboard";
+import Password from '../routes/Password';
 
 const Navigation: React.FunctionComponent = () => {
     return (
@@ -24,6 +25,7 @@ const Navigation: React.FunctionComponent = () => {
                     <Route path='/' element={<App/>}>
                         <Route path='login' element={<Login/>}/>
                         <Route path='register' element={<Register/>}/>
+                        <Route path='password' element={<Password/>}/>
                     </Route>
                     <Route path='home' element={
                         <RequireAuth>

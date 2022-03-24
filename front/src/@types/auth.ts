@@ -1,6 +1,7 @@
 export enum AuthTypes {
     Login,
-    Register
+    Register,
+    Password
 };
 
 export interface AuthValues {
