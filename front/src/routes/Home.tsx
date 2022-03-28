@@ -32,11 +32,11 @@ const Home: React.FunctionComponent = () => {
             // )
         navigate("/login")
     }
-
+//    1//09nsYFlT3F2pGCgYIARAAGAkSNwF-L9IrwVpoDaT1EfGOOEzxYVtTfEshOyY97EpTYeIRkfUsX0zjLI6LlAvcmYc5E9dNsmN0mBc
     return(
         <>
             <body className="flex h-screen">
-                <div className="px-4 py-2 bg-white-light lg:w-1/4 md:1/4 sm:1/2">
+                <div className="px-4 py-2 bg-white-light lg:w-1/4 md:1/3 sm:1/2">
                     <button className="inline w-8 h-8 lg:hidden" type="button"
                         onClick={() => setNavbarOpen(!navbarOpen)}>
                             {navbarOpen ?
@@ -62,7 +62,7 @@ const Home: React.FunctionComponent = () => {
                                 </label>
                             </section>
 
-                            <button className="ml-auto" type='button' onClick={() => {handleLogout()}}>
+                            <button className="flex items-center justify-end ml-auto" type='button' onClick={() => {handleLogout()}}>
                                 <FiLogOut size={30}/>
                             </button>
                         </article>

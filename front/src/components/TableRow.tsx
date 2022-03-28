@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
+import { truncateString } from "../utils/Utils";
 
 
 export interface ITableRowProps {
@@ -9,24 +9,23 @@ export interface ITableRowProps {
 
 export const TableRow: React.FC<ITableRowProps> = ({ head, values }) => {
 
-    const basicStyle = "text-sm font-medium text-primary flex items-center px-5"
-    const emailStyle = "text-xs font-light text-blue-light flex items-center px-5"
-    const [newValues, setValues] = useState(values)
+    const basicStyle = "text-lg md:text-sm sm:text-xs font-medium text-primary flex items-center justify-start px-5 h-10"
+    const emailStyle = "text-sm font-light text-blue-light flex items-center justify-start pl-5"
 
     return (
         <>
             <tr>
-                {newValues.map((value, i) => {
+                {values.map((value, i) => {
                     return (
-                        <td className="px-1 py-2 whitespace-no-wrap" key={i}>
-                            <div className={head[i] === 'email' ? emailStyle : head[i] === 'text' ? emailStyle : basicStyle}>
-                                {value}
+                        <td className="px-1 py-2 whitespace-no-wrap text-" key={i}>
+                            <section className={head[i] === 'email' ? emailStyle : head[i] === 'text' ? emailStyle : basicStyle}>
+                                {head[i] === 'email' ? truncateString(value, 7) : head[i] === 'text' ? truncateString(value, 18) : value}
                                 {head[i] === 'rating' && (
-                                    <div className="pl-1">
+                                    <article className="pl-1">
                                         <AiFillStar size={20} color="#0AC5CD"/>
-                                    </div>
+                                    </article>
                                 )}
-                            </div>
+                            </section>
                         </td>
                     )
                 })}

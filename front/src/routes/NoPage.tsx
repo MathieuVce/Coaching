@@ -17,7 +17,7 @@ const NoPage: React.FunctionComponent = () => {
                     The page you’re looking for doesn’t exist.
                 </p>
                 <div className="px-6 py-2 text-lg font-semibold text-blue-light">
-                     <Link to="/login">Go Home</Link>
+                     <Link to="/">Go Home</Link>
                 </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ const Register: React.FunctionComponent = () => {
     const [values, setValues] = useState({email: "", password: "", confirmedPassword: "", displayName: ""});
     const [isValidEmail, setValidEmail] = useState<boolean>(true)
     const [isValidPassword, setValidPassword] = useState<boolean>(true)
-    
+
     const handleChange = (prop: keyof typeof values, value: string) => {
         setValues({
             ...values,

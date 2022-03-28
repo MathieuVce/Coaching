@@ -12,7 +12,7 @@ export interface LoginState {
     user?: User;
 }
 
-export interface LoginPayLoad {
+export interface LoginPayload {
     password: string;
     email: string;
     user?: User;
@@ -25,10 +25,20 @@ export interface RegisterState {
     registered?: boolean;
 }
 
-export interface RegisterPayLoad {
+export interface RegisterPayload {
     password: string;
     email: string;
     displayName?: string;
+    error?: string;
+}
+
+export interface PasswordState {
+    email: string;
+    reset?: boolean;
+}
+
+export interface PasswordPayload {
+    email: string;
     error?: string;
 }
 
@@ -36,6 +46,7 @@ export interface AllState {
     authenticated: boolean;
     registered: boolean;
     user: User | undefined;
+    reset: boolean;
     message?: string;
 }
 

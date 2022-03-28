@@ -39,26 +39,26 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, icon, titl
         <>
             <div className="flex flex-col">
                 <div className="py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    <div className="inline-block overflow-x-auto align-middle shadow-md rounded-lg w-full bg-white-light pb-3">
-                        <div className="w-full border-b border-b-brown px-5 items-center py-4 flex flex-row">
+                    <section className="inline-block overflow-x-auto align-middle shadow-md rounded-lg w-full bg-white-light pb-3">
+                        <section className="w-full px-5 items-center py-4 flex flex-row">
                             {icon}
                             <label className="font-medium text-lg px-2">{title}</label>
-                            <div className="flex flex-row items-center w-full justify-end">
+                            <article className="flex flex-row items-center w-full justify-end">
                                 <button onClick={() => {handleRefresh()}} >
                                     <IoMdRefresh/>
                                 </button>
-                                <div className="bg-brown bg-opacity-20 justify-center flex py-1 rounded-lg px-2 ml-5">
+                                <article className="bg-brown bg-opacity-20 justify-center flex py-1 rounded-lg px-2 ml-5">
                                     <button className="text-xs" onClick={onClick}>View all</button>
-                                </div>
-                            </div>
-                        </div>
+                                </article>
+                            </article>
+                        </section>
                         {/* <table className="w-full table-fixed"> */}
                         <table className="w-full">
                             <tbody>
                                 <tr>
                                 {head.map((title, i) => {
                                     return (
-                                        <th className="px-6 py-3 text-xs font-light leading-4 thacking-wider text-left text-brown uppercase overflow-x-scroll" key={i}>{title}</th> 
+                                        <th className="px-6 py-3 text-xs font-light leading-4 thacking-wider text-left text-brown uppercase overflow-x-scroll border-t border-t-brown" key={i}>{title}</th> 
                                         )
                                     })}
                                 </tr>
@@ -71,7 +71,7 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, icon, titl
                                 <TableRow head={head} values={values}/>
                             </tbody>
                         </table>
-                    </div>
+                    </section>
                 </div>
             </div>
         </>

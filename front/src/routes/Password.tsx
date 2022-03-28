@@ -15,14 +15,16 @@ const Password: React.FunctionComponent = () => {
         });
     };
     return (
-        <Auth header={"Reset your password"} type={AuthTypes.Password} values={values} setValidEmail={setValidEmail} setValidPassword={setValidEmail}>
-            <Form name="Email" type='email' placeholder='name@email.com' onChange={(e) => { handleChange("email", e.target.value); setValidEmail(true); }} value={values.email}/>
-            {!isValidEmail && (
-                <label className='text-red'>
-                    Invalid email adress*
-                </label>
-            ) }
-        </Auth>
+        <>
+            <Auth header={"Reset your password"} type={AuthTypes.Password} values={values} setValidEmail={setValidEmail} setValidPassword={setValidEmail}>
+                <Form name="Email" type='email' placeholder='name@email.com' onChange={(e) => { handleChange("email", e.target.value); setValidEmail(true); }} value={values.email}/>
+                {!isValidEmail && (
+                    <label className='text-red'>
+                        Invalid email adress*
+                    </label>
+                ) }
+            </Auth>
+        </>
     );
 };
 

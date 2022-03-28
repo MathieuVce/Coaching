@@ -40,12 +40,12 @@ module.exports = {
           }
       },
       extend: {
-          boxShadow: {
+            boxShadow: {
               default: '0px 10px 20px rgba(150, 150, 187, 0.1)',
-          },
-          fontSize: {
+            },
+            fontSize: {
               '2rem': '2rem',
-          },
+            },
         },
       },
       variants: {
