@@ -19,7 +19,6 @@ jobs:
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install
-    # - name: Deploy to Firebase
-    #   uses: mohammed-atif/firebase-publish-react@v1.0
-    #   with:
-    #     firebase-token: ${{ secrets.FIREBASE_TOKEN }}
+      - uses: mohammed-atif/firebase-publish-react@v1.0
+        with:
+          firebase-token: ${{ secrets.FIREBASE_TOKEN }}
