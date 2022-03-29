@@ -18,10 +18,6 @@ jobs:
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
       - uses: mohammed-atif/firebase-publish-react@v1.0
         with:
           firebase-token: ${{ secrets.FIREBASE_TOKEN }}
-          build-application: false
