@@ -1,17 +1,19 @@
 import { auth } from "./firebase";
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { FirebaseError } from "../../../common/auth";
-import errorMapping from "../../../common/firebaseErrors.json";
+import { errorMapping } from "../../../common/firebaseErrors";
 
 const getErrors = (keyWord: string) => {
-    var message = 'An undefined error occured';
+    const  message = 'An undefined error occured';
 
-    Object.keys(errorMapping).forEach((code, index) => {
-      if (code === keyWord.split('/')[1]) {
-        message = Object.values(errorMapping).at(index)!
-      }
-    })
-    return message;
+    // Object.keys(errorMapping).forEach((code, index) => {
+    //   if (code === keyWord.split('/')[1]) {
+    //     message = Object.values(errorMapping).at(index)!
+    //   }
+    // });
+    // return message;
+    const parsedError  = keyWord.split('/')[1]
+    return errorMapping[parsedError] || message
 };
 
 const loginUser = async (email: string, password: string) => {

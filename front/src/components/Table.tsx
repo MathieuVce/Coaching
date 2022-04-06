@@ -54,7 +54,7 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, icon, titl
                         </section>
                         {/* <table className="w-full table-fixed"> */}
                         <table className="w-full">
-                            <tbody>
+                            <thead>
                                 <tr>
                                 {head.map((title, i) => {
                                     return (
@@ -62,13 +62,11 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, icon, titl
                                         )
                                     })}
                                 </tr>
-                            </tbody>
+                            </thead>
                             <tbody className="bg-white-light border-t border-t-brown">
-                                <TableRow head={head} values={values}/>
-                                <TableRow head={head} values={values}/>
-                                <TableRow head={head} values={values}/>
-                                <TableRow head={head} values={values}/>
-                                <TableRow head={head} values={values}/>
+                                {Array.from({ length: 5 }, (_, i) =>
+                                    <TableRow head={head} values={values}/>
+                                )}
                             </tbody>
                         </table>
                     </section>

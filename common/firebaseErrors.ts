@@ -1,4 +1,4 @@
-{
+export const errorMapping: {[key: string]: string} = {
     "admin-restricted-operation": "This operation is restricted to administrators only.",
     "argument-error": "",
     "app-not-authorized": "This app, identified by the domain where it's hosted, is not authorized to use Firebase Authentication with the provided API key. Review your key configuration in the Google API console.",

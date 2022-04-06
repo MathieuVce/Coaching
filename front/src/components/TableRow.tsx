@@ -17,7 +17,7 @@ export const TableRow: React.FC<ITableRowProps> = ({ head, values }) => {
             <tr>
                 {values.map((value, i) => {
                     return (
-                        <td className="px-1 py-2 whitespace-no-wrap text-" key={i}>
+                        <td className="px-1 py-2 whitespace-no-wrap" key={i}>
                             <section className={head[i] === 'email' ? emailStyle : head[i] === 'text' ? emailStyle : basicStyle}>
                                 {head[i] === 'email' ? truncateString(value, 7) : head[i] === 'text' ? truncateString(value, 18) : value}
                                 {head[i] === 'rating' && (

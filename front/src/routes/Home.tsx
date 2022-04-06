@@ -32,7 +32,6 @@ const Home: React.FunctionComponent = () => {
             // )
         navigate("/login")
     }
-//    1//09nsYFlT3F2pGCgYIARAAGAkSNwF-L9IrwVpoDaT1EfGOOEzxYVtTfEshOyY97EpTYeIRkfUsX0zjLI6LlAvcmYc5E9dNsmN0mBc
     return(
         <>
             <body className="flex h-screen">
@@ -58,11 +57,11 @@ const Home: React.FunctionComponent = () => {
                             <section className="flex flex-col pt-0.5">
                                 <label className="mx-2 text-sm">Admin</label>
                                 <label className="mx-2 font-bold text-m">
-                                    {user?.displayName ? user?.displayName : ""}
+                                    {user?.displayName}
                                 </label>
                             </section>
 
-                            <button className="flex items-center justify-end ml-auto" type='button' onClick={() => {handleLogout()}}>
+                            <button className="flex items-center justify-end ml-auto" type='button' onClick={handleLogout}>
                                 <FiLogOut size={30}/>
                             </button>
                         </article>

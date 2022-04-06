@@ -23,9 +23,13 @@ module.exports = {
               darker: '#1e874b',
           },
           red: {
-              light: '#FFEAEA',
+              light: '#FF0000',
               DEFAULT: '#EB5757',
               dark: '#C20D0D',
+          },
+          yellow: {
+            DEFAULT: "",
+            light: "#FF9900"
           },
           orange: {
               light: '#FFEBDA',
