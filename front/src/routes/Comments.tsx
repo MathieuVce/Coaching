@@ -4,7 +4,7 @@ import { BiTrash } from "react-icons/bi";
 
 const Comments: React.FunctionComponent = () => {
 
-    const valuesComments = ['10', 'Spider-Man', 'John Doe', 'What a movie !!! So many visual effects...', '23 Dec. 2021']
+    const valuesComments = ['10', 'Spider-Man', 'John Doe', 'What a movie !!! So many visual effects, what a movie !!! So many visual effects What a movie !!! So many visual effects', '23 Dec. 2021']
     const header = ['id', 'item', 'author', 'text', 'created date', 'actions']
 
     return(

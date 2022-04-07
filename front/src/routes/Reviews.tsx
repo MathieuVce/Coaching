@@ -5,11 +5,11 @@ import { Page } from "../components/Page";
 
 const Reviews: React.FunctionComponent = () => {
 
-    const valuesComments = ['10', 'Spider-Man', 'John Doe', 'What a movie !!! So many visual effects...', '9.2', '23 Dec. 2021']
+    const valuesComments = ['10', 'Spider-Man', 'John Doe', 'What a movie !!! So many visual effects, what a movie !!! So many visual effects, What a movie !!! So many visual effects', '9.2', '23 Dec. 2021']
     const header = ['id', 'item', 'author', 'text', 'rating', 'created date', 'actions']
     return(
         <>
-            <Page title={'Comments'} total='21 122' values={valuesComments} header={header}>
+            <Page title={'Reviews'} total='10 122' values={valuesComments} header={header}>
                 <div className="flex items-center space-x-5 justify-center">
                     <article className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6">
                         <AiOutlineEye color='black' size={20}/>
