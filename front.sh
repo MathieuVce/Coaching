@@ -1,1 +1,1 @@
-cd front && npm run serve
+cd front && npm run dev

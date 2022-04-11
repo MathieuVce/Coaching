@@ -1,15 +1,22 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import React from 'react'
 import './assets/index.css'
-import store from "./store/store"
-import { Provider } from "react-redux"
+import Navigation from "./navigation/Navigation";
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+
+const options = {
+  position: positions.TOP_RIGHT,
+  timeout: 6000,
+  offset: '10px',
+  transition: transitions.SCALE
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-    <App />
-    </Provider>
+    <AlertProvider template={AlertTemplate} {...options}>
+      <Navigation/>
+    </AlertProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
