@@ -50,7 +50,7 @@ const Home: React.FunctionComponent = () => {
                         </article>
                         
                         <article className="h-15 flex md:w-64">
-                            <section className="bg-blue bg-opacity-70 w-12 h-12 rounded-md items-center justify-center flex">
+                            <section className="bg-blue bg-opacity-30 w-12 h-12 rounded-md items-center justify-center flex">
                                 <RiUser3Line size={30} color='black'/>
                             </section>
 

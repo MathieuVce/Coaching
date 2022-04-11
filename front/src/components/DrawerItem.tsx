@@ -14,7 +14,7 @@ export const Drawer: React.FC<IDrawerProps> = ({ title, selectedIcon, outlineIco
     const navigate = useNavigate();
     const location = useLocation();
     const isSelected = location.pathname.split('/')[2] === title.toLowerCase()
-    const selectedStyle = isSelected ? "mb-2 bg-blue rounded shadow font-bold" : "mb-2 rounded hover:shadow hover:bg-blue hover:font-bold hover:bg-opacity-40"
+    const selectedStyle = isSelected ? "mb-2 bg-blue bg-opacity-60 rounded shadow font-bold" : "mb-2 rounded hover:shadow hover:bg-blue hover:font-bold hover:bg-opacity-20"
 
     return (
         <>

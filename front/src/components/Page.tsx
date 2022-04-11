@@ -16,7 +16,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, child
                     <h1 className="font-semibold text-3xl pr-2">{title}</h1>
                     <p className="font-light text-base pt-2 text-brown">{total} total</p>
                 </section>
-                <section className="border-t mx-4 px-4">
+                <section className="border-t mx-4 px-4 overflow-scroll">
                     <ScrollView header={header} body={values} child={children}/>
                 </section>
             </div>

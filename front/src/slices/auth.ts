@@ -7,7 +7,7 @@ import AuthService from "../services/auth";
   
 const initialState: AllState = {
     user: undefined,
-    authenticated: false,
+    authenticated: true,
     registered: false,
     message: '',
     reset: false
