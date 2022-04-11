@@ -56,10 +56,10 @@ const App: React.FunctionComponent = () => {
         </nav>
         {location.pathname === '/' ?
         <div className="flex items-center justify-center w-full h-screen bg-gradient-to-b from-blue to-blue-light">
-          <div className=" bg-white rounded-md shadow-xl py-24 px-16 max-w-md lg:max-w-3xl md:max-w-2xl sm:max-w-md">
+          <div className=" bg-white rounded-md shadow-xl py-24 px-16 max-w-sm lg:max-w-3xl md:max-w-2xl sm:max-w-sm">
             <section className="flex flex-col items-center">
               <article className="flex flex-row">
-                <h1 className="font-bold text-primary text-8xl 2xl:text-9xl xl:text-9xl lg:text-8xl sm:text-8xl">
+                <h1 className="font-bold text-primary text-7xl 2xl:text-9xl xl:text-9xl lg:text-8xl sm:text-7xl">
                   W<span className="text-blue">e</span>llc<span className="text-blue">o</span>m<span className="text-blue">e</span>
                 </h1>
               </article>
