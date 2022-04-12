@@ -14,6 +14,7 @@ const Register: React.FunctionComponent = () => {
             [prop]: value
         });
     };
+
     return (
         <Auth header={"Register a new account"} type={AuthTypes.Register} values={values} setValidEmail={setValidEmail} setValidPassword={setValidPassword}>
             <Form name="Name" type='text' placeholder='Enter name' onChange={(e) => {handleChange('displayName', e.target.value)}} value={values.displayName}/>

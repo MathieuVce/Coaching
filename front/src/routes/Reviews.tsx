@@ -11,12 +11,12 @@ const Reviews: React.FunctionComponent = () => {
         <>
             <Page title={'Reviews'} total='10 122' values={values} header={header}>
                 <div className="flex items-center space-x-5 justify-center">
-                    <button className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6">
+                    <article className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6">
                         <AiOutlineEye color='black' size={20}/>
-                    </button>
-                    <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center">
+                    </article>
+                    <article className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center">
                         <BiTrash color='black' size={18}/>
-                    </button>
+                    </article>
                 </div>
             </Page>
         </>
