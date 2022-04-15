@@ -34,7 +34,7 @@ const Home: React.FunctionComponent = () => {
     }
     return(
         <>
-            <body className="flex h-screen">
+            <div className="flex h-screen">
                 <div className="px-4 py-2 bg-white-light lg:w-1/4 md:1/3 sm:1/2">
                     <button className="inline w-8 h-8 lg:hidden" type="button"
                         onClick={() => setNavbarOpen(!navbarOpen)}>
@@ -80,7 +80,7 @@ const Home: React.FunctionComponent = () => {
                     </section>
                 </div>
                 <Outlet />
-            </body>
+            </div>
         </>
     );
 };

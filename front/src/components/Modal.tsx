@@ -5,10 +5,10 @@ interface IModalProps {
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     onApply: React.MouseEventHandler<HTMLButtonElement>;
     title: string;
-
+    buttons: string;
 }
 
-export const Modal: React.FC<IModalProps> = ({showModal, setShowModal, title, onApply, children}) => {
+export const Modal: React.FC<IModalProps> = ({showModal, setShowModal, title, onApply, buttons, children}) => {
 
   return (
     <>
@@ -25,19 +25,19 @@ export const Modal: React.FC<IModalProps> = ({showModal, setShowModal, title, on
                 <div className="relative p-6 flex-auto">
                     {children}
                 </div>
-                <div className="flex items-center justify-end p-6">
+                <div className="flex items-center justify-center space-x-6 p-6">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-primary text-white hover:text-red font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}>
-                    Close
+                    {buttons.split("/")[0]}
                   </button>
                   <button
-                    className="bg-blue text-white active:bg-blue font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-blue text-white hover:bg-primary hover:text-green font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={onApply}
                   >
-                    Save Changes
+                    {buttons.split("/")[1]}
                   </button>
                 </div>
               </div>

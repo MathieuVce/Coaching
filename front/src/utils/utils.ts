@@ -1,4 +1,6 @@
+import { query, collection, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { db } from "../services/firebase";
 
 export const checkEmail = (input: string) => {
      return /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(input)
@@ -57,4 +59,10 @@ export const useBreakpoints = () => {
     if (breakpoints.isMd) breakpoints.active = "md";
     if (breakpoints.isLg) breakpoints.active = "lg";
     return breakpoints;
-  }
+}
+
+export const getDocIdBy = async (what: string, name: string, who: string) => {
+  const q = query(collection(db, name), where(what, "==", who));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot
+}

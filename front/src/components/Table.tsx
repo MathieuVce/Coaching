@@ -65,7 +65,7 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, icon, titl
                             </thead>
                             <tbody className="bg-white-light border-t border-t-brown">
                                 {Array.from({ length: 5 }, (_, i) =>
-                                    <TableRow head={head} values={values}/>
+                                    <TableRow head={head} values={values} key={i}/>
                                 )}
                             </tbody>
                         </table>
