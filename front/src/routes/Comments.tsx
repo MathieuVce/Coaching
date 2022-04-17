@@ -2,9 +2,9 @@ import { Page } from "../components/Page";
 import { AiOutlineEye, AiOutlineUserAdd } from "react-icons/ai"
 import { BiTrash } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { getDocs, collection, getDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { getDocs, collection, getDoc, doc, deleteDoc, DocumentData, DocumentSnapshot } from "firebase/firestore";
 import { db } from "../services/firebase";
-import { IComment, IUser } from "../../../common/page";
+import { IComment } from "../../../common/page";
 import { getDocIdBy } from "../utils/Utils";
 import { Modal } from "../components/Modal";
 
@@ -25,9 +25,9 @@ const Comments: React.FunctionComponent = () => {
         const querySnapshot = await getDocs(collection(db, "comments"));
         querySnapshot.forEach(async (doc) => {
 
-            const userSnap = await getDoc(doc.data().user);
+            const userSnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().user);
             console.log(userSnap.exists() ? userSnap.data().name : '')
-            const moviesnap = await getDoc(doc.data().movie);
+            const moviesnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().movie);
 
             
             setComments(comments => [...comments, {

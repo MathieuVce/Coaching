@@ -1,10 +1,9 @@
 import { IconBaseProps } from "react-icons";
 import { ScrollView } from "./ScrollView";
+import { IPageType } from "../../../common/page";
 
 
-import { IComment, IUser } from "../../../common/page";
-
-export interface IPageProps {
+interface IPageProps {
    title: string;
    total: string;
    header: string[];
@@ -15,7 +14,7 @@ export interface IPageProps {
 }
 
 export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon, setId, handleClick, children }) => {
-    
+    const tab: {[key: string]: IPageType} = {"comments": IPageType.COMMENT, "users": IPageType.USER};
     return (
         <>
             <div className="h-screen  flex flex-col">
@@ -29,7 +28,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     </article>
                 </section>
                 <section className="border-t mx-4 px-4">
-                    <ScrollView header={header} body={values} child={children} setId={setId}/>
+                    <ScrollView header={header} body={values} child={children} setId={setId} type={tab[title.toLowerCase()]}/>
                 </section>
             </div>
         </>

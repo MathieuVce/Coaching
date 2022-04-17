@@ -5,6 +5,13 @@ export interface IPage {
     header: Array<{head: string; padding: string}>;
 };
 
+export enum IPageType {
+    USER,
+    COMMENT,
+    REVIEW,
+    ITEM
+};
+
 export interface IUser {
     email: string;
     name: string;
