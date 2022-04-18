@@ -29,6 +29,7 @@ export interface IComment {
     item: string;
     creationDate: string;
     user: string;
+    title: string;
 }
 
 export interface IReview {

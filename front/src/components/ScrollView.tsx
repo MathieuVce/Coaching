@@ -1,5 +1,5 @@
 import { RiUser3Line } from "react-icons/ri";
-import { IPageType } from "../../../common/page";
+import { IComment, IPageType, IUser } from "../../../common/page";
 import { truncateString, useBreakpoints } from "../utils/Utils";
 
 export interface IScrollViewProps {
@@ -7,7 +7,7 @@ export interface IScrollViewProps {
     header: string[];
     body: any[];
     child: React.ReactNode;
-    setId: React.Dispatch<React.SetStateAction<string | undefined>>;
+    setId: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, type, child }) => {
@@ -106,7 +106,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                     </article>
                                                 </td>
                                                 <td className="rounded-l-md">
-                                                    <article className="bg-white-light py-6 rounded-l-md text-left px-6 -mx-1 my-1 whitespace-nowrap">
+                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1 whitespace-nowrap">
                                                         {truncateString(value.comment, isXs ? 5 : isSm ? 20 : isMd ? 60 : isLg ? 85 : 100)}
                                                     </article>
                                                 </td>
@@ -116,7 +116,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                     </article>
                                                 </td>
                                                 <td>
-                                                    <article className="bg-white-light py-6 px-4 rounded-r-md" onClick={() => {setId(value.comment)}}>
+                                                    <article className="bg-white-light py-6 px-4 rounded-r-md" onClick={() => {setId(value)}}>
                                                         {child}
                                                     </article>
                                                 </td>
