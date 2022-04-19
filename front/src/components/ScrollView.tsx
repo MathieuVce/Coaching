@@ -1,3 +1,4 @@
+import { AiFillStar } from "react-icons/ai";
 import { RiUser3Line } from "react-icons/ri";
 import { IComment, IPageType, IUser } from "../../../common/page";
 import { truncateString, useBreakpoints } from "../utils/Utils";
@@ -32,13 +33,14 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                             {body?.map((value, i) => {
                                 return (
                                     <tr key={i}>
+                                        <td className="rounded-l-md">
+                                            <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1">
+                                                {i}
+                                            </article>
+                                        </td>
                                         {type == IPageType.USER && (
                                             <>
-                                                <td className="rounded-l-md">
-                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1">
-                                                        {i}
-                                                    </article>
-                                                </td>
+                                                
                                                 <td className="flex items-center">
                                                     <article className="bg-white-light flex items-center px-6 my-1 -mx-1 min-w-full">
                                                         <section className="bg-blue bg-opacity-30 w-12 h-12 rounded-md items-center justify-center flex mr-2">
@@ -51,77 +53,52 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                         </article>
                                                     </article>
                                                 </td>
-                                                <td>
-                                                    <article className="bg-white-light py-6 text-center px-6 -mx-2 my-1">
-                                                        {value.username}
-                                                    </article>
-                                                </td>
-                                                <td className="uppercase">
-                                                    <article className="bg-white-light py-6 text-left px-6 -mx-1 my-1">
-                                                        {value.pricing}
-                                                    </article>
-                                                </td>
-                                                <td>
-                                                    <article className="bg-white-light py-6 text-center px-6 -mx-1 my-1">
-                                                        {value.comments.length}
-                                                    </article>
-                                                </td>
-                                                <td>
-                                                    <article className="bg-white-light py-6 text-center px-6 -mx-1 my-1">
-                                                        {value.reviews.length}
-                                                    </article>
-                                                </td>
-                                                <td className={`${value.status === 'approved' ? 'text-green' : 'text-red-dark'}`}>
-                                                    <article className="bg-white-light py-6 text-left px-6 -mx-1 my-1">
-                                                        {value.status.toUpperCase()}
-                                                    </article>
-                                                </td>
-                                                <td>
-                                                    <article className="bg-white-light py-6 text-right px-6 -mx-1 my-1 ">
-                                                        {value.creationDate.split(',')[0]}
-                                                    </article>
-                                                </td>
-                                                <td>
-                                                    <article className="bg-white-light py-6 px-4 rounded-r-md" onClick={() => {setId(value.username)}}>
-                                                        {child}
-                                                    </article>
-                                                </td>
+                                                {Object.keys(value).map((key, index, {length}) => {
+                                                    if ( index > 2 && index < length) {
+                                                            return (
+                                                                <td>
+                                                                    <article className={`${(value.status === 'APPROVED' && index == 7) ? 'text-green' : (value.status === 'BANNED' && index == 7) ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 ${key == 'comments' || key == 'reviews' || key == 'username' ? 'text-center' : 'text-left'} text-center px-6 -mx-2 my-1`}>
+                                                                        {value[key]}
+                                                                    </article>
+                                                                </td>
+                                                            )
+                                                    }
+                                                }
+                                                )}
                                             </>
                                         )}
-                                        {type == IPageType.COMMENT && (
+                                        {(type == IPageType.REVIEW || type == IPageType.COMMENT) && (
                                             <>
-                                                <td className="rounded-l-md">
-                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1">
-                                                        {i}
-                                                    </article>
-                                                </td>
-                                                <td className="rounded-l-md">
-                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1 whitespace-nowrap">
-                                                        {value.item}
-                                                    </article>
-                                                </td>
-                                                <td className="rounded-l-md">
-                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1">
-                                                        {value.user}
-                                                    </article>
-                                                </td>
-                                                <td className="rounded-l-md">
-                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1 whitespace-nowrap">
-                                                        {truncateString(value.comment, isXs ? 5 : isSm ? 20 : isMd ? 60 : isLg ? 85 : 100)}
-                                                    </article>
-                                                </td>
-                                                <td className="rounded-l-md">
-                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1">
-                                                        {value.creationDate.split(',')[0]}
-                                                    </article>
-                                                </td>
-                                                <td>
-                                                    <article className="bg-white-light py-6 px-4 rounded-r-md" onClick={() => {setId(value)}}>
-                                                        {child}
-                                                    </article>
-                                                </td>
+                                                {Object.keys(value).map((key, index, {length}) => {
+                                                    if (length - 1 !== index) {
+                                                            return (
+                                                                <td className="rounded-l-md">
+                                                                    <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1 whitespace-nowrap flex items-center">
+                                                                        {(key === 'review' || key === 'comment') ? (
+                                                                            truncateString(value[key], isXs ? 5 : isSm ? 20 : isMd ? 60 : isLg ? 85 : 100)
+                                                                        ) : key == 'creationDate' ? (
+                                                                            value[key].split(',')[0]
+                                                                        ) : (
+                                                                            value[key]
+                                                                        )}
+                                                                        {key == 'rating' && (
+                                                                            <article className="pl-1">
+                                                                                <AiFillStar size={20} color="#0AC5CD"/>
+                                                                            </article>
+                                                                        )}
+                                                                    </article>
+                                                                </td>
+                                                            );
+                                                        }
+                                                    }
+                                                )}
                                             </>
                                         )}
+                                         <td>
+                                            <article className="bg-white-light py-6 px-4 rounded-r-md" onClick={() => {setId(value)}}>
+                                                {child}
+                                            </article>
+                                        </td>
                                     </tr>
                                 )
                             })}

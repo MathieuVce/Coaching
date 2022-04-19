@@ -38,4 +38,5 @@ export interface IReview {
     creationDate: string;
     rating: number;
     user: IUser;
+    title: string;
 }
