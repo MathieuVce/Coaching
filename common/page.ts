@@ -16,8 +16,8 @@ export interface IUser {
     email: string;
     name: string;
     username: string;
-    comments: IComment[];
-    reviews: IReview[];
+    comments: number;
+    reviews: number;
     pricing: string;
     status: string;
     creationDate: string;
@@ -25,7 +25,7 @@ export interface IUser {
 };
 
 export interface IComment {
-    comment: string;
+    comment: string | undefined;
     item: string;
     creationDate: string;
     user: string;

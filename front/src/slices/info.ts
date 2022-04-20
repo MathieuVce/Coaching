@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import InfoService from "../services/info";
-import { AllState } from '../../../common/info'
+import { AllState, deleteCommentsPayload, deleteCommentsState } from '../../../common/info'
 
 const initialState: AllState =  {
     comments: [],
@@ -10,16 +10,24 @@ const initialState: AllState =  {
 
 export const getComments = createAsyncThunk('getComments', async (_, thunkAPI) => {
     try {
-        console.log('la 1')
         const comments = await InfoService.getComments();
-        debugger;
         return { comments };
     } catch (error: any) {
         return thunkAPI.rejectWithValue({ error: error.message });
     }
 });
 
-
+export const deleteComments = createAsyncThunk<deleteCommentsState, deleteCommentsPayload>(
+    'deleteComments',
+    async (req, thunkAPI) => {
+        try {
+            await InfoService.deleteComments(req.what);
+            return;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+      }
+    }
+);
 
 export const infoSlice = createSlice({
     name: 'info',

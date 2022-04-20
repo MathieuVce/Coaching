@@ -46,8 +46,8 @@ const Users: React.FunctionComponent = () => {
             await setDoc(newUserRef, {
                 ...user,
                 pricing: final,
-                comments: [],
-                reviews: [],
+                comments: 0,
+                reviews: 0,
                 status: true,
                 creationDate: new Date().toLocaleString()
             });

@@ -2,20 +2,18 @@ import { Page } from "../components/Page";
 import { AiOutlineEye, AiOutlinePlusCircle } from "react-icons/ai"
 import { BiTrash } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { getDocs, collection, getDoc, doc, deleteDoc, DocumentData, DocumentSnapshot, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { IComment } from "../../../common/page";
-import { getDocIdBy } from "../utils/Utils";
 import { Modal } from "../components/Modal";
 import { RiUser3Line } from "react-icons/ri";
 import { ActivityIndicator } from "../components/ActivityIndicator";
-import { getComments } from "../slices/info";
+import { deleteComments, getComments } from "../slices/info";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Comments: React.FunctionComponent = () => {
 
     const header = ['id', 'item', 'author', 'text', 'created date', 'actions']
-    // const [comments, setComments] = useState<IComment[]>([]);
     const [comment, setComment] = useState<IComment>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);
@@ -25,29 +23,12 @@ const Comments: React.FunctionComponent = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        setLoading(true);
         fetchComments();
     }, []);
 
     const fetchComments = async () => {
-        setLoading(true);
-        // const querySnapshot = await getDocs(collection(db, "comments"));
-        // querySnapshot.forEach(async (doc) => {
-
-        //     const userSnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().user);
-        //     const moviesnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().movie);
-
-            
-        //     setComments(comments => [...comments, {
-        //             item: moviesnap.exists() ? moviesnap.data().title : "",
-        //             user: userSnap.exists() ? userSnap.data().name : "",
-        //             comment: doc.data().comment,
-        //             creationDate: doc.data().creationDate,
-        //             title: doc.data().title
-        //         }
-        //     ]);
-        // });
-        dispatch(getComments());
-        console.log(comments)
+        await dispatch(getComments());
         setLoading(false);
     }
 
@@ -55,12 +36,7 @@ const Comments: React.FunctionComponent = () => {
         setShowModal(false);
         setShowModal2(false);
         setLoading(true);
-        const commentRef = await getDocIdBy("comment", "comments", comment?.comment!);
-        const document = doc(collection(db, "comments"), commentRef.docs[0].id)
-
-        await deleteDoc(document)
-
-        // setComments([]);
+        await dispatch(deleteComments({what: comment?.comment!}))
         await fetchComments();
     }
 
@@ -80,11 +56,10 @@ const Comments: React.FunctionComponent = () => {
             title: 'OK new best movie'
         });
 
-        // setComments([]);
         await fetchComments();
     }
 
-    return(
+    return (
         <>
             <Modal setShowModal={setShowModal} showModal={showModal} onApply={handleApply} buttons='no/confirm' title={"Delete comment"}>
                 <label>
