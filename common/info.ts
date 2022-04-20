@@ -1,10 +1,14 @@
 import { IComment, IReview, IUser } from './page'
 
-export interface deleteCommentsState {
+export interface pageState {
 }
 
-export interface deleteCommentsPayload {
+export interface pagePayload {
     what: string;
+}
+
+export interface userPayload {
+    user: IUser;
 }
 
 export interface AllState {

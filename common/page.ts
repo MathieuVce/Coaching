@@ -19,7 +19,7 @@ export interface IUser {
     comments: number;
     reviews: number;
     pricing: string;
-    status: string;
+    status: string | boolean;
     creationDate: string;
     info?: string;
 };
