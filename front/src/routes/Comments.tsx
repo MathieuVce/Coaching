@@ -9,15 +9,20 @@ import { getDocIdBy } from "../utils/Utils";
 import { Modal } from "../components/Modal";
 import { RiUser3Line } from "react-icons/ri";
 import { ActivityIndicator } from "../components/ActivityIndicator";
+import { getComments } from "../slices/info";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Comments: React.FunctionComponent = () => {
 
     const header = ['id', 'item', 'author', 'text', 'created date', 'actions']
-    const [comments, setComments] = useState<IComment[]>([]);
+    // const [comments, setComments] = useState<IComment[]>([]);
     const [comment, setComment] = useState<IComment>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
+    const { comments } = useAppSelector(state => state.info);
+
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         fetchComments();
@@ -25,24 +30,25 @@ const Comments: React.FunctionComponent = () => {
 
     const fetchComments = async () => {
         setLoading(true);
-        const querySnapshot = await getDocs(collection(db, "comments"));
-        querySnapshot.forEach(async (doc) => {
+        // const querySnapshot = await getDocs(collection(db, "comments"));
+        // querySnapshot.forEach(async (doc) => {
 
-            const userSnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().user);
-            console.log(userSnap.exists() ? userSnap.data().name : '')
-            const moviesnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().movie);
+        //     const userSnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().user);
+        //     const moviesnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().movie);
 
             
-            setComments(comments => [...comments, {
-                    item: moviesnap.exists() ? moviesnap.data().title : "",
-                    user: userSnap.exists() ? userSnap.data().name : "",
-                    comment: doc.data().comment,
-                    creationDate: doc.data().creationDate,
-                    title: doc.data().title
-                }
-            ]);
-            setLoading(false);
-        });
+        //     setComments(comments => [...comments, {
+        //             item: moviesnap.exists() ? moviesnap.data().title : "",
+        //             user: userSnap.exists() ? userSnap.data().name : "",
+        //             comment: doc.data().comment,
+        //             creationDate: doc.data().creationDate,
+        //             title: doc.data().title
+        //         }
+        //     ]);
+        // });
+        dispatch(getComments());
+        console.log(comments)
+        setLoading(false);
     }
 
     const handleApply = async () => {
@@ -54,7 +60,7 @@ const Comments: React.FunctionComponent = () => {
 
         await deleteDoc(document)
 
-        setComments([]);
+        // setComments([]);
         await fetchComments();
     }
 
@@ -74,7 +80,7 @@ const Comments: React.FunctionComponent = () => {
             title: 'OK new best movie'
         });
 
-        setComments([]);
+        // setComments([]);
         await fetchComments();
     }
 

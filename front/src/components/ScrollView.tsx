@@ -56,7 +56,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                 {Object.keys(value).map((key, index, {length}) => {
                                                     if ( index > 2 && index < length) {
                                                             return (
-                                                                <td>
+                                                                <td key={index}>
                                                                     <article className={`${(value.status === 'APPROVED' && index == 7) ? 'text-green' : (value.status === 'BANNED' && index == 7) ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 ${key == 'comments' || key == 'reviews' || key == 'username' ? 'text-center' : 'text-left'} text-center px-6 -mx-2 my-1`}>
                                                                         {value[key]}
                                                                     </article>
@@ -72,7 +72,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                 {Object.keys(value).map((key, index, {length}) => {
                                                     if (length - 1 !== index) {
                                                             return (
-                                                                <td className="rounded-l-md">
+                                                                <td className="rounded-l-md" key={index}>
                                                                     <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1 whitespace-nowrap flex items-center">
                                                                         {(key === 'review' || key === 'comment') ? (
                                                                             truncateString(value[key], isXs ? 5 : isSm ? 20 : isMd ? 60 : isLg ? 85 : 100)

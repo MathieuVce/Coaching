@@ -31,7 +31,6 @@ const Reviews: React.FunctionComponent = () => {
         querySnapshot.forEach(async (doc) => {
 
             const userSnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().user);
-            console.log(userSnap.exists() ? userSnap.data().name : '')
             const moviesnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().movie);
 
             
