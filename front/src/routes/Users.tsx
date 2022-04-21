@@ -17,7 +17,7 @@ const Users: React.FunctionComponent = () => {
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);
     const [toDelete, setDelete] = useState(false);
-    const [CreateUserModal, setCreateUserModal] = useState(false);
+    const [createUserModal, setCreateUserModal] = useState(false);
     const [user, setUser] = useState({email: "", name: "", username: ""});
     const [final, setFinal] = useState<string>('pricing');
     const pricing = ['FREE', 'STANDARD', 'PREMIUM'];
@@ -79,7 +79,7 @@ const Users: React.FunctionComponent = () => {
 
     return(
         <>
-            <Modal setShowModal={setCreateUserModal} showModal={CreateUserModal} buttons='cancel/add user' onApply={handleCreateUser} title="Add a user">
+            <Modal setShowModal={setCreateUserModal} showModal={createUserModal} buttons='cancel/add user' onApply={handleCreateUser} title="Add a user">
                 <Form name="Name" type='text' placeholder='Enter name' onChange={(e) => {handleChange('name', e.target.value)}} value={user.name}/>
                 <Form name="Username" type='text' placeholder='Enter username' onChange={(e) => {handleChange('username', e.target.value)}} value={user.username}/>
                 <Form name="Email" type='email' placeholder='name@email.com' onChange={(e) => { handleChange('email', e.target.value); }} value={user.email} />

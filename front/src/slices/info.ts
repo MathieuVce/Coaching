@@ -1,12 +1,57 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import InfoService from "../services/info";
-import { AllState, pageState, pagePayload, userPayload } from '../../../common/info'
+import { AllState, pageState, pagePayload, userPayload, moviePayload } from '../../../common/info'
 
 const initialState: AllState =  {
     comments: [],
     users: [],
-    reviews: []
+    reviews: [],
+    movies: [],
 };
+
+export const createMovies = createAsyncThunk<pageState, moviePayload>(
+    'createMovies',
+    async (req, thunkAPI) => {
+        try{
+            await InfoService.createMovies(req.movie);
+            return;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+        }
+});
+
+export const getMovies = createAsyncThunk('getMovies', async (_, thunkAPI) => {
+    try {
+        const movies = await InfoService.getMovies();
+        return { movies };
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue({ error: error.message });
+    }
+});
+
+export const deleteMovies = createAsyncThunk<pageState, pagePayload>(
+    'deleteMovies',
+    async (req, thunkAPI) => {
+        try {
+            await InfoService.deleteMovies(req.what);
+            return;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+      }
+    }
+);
+
+export const updateMovies = createAsyncThunk<pageState, pagePayload>(
+    'updateMovies',
+    async (req, thunkAPI) => {
+        try {
+            await InfoService.updateMovies(req.what);
+            return;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+      }
+    }
+);
 
 export const createComments = createAsyncThunk('createComments', async (_, thunkAPI) => {
     try {
@@ -125,6 +170,9 @@ export const infoSlice = createSlice({
         }),
         builder.addCase(getReviews.fulfilled, (state, action) => {
             state.reviews = action.payload.reviews;
+        }),
+        builder.addCase(getMovies.fulfilled, (state, action) => {
+            state.movies = action.payload.movies;
         })
     },
 });
