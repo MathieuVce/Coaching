@@ -40,7 +40,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     </article>
                 </section>
                 <section className="border-t mx-4 px-4">
-                    <ScrollView header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]}/>
+                    <ScrollView header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
                     <Pagination
                         itemsPerPage={itemsPerPage}
                         totalItems={values.length}
