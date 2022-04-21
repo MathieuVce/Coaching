@@ -1,8 +1,8 @@
 import { IconBaseProps } from "react-icons";
 import { ScrollView } from "./ScrollView";
-import { IComment, IPageType, IUser } from "../../../common/page";
-import { useState } from "react";
-import { Pagination } from "./Pagination";
+import { IPageType } from "../../../common/page";
+import { SetStateAction, useState } from "react";
+import { Pagination } from "./PaginationList";
 
 
 interface IPageProps {
@@ -27,9 +27,10 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
 
     const paginateFront = () => setCurrentPage(currentPage + 1);
     const paginateBack = () => setCurrentPage(currentPage - 1);
+    const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
     return (
         <>
-            <div className="h-screen  flex flex-col">
+            <div className="h-screen  flex flex-col mr-5">
                 <section className="h-16 flex items-center justify-start flex-row mx-4 mt-2 pb-4">
                     <h1 className="font-semibold text-3xl pr-2">{title}</h1>
                     <p className="font-light text-base pt-2 text-brown">{total} total</p>
@@ -41,11 +42,17 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                 </section>
                 <section className="border-t mx-4 px-4">
                     <ScrollView header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
-                    <Pagination
+                    {/* <Pagination
                         itemsPerPage={itemsPerPage}
                         totalItems={values.length}
                         paginateBack={paginateBack}
                         paginateFront={paginateFront}
+                        currentPage={currentPage}
+                    /> */}
+                    <Pagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={values.length}
+                        paginate={paginate}
                         currentPage={currentPage}
                     />
                 </section>
