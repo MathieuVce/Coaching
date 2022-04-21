@@ -1,6 +1,8 @@
 import { IconBaseProps } from "react-icons";
 import { ScrollView } from "./ScrollView";
 import { IComment, IPageType, IUser } from "../../../common/page";
+import { useState } from "react";
+import { Pagination } from "./Pagination";
 
 
 interface IPageProps {
@@ -14,7 +16,17 @@ interface IPageProps {
 }
 
 export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon, setId, handleClick, children }) => {
+    
     const tab: {[key: string]: IPageType} = {"comments": IPageType.COMMENT, "users": IPageType.USER, "reviews": IPageType.REVIEW, "movies": IPageType.ITEM};
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(7);
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = values.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginateFront = () => setCurrentPage(currentPage + 1);
+    const paginateBack = () => setCurrentPage(currentPage - 1);
     return (
         <>
             <div className="h-screen  flex flex-col">
@@ -28,7 +40,14 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     </article>
                 </section>
                 <section className="border-t mx-4 px-4">
-                    <ScrollView header={header} body={values} child={children} setId={setId} type={tab[title.toLowerCase()]}/>
+                    <ScrollView header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]}/>
+                    <Pagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={values.length}
+                        paginateBack={paginateBack}
+                        paginateFront={paginateFront}
+                        currentPage={currentPage}
+                    />
                 </section>
             </div>
         </>

@@ -1,6 +1,6 @@
 import { AiFillStar } from "react-icons/ai";
 import { RiUser3Line } from "react-icons/ri";
-import { IComment, IPageType, IUser } from "../../../common/page";
+import { IPageType } from "../../../common/page";
 import { truncateString, useBreakpoints } from "../utils/Utils";
 
 export interface IScrollViewProps {
@@ -35,7 +35,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                     <tr key={i}>
                                         <td className="rounded-l-md">
                                             <article className="bg-white-light py-6 rounded-l-md text-center px-6 -mx-1 my-1">
-                                                {i}
+                                                {i + 1}
                                             </article>
                                         </td>
                                         {type == IPageType.USER && (
