@@ -132,7 +132,6 @@ const createReviews = async () => {
         const movieRef = doc(db, 'movies/1SoMx4v11KhZmHF26t7h');
         const movieRef2 = doc(db, 'movies/ah72UXJAGkj7CBxVgOjQ');
         const userRef = doc(db, 'users/4iJue1PpC2iRhdtOjXP5');
-        const userRef2 = doc(db, 'users/y9n6QxTefUKJP53klqlh');
 
         await setDoc(newReviewRef, {
             movie: movieRef2,
@@ -155,7 +154,6 @@ const createComments = async () => {
         const movieRef = doc(db, 'movies/1SoMx4v11KhZmHF26t7h');
         const movieRef2 = doc(db, 'movies/ah72UXJAGkj7CBxVgOjQ');
         const userRef = doc(db, 'users/4iJue1PpC2iRhdtOjXP5');
-        const userRef2 = doc(db, 'users/y9n6QxTefUKJP53klqlh');
 
         await setDoc(newCommentRef, {
             movie: movieRef,

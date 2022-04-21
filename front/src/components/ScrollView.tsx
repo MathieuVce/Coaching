@@ -57,7 +57,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                     if ( index > 2 && index < length) {
                                                         return (
                                                             <td key={index}>
-                                                                <article className={`${(value.status === 'APPROVED' && index == 7) ? 'text-green' : (value.status === 'BANNED' && index == 7) ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 ${key == 'comments' || key == 'reviews' || key == 'username' ? 'text-center' : 'text-left'} text-center px-6 -mx-2 my-1`}>
+                                                                <article className={`${(value.status === 'APPROVED' && index == 7) ? 'text-green' : (value.status === 'BANNED' && index == 7) ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 ${key == 'comments' || key == 'reviews' || key == 'username' ? 'text-center' : 'text-left'} px-6 -mx-2 my-1`}>
                                                                     {value[key]}
                                                                 </article>
                                                             </td>

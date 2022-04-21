@@ -2,12 +2,13 @@ import { Page } from "../components/Page";
 import { AiOutlineEye, AiOutlinePlusCircle } from "react-icons/ai"
 import { BiTrash } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { IComment } from "../../../common/page";
+import { IComment, IPageType } from "../../../common/page";
 import { Modal } from "../components/Modal";
 import { RiUser3Line } from "react-icons/ri";
 import { ActivityIndicator } from "../components/ActivityIndicator";
 import { createComments, deleteComments, getComments } from "../slices/info";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { ShowInfo } from "../components/ShowInfo";
 
 const Comments: React.FunctionComponent = () => {
 
@@ -51,21 +52,8 @@ const Comments: React.FunctionComponent = () => {
                     Are you sure you want to delete this comment ?
                 </label>
             ) : (
-                <>
-                    <article className="flex items-center my-1 -mx-1 min-w-full">
-                        <section className="bg-blue bg-opacity-30 w-12 h-12 rounded-md items-center justify-center flex mr-2">
-                            <RiUser3Line size={30} color='black'/>
-                        </section>
-
-                        <article className="flex flex-col py-4 space-y-1">
-                                <p className="font-medium text-md">{comment?.title}</p>
-                                <p className="font-light text-xs text-brown">{comment?.creationDate.split(':').slice(0, -1).join(':').replaceAll('/','.')} by <span className="font-semibold text-sm text-primary">{comment?.user}</span></p>
-                        </article>
-                    </article>
-                    <article className="border-t border-t-brown pt-4 whitespace-pre-wrap ">
-                        {comment?.comment}
-                    </article>
-                </>
+                <ShowInfo title={comment?.title!} type={IPageType.COMMENT} creationDate={comment?.creationDate!} text={comment?.comment!} user={comment?.user!} />
+                
             )}
             </Modal>
             {isLoading ? (
