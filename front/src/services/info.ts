@@ -1,7 +1,7 @@
 import { db } from "./firebase";
 import { FirebaseError } from "../../../common/auth";
 import { getDocIdBy, getErrors } from "../utils/Utils";
-import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
+import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc, query, orderBy, startAt } from "firebase/firestore";
 import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
 import { ICreateComment, ICreateReview } from "../../../common/info";
 
@@ -41,9 +41,10 @@ const createMovies = async (movie: IMovie) => {
 
 const getMovies = async () => {
     try {
-        const querySnapshot = await getDocs(collection(db, "movies"));
+        const querySnapshot = query(collection(db, "movies"), orderBy("title"), startAt('A'));
+        const queryDocs = await getDocs(querySnapshot);
 
-        const promiseArray = querySnapshot.docs.map(async (doc) => {
+        const promiseArray = queryDocs.docs.map(async (doc) => {
 
             const obj = 
             {
@@ -95,9 +96,10 @@ const deleteMovies = async (what: string) => {
 
 const getUsers = async () => {
     try {
-        const querySnapshot = await getDocs(collection(db, "users"));
+        const querySnapshot = query(collection(db, "users"), orderBy("name"), startAt('A'));
+        const queryDocs = await getDocs(querySnapshot);
 
-        const promiseArray = querySnapshot.docs.map(async (doc) => {
+        const promiseArray = queryDocs.docs.map(async (doc) => {
 
             const obj = 
             {
@@ -153,9 +155,10 @@ const deleteUsers = async (what: string) => {
 const getComments = async () => {
 
     try {
-        const querySnapshot = await getDocs(collection(db, "comments"));
+        const querySnapshot = query(collection(db, "comments"), orderBy("comment"), startAt('A'));
+        const queryDocs = await getDocs(querySnapshot);
 
-        const promiseArray = querySnapshot.docs.map(async (doc) => {
+        const promiseArray = queryDocs.docs.map(async (doc) => {
 
             const userSnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().user);
             const moviesnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().movie);
@@ -241,9 +244,10 @@ const createComments = async (comment: ICreateComment) => {
 
 const getReviews = async () => {
     try {
-        const querySnapshot = await getDocs(collection(db, "reviews"));
+        const querySnapshot = query(collection(db, "reviews"), orderBy("review"), startAt('A'));
+        const queryDocs = await getDocs(querySnapshot);
     
-        const promiseArray = querySnapshot.docs.map(async (doc) => {
+        const promiseArray = queryDocs.docs.map(async (doc) => {
 
             const userSnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().user);
             const moviesnap: DocumentSnapshot<DocumentData> = await getDoc(doc.data().movie);

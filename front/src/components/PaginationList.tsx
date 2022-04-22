@@ -38,7 +38,7 @@ export const Pagination: React.FC<IPaginationProps> = ({ itemsPerPage, totalItem
                         }}
                         className={currentPage === number
                             ? "bg-blue hover:bg-blue relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md mx-1"
-                            : "bg-white border-brown text-brown hover:bg-blue hover:bg-opacity-30 relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md"
+                            : "bg-white border-brown text-brown hover:bg-blue hover:bg-opacity-30 relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md mx-1"
                         } key={i}>
                         {number}
                     </button>
