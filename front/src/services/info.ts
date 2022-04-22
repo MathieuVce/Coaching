@@ -1,7 +1,7 @@
 import { db } from "./firebase";
 import { FirebaseError } from "../../../common/auth";
-import { getDocIdBy, getErrors } from "../utils/Utils";
-import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc, query, orderBy, startAt } from "firebase/firestore";
+import { getDocById, getErrors } from "../utils/Utils";
+import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc, query, orderBy, startAt, DocumentReference } from "firebase/firestore";
 import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
 import { ICreateComment, ICreateReview } from "../../../common/info";
 
@@ -9,7 +9,7 @@ const getFirstDoc = async (what: string, type: IPageType) => {
     const typeArray = ["username", "comment", "review", "title"]
     const collectionArray = ["users", "comments", "reviews", "movies"]
 
-    const ref = await getDocIdBy(typeArray[type], collectionArray[type], what);
+    const ref = await getDocById(typeArray[type], collectionArray[type], what);
     const document = doc(collection(db, collectionArray[type]), ref.docs[0].id)
 
     return {ref, document};
@@ -31,7 +31,7 @@ const createMovies = async (movie: IMovie) => {
     try {
         const newMovieRef = doc(collection(db, "movies"));
 
-        await setDoc(newMovieRef, movie);
+        await setDoc(newMovieRef,movie);
 
     } catch(error) {
         const firebaseError = error as FirebaseError
@@ -196,6 +196,21 @@ const deleteComments = async (what: string) => {
     }
 };
 
+const updateMovieRating = async (movieRef: DocumentReference<DocumentData>) => {
+    let rating = 0;
+    const refRating = await getDocById("movie", "reviews", movieRef);
+
+    refRating.docs.map((doc) => {
+        rating += doc.data().rating;
+    })  
+    const document = doc(collection(db, 'movies'), movieRef.id)
+
+    await updateDoc(document, {
+        rating: rating/refRating.docs.length
+    });
+    console.log(rating, refRating.docs.length, rating/refRating.docs.length)
+};
+
 const createReviews = async (review: ICreateReview) => {
     try {
         const newReviewRef = doc(collection(db, "reviews"));
@@ -203,15 +218,16 @@ const createReviews = async (review: ICreateReview) => {
         const movieDoc = await getFirstDoc(review.movie, IPageType.ITEM);
         const userDoc = await getFirstDoc(review.user, IPageType.USER);
 
-        const movieRef2 = doc(db, `movies/${movieDoc.ref.docs[0].id}`);
-        const userRef2 = doc(db, `users/${userDoc.ref.docs[0].id}`);
+        const movieRef = doc(db, `movies/${movieDoc.ref.docs[0].id}`);
+        const userRef = doc(db, `users/${userDoc.ref.docs[0].id}`);
         
         await setDoc(newReviewRef, {
             ...review,
-            movie: movieRef2,
-            user: userRef2,
+            movie: movieRef,
+            user: userRef,
 
         });
+        await (updateMovieRating(movieRef));
 
     } catch(error) {
         const firebaseError = error as FirebaseError
