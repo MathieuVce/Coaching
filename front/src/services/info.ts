@@ -3,6 +3,7 @@ import { FirebaseError } from "../../../common/auth";
 import { getDocIdBy, getErrors } from "../utils/Utils";
 import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
 import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
+import { ICreateComment, ICreateReview } from "../../../common/info";
 
 const getFirstDoc = async (what: string, type: IPageType) => {
     const typeArray = ["username", "comment", "review", "title"]
@@ -192,20 +193,21 @@ const deleteComments = async (what: string) => {
     }
 };
 
-const createReviews = async () => {
+const createReviews = async (review: ICreateReview) => {
     try {
         const newReviewRef = doc(collection(db, "reviews"));
-        const movieRef = doc(db, 'movies/1SoMx4v11KhZmHF26t7h');
-        const movieRef2 = doc(db, 'movies/ah72UXJAGkj7CBxVgOjQ');
-        const userRef = doc(db, 'users/4iJue1PpC2iRhdtOjXP5');
 
+        const movieDoc = await getFirstDoc(review.movie, IPageType.ITEM);
+        const userDoc = await getFirstDoc(review.user, IPageType.USER);
+
+        const movieRef2 = doc(db, `movies/${movieDoc.ref.docs[0].id}`);
+        const userRef2 = doc(db, `users/${userDoc.ref.docs[0].id}`);
+        
         await setDoc(newReviewRef, {
+            ...review,
             movie: movieRef2,
-            user: userRef,
-            review: 'uih hoekfozekf zoekfoi okez fzoekfozekf zefokez fzoekfoz fzoekfozekf zefokez fzoekfoz fzoekfozekf zefokez fzoekfoz fzoekfozekf zefokez fzoekfoz fzoekfozekf zefokez fzoekfo',
-            rating: 7.3,
-            creationDate: new Date().toLocaleString(),
-            title: 'OK new best mememememememe'
+            user: userRef2,
+
         });
 
     } catch(error) {
@@ -214,22 +216,24 @@ const createReviews = async () => {
     }
 };
 
-const createComments = async () => {
+const createComments = async (comment: ICreateComment) => {
     try {
         const newCommentRef = doc(collection(db, "comments"));
-        const movieRef = doc(db, 'movies/1SoMx4v11KhZmHF26t7h');
-        const movieRef2 = doc(db, 'movies/ah72UXJAGkj7CBxVgOjQ');
-        const userRef = doc(db, 'users/4iJue1PpC2iRhdtOjXP5');
+        const movieDoc = await getFirstDoc(comment.movie, IPageType.ITEM);
+        const userDoc = await getFirstDoc(comment.user, IPageType.USER);
 
+        const movieRef2 = doc(db, `movies/${movieDoc.ref.docs[0].id}`);
+        const userRef2 = doc(db, `users/${userDoc.ref.docs[0].id}`);
+        
         await setDoc(newCommentRef, {
-            movie: movieRef,
-            user: userRef,
-            comment: 'uih hoekfozekf zoekfoi okez fzoekfozekf zefokez fzoekfo',
-            creationDate: new Date().toLocaleString(),
-            title: 'OK new best movie'
+            ...comment,
+            movie: movieRef2,
+            user: userRef2,
+
         });
-    
+
     } catch(error) {
+        console.log(error)
         const firebaseError = error as FirebaseError
         throw { message: getErrors(firebaseError.code) }
     }

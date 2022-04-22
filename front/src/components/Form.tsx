@@ -4,10 +4,11 @@ interface IFormProps {
     placeholder: string;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
     value: string;
+    maxLen? : number;
 }
 
 
-export const Form: React.FC<IFormProps> = ({name, type, placeholder, onChange, value, children}) => {
+export const Form: React.FC<IFormProps> = ({name, type, placeholder, onChange, value, maxLen, children}) => {
     return (
         <>
             <label htmlFor={name} className="block py-1">
@@ -21,7 +22,8 @@ export const Form: React.FC<IFormProps> = ({name, type, placeholder, onChange, v
                 placeholder={placeholder}
                 id={name}
                 className="w-full p-1 outline-none" 
-                maxLength={35}/>
+                maxLength={maxLen || 35}
+                />
                 {children}
             </div>
         </>

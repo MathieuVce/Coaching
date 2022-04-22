@@ -16,7 +16,7 @@ export const Pagination: React.FC<IPaginationProps> = ({ itemsPerPage, totalItem
     }
     
     return (
-        <div className='py-2'>
+        <div>
             <div className="my-1">
                 <p className='text-sm text-brown'>
                 Showing
@@ -31,17 +31,15 @@ export const Pagination: React.FC<IPaginationProps> = ({ itemsPerPage, totalItem
             <nav className='block'>
                 <ul className='flex pl-0 rounded list-none flex-wrap'>
                 <li>
-                    {pageNumbers.map((number) => (
+                    {pageNumbers.map((number, i) => (
                         <button
                         onClick={() => {
                         paginate(number);
                         }}
-                        className={
-                        currentPage === number
+                        className={currentPage === number
                             ? "bg-blue hover:bg-blue relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md mx-1"
                             : "bg-white border-brown text-brown hover:bg-blue hover:bg-opacity-30 relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md"
-                        }
-                        >
+                        } key={i}>
                         {number}
                     </button>
                     ))}

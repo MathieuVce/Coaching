@@ -10,7 +10,7 @@ interface IPaginationProps {
 export const Pagination: React.FC<IPaginationProps> = ({ itemsPerPage, totalItems, paginateBack, paginateFront, currentPage }) => {
     
     return (
-        <div className='py-2'>
+        <div>
             <div className="my-1">
                 <p className='text-sm text-gray-700'>
                 Showing
