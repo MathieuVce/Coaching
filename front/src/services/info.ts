@@ -49,7 +49,7 @@ const getMovies = async () => {
             const obj = 
             {
                 title: doc.data().title,
-                rating: doc.data().rating,
+                rating: doc.data().rating.toFixed(1),
                 category: doc.data().category.toUpperCase(),
                 views: doc.data().views,
                 status: doc.data().status ? "VISIBLE" : "HIDDEN",
@@ -166,7 +166,7 @@ const getComments = async () => {
             const obj = 
             {
                 item: moviesnap.exists() ? moviesnap.data().title : "",
-                user: userSnap.exists() ? userSnap.data().name : "",
+                user: userSnap.exists() ? userSnap.data().username : "",
                 comment: doc.data().comment,
                 creationDate: doc.data().creationDate,
                 title: doc.data().title
@@ -186,8 +186,10 @@ const getComments = async () => {
 const deleteComments = async (what: string) => {
     try {
         const res = await getFirstDoc(what, IPageType.COMMENT);
+        const userRef = res.ref.docs[0].data().user;
 
         await deleteDoc(res.document)
+        await (updateUserComment(userRef))
   
     } catch(error) {
         const firebaseError = error as FirebaseError
@@ -211,6 +213,18 @@ const updateMovieRating = async (movieRef: DocumentReference<DocumentData>) => {
     console.log(rating, refRating.docs.length, rating/refRating.docs.length)
 };
 
+const updateUserReview = async (userRef: DocumentReference<DocumentData>) => {
+    const refReviews = await getDocById("user", "reviews", userRef);
+    const numReviews = refReviews.docs.length;
+    console.log(refReviews.docs)
+    
+    const document = doc(collection(db, 'users'), userRef.id)
+
+    await updateDoc(document, {
+        reviews: numReviews
+    });
+}
+
 const createReviews = async (review: ICreateReview) => {
     try {
         const newReviewRef = doc(collection(db, "reviews"));
@@ -228,6 +242,7 @@ const createReviews = async (review: ICreateReview) => {
 
         });
         await (updateMovieRating(movieRef));
+        await (updateUserReview(userRef));
 
     } catch(error) {
         const firebaseError = error as FirebaseError
@@ -235,21 +250,35 @@ const createReviews = async (review: ICreateReview) => {
     }
 };
 
+const updateUserComment = async (userRef: DocumentReference<DocumentData>) => {
+    const refComments = await getDocById("user", "comments", userRef);
+    const numComments = refComments.docs.length;
+    
+    const document = doc(collection(db, 'users'), userRef.id)
+
+    await updateDoc(document, {
+        comments: numComments
+    });
+    console.log(numComments)
+}
+
 const createComments = async (comment: ICreateComment) => {
     try {
         const newCommentRef = doc(collection(db, "comments"));
         const movieDoc = await getFirstDoc(comment.movie, IPageType.ITEM);
         const userDoc = await getFirstDoc(comment.user, IPageType.USER);
 
-        const movieRef2 = doc(db, `movies/${movieDoc.ref.docs[0].id}`);
-        const userRef2 = doc(db, `users/${userDoc.ref.docs[0].id}`);
+        const movieRef = doc(db, `movies/${movieDoc.ref.docs[0].id}`);
+        const userRef = doc(db, `users/${userDoc.ref.docs[0].id}`);
         
         await setDoc(newCommentRef, {
             ...comment,
-            movie: movieRef2,
-            user: userRef2,
+            movie: movieRef,
+            user: userRef,
 
         });
+        await (updateUserComment(userRef));
+
 
     } catch(error) {
         console.log(error)
@@ -271,9 +300,9 @@ const getReviews = async () => {
             const obj = 
             {
                 item: moviesnap.exists() ? moviesnap.data().title : "",
-                user: userSnap.exists() ? userSnap.data().name : "",
+                user: userSnap.exists() ? userSnap.data().username : "",
                 review: doc.data().review,
-                rating: doc.data().rating,
+                rating: doc.data().rating.toFixed(1),
                 creationDate: doc.data().creationDate,
                 title: doc.data().title
             }
@@ -293,8 +322,10 @@ const getReviews = async () => {
 const deleteReviews = async (what: string) => {
     try {
         const res = await getFirstDoc(what, IPageType.REVIEW);
-    
+        const userRef = res.ref.docs[0].data().user;
+
         await deleteDoc(res.document)
+        await (updateUserReview(userRef))
   
     } catch(error) {
         const firebaseError = error as FirebaseError

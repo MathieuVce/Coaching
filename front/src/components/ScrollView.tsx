@@ -103,7 +103,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                                         ) : key == 'creationDate' ? (
                                                                             value[key].split(',')[0]
                                                                         ) : (
-                                                                            value[key] || '-'
+                                                                            value[key] || '--no user--'
                                                                         )}
                                                                         {key == 'rating' && (
                                                                             <article className="pl-1">

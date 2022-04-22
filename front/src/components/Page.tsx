@@ -24,7 +24,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    let currentItems = sortArray.slice(indexOfFirstItem, indexOfLastItem);
+    let currentItems = values.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginateFront = () => setCurrentPage(currentPage + 1);
     const paginateBack = () => setCurrentPage(currentPage - 1);
