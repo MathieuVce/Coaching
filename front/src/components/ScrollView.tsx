@@ -27,13 +27,15 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                         <thead>
                             <tr>
                             {header?.map((value, i) => {
-                                return (
-                                    <th className="px-4" key={i}>
-                                        <button onClick={() => {}} className="text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap hover:underline">
-                                            {value}
-                                        </button>
-                                    </th> 
-                                    )
+                                if (value !== 'title') {
+                                    return (
+                                        <th className="px-4" key={i}>
+                                            <button onClick={() => {}} className="text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap hover:underline">
+                                                {value}
+                                            </button>
+                                        </th> 
+                                        )
+                                }
                             })}
                             </tr>
                         </thead>

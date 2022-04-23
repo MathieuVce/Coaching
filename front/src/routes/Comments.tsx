@@ -14,7 +14,7 @@ import { Dropdown } from "../components/Dropdown";
 const Comments: React.FunctionComponent = () => {
 
     const { users, movies, comments } = useAppSelector(state => state.info);
-    const header = ['id', 'item', 'author', 'text', 'created date', 'actions']
+    const header = ['id', 'item', 'author', 'text', 'created date', 'title', 'actions']
     const [commentId, setCommentId] = useState<IComment>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);
@@ -101,10 +101,10 @@ const Comments: React.FunctionComponent = () => {
             :
                 <Page title={'Comments'} total={comments.length.toString()} values={comments} header={header} icon={<AiOutlinePlusCircle color='black' size={0}/>} setId={setCommentId} handleClick={handleClick}>
                     <div className="flex items-center space-x-5 justify-center">
-                        <button className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6" onClick={() => {setShow(true); setShowModal(true)}}>
+                        <button className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6 shadow-xs" onClick={() => {setShow(true); setShowModal(true)}}>
                             <AiOutlineEye color='black' size={20}/>
                         </button>
-                        <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center" onClick={() => {setShow(false); setShowModal(true)}}>
+                        <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center shadow-xs" onClick={() => {setShow(false); setShowModal(true)}}>
                             <BiTrash color='black' size={18}/>
                         </button>
                     </div>
