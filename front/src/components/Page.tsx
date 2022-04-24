@@ -31,8 +31,8 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
     const [file, setFile] = useState<File>();
     const fileReader = new FileReader();
     const [showModal, setShowModal] = useState(false);
+    
     const dispatch = useAppDispatch();
-
 
     const csvReport = {
         data: sortArray,
@@ -106,14 +106,27 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
             //     comment: item['text']
             // }
             // await dispatch(createComments({comment: obj}));
-            const obj = {
+            const obj: {[key: string]: string | number | boolean} = {
                 movie: item['item'],
                 user: item['author'],
                 title: item['title'],
                 review : item['text'],
+                comment: item['text'],
                 rating: parseFloat(item['rating']),
                 creationDate: item['created date'],
+                category: item['category'],
+                views: parseFloat(item['views']),
+                status: (item['status'] === 'APPROVED' || item['status'] === 'VISIBLE') ? true : false,
+                name: item['basic info']?.split('/')[0],
+                email: item['basic info']?.split('/')[1],
+                username: item['username'],
+                comments: parseFloat(item['comments']),
+                reviews: parseFloat(item['reviews']),
+                pricing: item['pricing'],
+
             }
+            Object.keys(obj).forEach(key => (obj[key] === undefined) ? delete obj[key] : {});
+            //isNaN()
             console.log(obj)
             // await dispatch(createReviews({review: obj}));
         });

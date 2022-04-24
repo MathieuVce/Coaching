@@ -210,7 +210,6 @@ const updateMovieRating = async (movieRef: DocumentReference<DocumentData>) => {
     await updateDoc(document, {
         rating: rating/refRating.docs.length
     });
-    console.log(rating, refRating.docs.length, rating/refRating.docs.length)
 };
 
 const updateUserReview = async (userRef: DocumentReference<DocumentData>) => {

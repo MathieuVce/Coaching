@@ -54,7 +54,7 @@ const Reviews: React.FunctionComponent = () => {
                 ...review,
                 movie: finalMovie,
                 user: finalUser,
-                rating: (rating + 1) * 2,
+                rating: rating + 1,
                 creationDate: new Date().toLocaleString()
             }
             await dispatch(createReviews({review: obj}))
@@ -87,7 +87,7 @@ const Reviews: React.FunctionComponent = () => {
                 <Form name="Title" type='text' placeholder='Enter title' onChange={(e) => {handleChange('title', e.target.value)}} value={review.title}/>
                 <Form name="Review" type='text' placeholder='Enter review' onChange={(e) => {handleChange('review', e.target.value)}} value={review.review} maxLen={200}/>
                 <section className="my-2">
-                    <label>Rating</label>
+                    <label>Rating <span className="italic font-light ml-1">{rating + 1} stars</span></label>
                     <Stars color='text-blue' rating={rating} setRating={setRating}/>
                 </section>
                 <Dropdown color="bg-blue" display={finalMovie} setDisplay={setFinalMovie} title='Movie' values={movie}/>
