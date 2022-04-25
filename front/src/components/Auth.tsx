@@ -53,7 +53,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     };
 
     const handleLoginFormSubmit = async () => {
-        dispatch(login(values))
+        await dispatch(login(values))
         if (authenticated) {
             // navigate(path.path || "/home/dashboard");
             navigate("/home/dashboard");
@@ -65,7 +65,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     };
 
     const handleRegisterFormSubmit = async () => {
-        dispatch(register(values))
+        await dispatch(register(values))
         if (registered) {
             navigate("/login");
         } else {
@@ -76,7 +76,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     };
 
     const handlePasswordFormSubmit = async () => {
-        dispatch(password({email: values.email}))
+        await dispatch(password({email: values.email}))
         if (reset) {
             setColor('green');
         } else {

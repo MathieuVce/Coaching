@@ -60,7 +60,7 @@ const App: React.FunctionComponent = () => {
             <section className="flex flex-col items-center">
               <article className="flex flex-row">
                 <h1 className="font-bold text-primary text-7xl 2xl:text-9xl xl:text-9xl lg:text-8xl sm:text-7xl">
-                  W<span className="text-blue">e</span>llc<span className="text-blue">o</span>m<span className="text-blue">e</span>
+                  W<span className="text-blue">e</span>lc<span className="text-blue">o</span>m<span className="text-blue">e</span>
                 </h1>
               </article>
               <h6 className="mb-8 text-2xl font-bold text-center md:text-3xl">

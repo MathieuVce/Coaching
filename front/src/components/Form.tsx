@@ -20,7 +20,8 @@ export const Form: React.FC<IFormProps> = ({name, type, placeholder, onChange, v
                 type={type}
                 placeholder={placeholder}
                 id={name}
-                className="w-full p-1 outline-none bg-transparent" />
+                className="w-full p-1 outline-none" 
+                maxLength={35}/>
                 {children}
             </div>
         </>
