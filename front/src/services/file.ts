@@ -15,6 +15,7 @@ const csvFileToArray = async (string: string, type: IPageType) => {
         return obj;
     });
 
+
     array.map(async (item) => {
         const obj: {[key: string]: string | number | boolean} = {
             movie: item['item'],
@@ -54,10 +55,10 @@ const uploadFile = async (file: File, type: IPageType) => {
 
     fileReader.onload = async function (event) {
         const csvOutput = event.target?.result;
-        console.log(csvOutput);
         valuesArr = (await csvFileToArray(csvOutput?.toString()!, type)) as uploadState
     };
     fileReader.readAsText(file);
+    console.log(valuesArr);
     return valuesArr;
 };
 
