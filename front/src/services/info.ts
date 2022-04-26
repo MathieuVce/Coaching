@@ -41,7 +41,7 @@ const createMovies = async (movie: IMovie) => {
 
 const getMovies = async () => {
     try {
-        const querySnapshot = query(collection(db, "movies"), orderBy("title"), startAt('A'));
+        const querySnapshot = query(collection(db, "movies"), orderBy('title'), startAt('A'));
         const queryDocs = await getDocs(querySnapshot);
 
         const promiseArray = queryDocs.docs.map(async (doc) => {

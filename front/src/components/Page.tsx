@@ -1,15 +1,16 @@
 import { IconBaseProps } from "react-icons";
 import { ScrollView } from "./ScrollView";
-import { IPageType } from "../../../common/page";
-import { SetStateAction, useState } from "react";
+import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
+import { SetStateAction, useEffect, useState } from "react";
 import { Pagination } from "./PaginationList";
 import { CSVLink } from "react-csv";
-import { AiOutlineDownload, AiOutlineUpload } from "react-icons/ai";
+import { AiOutlineDownload, AiOutlineSearch, AiOutlineUpload } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { ActivityIndicator } from "./ActivityIndicator";
 import { Modal } from "./Modal";
 import { DragAndDrop } from "./DragAndDrop";
 import { uploadFile } from "../slices/file";
+import { Form } from "./Form";
 
 interface IPageProps {
    title: string;
@@ -24,23 +25,26 @@ interface IPageProps {
 export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon, setId, handleClick, children }) => {
     
     const tab: {[key: string]: IPageType} = {"comments": IPageType.COMMENT, "users": IPageType.USER, "reviews": IPageType.REVIEW, "movies": IPageType.ITEM};
+    const tabFilter: {[key: string]: string} = {"comments": 'item', "users": 'name', "reviews": 'item', "movies": 'title'};
     const headers: {[key: string]: {key: string}} = {"created date": {key: 'creationDate'}, "basic info": {key: 'info'}, "author": {key: 'user'}, "text": {key: title.slice(0, -1).toLowerCase()}};
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const sortArray = [...values];
     const [isLoading, setLoading] = useState<boolean>(false);
     const [file, setFile] = useState<File>();
     const [showModal, setShowModal] = useState(false);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    let currentItems = values.slice(indexOfFirstItem, indexOfLastItem);
+    const [filteredArray, setFilteredArray] = useState<typeof values>(values);
+    let currentItems = filteredArray.slice(indexOfFirstItem, indexOfLastItem);
     const { valuesArr } = useAppSelector(state => state.file);
+    const [onHover, setHover] = useState({'add': false, 'download': false, 'upload': false});
+    const [toSearch, setSearch] = useState({name: ""});
 
 
     const dispatch = useAppDispatch();
 
     const csvReport = {
-        data: sortArray,
+        data: values,
         headers: header.slice(1,-1).map((value) => {
             if (value in headers) {
                 return {
@@ -61,9 +65,9 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
 
     const sortValues = async (head: string) => {
         
-        sortArray.sort((a, b) => a.rating - b.rating);
+        // sortArray.sort((a, b) => a.rating - b.rating);
         // currentItems = sortArray.slice(indexOfFirstItem, indexOfLastItem);
-        console.log(sortArray)
+        // console.log(sortArray)
     };
 
     const handleOnChange = (e: any) => {
@@ -96,6 +100,25 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
         setShowModal(true);
     };
 
+    const handleChangeButton = (prop: keyof typeof onHover, value: boolean) => {
+        setHover({
+            ...onHover,
+            [prop]: value
+        });
+    };
+
+    const handleChange = (prop: keyof typeof toSearch, value: string) => {
+        setSearch({
+            ...toSearch,
+            [prop]: value
+        });
+        searchType(value);
+    };
+
+    const searchType = (title: string) => {
+        setFilteredArray(values.filter(i => i.name.toLowerCase().includes(title.toLowerCase())));
+    }
+
     return (
         <>
             <Modal setShowModal={setShowModal} showModal={showModal} onApply={handleOnSubmit} buttons='go back/upload file' title="Upload a .csv file">
@@ -117,13 +140,26 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     <h1 className="font-semibold text-3xl pr-2">{title}</h1>
                     <p className="font-light text-base pt-2 text-brown">{total} total</p>
                     <article className="ml-auto flex justify-center items-center space-x-2">
-                        <button className={`bg-white-light dark:bg-primary-light h-8 flex items-center justify-center rounded-lg w-8 shadow-md`} onClick={handleClick}>
+                        <article className='flex'>
+                            <input
+                                value={toSearch.name}
+                                onChange={(e) => {handleChange('name', e.target.value)}}
+                                type='search'
+                                placeholder={`Find a ${title.toLowerCase().slice(0, -1)}...`}
+                                className="w-full px-3 py-1 outline-none rounded-3xl dark:bg-primary dark:text-white bg-white-light" 
+                                maxLength={20}
+                            />
+                            {!toSearch.name && (
+                                <AiOutlineSearch size={25} className='translate-y-1 -translate-x-8'/>
+                            )}
+                        </article>
+                        <button className={`bg-white-light dark:bg-primary-light h-8 flex items-center justify-center rounded-lg w-8 shadow-md ${onHover.add && 'shadow-inner'}`} onMouseDownCapture={() => handleChangeButton('add', true)} onMouseLeave={() => handleChangeButton('add', false)} onClick={handleClick}>
                             {icon}
                         </button>
-                        <CSVLink {...csvReport} className="bg-white-light dark:bg-primary-light h-8 w-8 rounded-lg flex items-center justify-center shadow-md" separator={";"}>
+                        <CSVLink {...csvReport} className={`bg-white-light dark:bg-primary-light h-8 w-8 rounded-lg flex items-center justify-center shadow-md  ${onHover.download && 'shadow-inner'}`} onMouseDownCapture={() => handleChangeButton('download', true)} onMouseLeave={() => handleChangeButton('download', false)} separator={";"}>
                             <AiOutlineDownload size={20}/>
                         </CSVLink>
-                        <button className="bg-white-light dark:bg-primary-light h-8 flex items-center justify-center rounded-lg w-8 shadow-md" onClick={() => {setShowModal(true); setFile(undefined);}}>
+                        <button className={`bg-white-light dark:bg-primary-light h-8 flex items-center justify-center rounded-lg w-8 shadow-md  ${onHover.upload && 'shadow-inner'}`} onMouseDownCapture={() => handleChangeButton('upload', true)} onMouseLeave={() => handleChangeButton('upload', false)} onClick={() => {setShowModal(true); setFile(undefined);}}>
                             <AiOutlineUpload size={20}/>
                         </button>
                     </article>
@@ -145,7 +181,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                         {values.length !== 0 && (
                             <Pagination
                             itemsPerPage={itemsPerPage}
-                            totalItems={values.length}
+                            totalItems={filteredArray.length}
                             paginate={paginate}
                             currentPage={currentPage}
                             />
