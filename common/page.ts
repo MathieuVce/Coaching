@@ -9,7 +9,7 @@ export enum IPageType {
     USER,
     COMMENT,
     REVIEW,
-    ITEM
+    ITEM,
 };
 
 export interface IUser {
@@ -37,6 +37,15 @@ export interface IReview {
     item: string;
     creationDate: string;
     rating: number;
-    user: IUser;
+    user: string;
     title: string;
+}
+
+export interface IMovie {
+    title: string;
+    rating: number;
+    category: string;
+    views: number;
+    status: string | boolean;
+    creationDate: string;
 }

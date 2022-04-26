@@ -2,11 +2,11 @@ import { db } from "./firebase";
 import { FirebaseError } from "../../../common/auth";
 import { getDocIdBy, getErrors } from "../utils/Utils";
 import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
-import { IComment, IPageType, IReview, IUser } from "../../../common/page";
+import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
 
 const getFirstDoc = async (what: string, type: IPageType) => {
-    const typeArray = ["username", "comment", "review"]
-    const collectionArray = ["users", "comments", "reviews"]
+    const typeArray = ["username", "comment", "review", "title"]
+    const collectionArray = ["users", "comments", "reviews", "movies"]
 
     const ref = await getDocIdBy(typeArray[type], collectionArray[type], what);
     const document = doc(collection(db, collectionArray[type]), ref.docs[0].id)
@@ -26,6 +26,72 @@ const createUsers = async (user: IUser) => {
     }
 };
 
+const createMovies = async (movie: IMovie) => {
+    try {
+        const newMovieRef = doc(collection(db, "movies"));
+
+        await setDoc(newMovieRef, movie);
+
+    } catch(error) {
+        const firebaseError = error as FirebaseError
+        throw { message: getErrors(firebaseError.code) }
+    }
+};
+
+const getMovies = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, "movies"));
+
+        const promiseArray = querySnapshot.docs.map(async (doc) => {
+
+            const obj = 
+            {
+                title: doc.data().title,
+                rating: doc.data().rating,
+                category: doc.data().category.toUpperCase(),
+                views: doc.data().views,
+                status: doc.data().status ? "VISIBLE" : "HIDDEN",
+                creationDate: doc.data().creationDate.split(',')[0],
+            }
+            return obj;
+        });
+
+        const arrayOfValues: IMovie[] = await Promise.all(promiseArray);
+
+        return arrayOfValues;
+    } catch(error) {
+        const firebaseError = error as FirebaseError
+        throw { message: getErrors(firebaseError.code) }
+    }
+};
+
+const updateMovies = async (what: string) => {
+    try {
+        const res = await getFirstDoc(what, IPageType.ITEM);
+
+        await updateDoc(res.document, {
+            status: !res.ref.docs[0].data().status
+        });
+    
+    } catch(error) {
+        const firebaseError = error as FirebaseError
+        throw { message: getErrors(firebaseError.code) }
+    }
+};
+
+const deleteMovies = async (what: string) => {
+    try {
+        const res = await getFirstDoc(what, IPageType.ITEM);
+
+        await deleteDoc(res.document)
+    
+    } catch(error) {
+        const firebaseError = error as FirebaseError
+        console.log(firebaseError.code)
+        throw { message: getErrors(firebaseError.code) }
+    }
+};
+
 const getUsers = async () => {
     try {
         const querySnapshot = await getDocs(collection(db, "users"));
@@ -39,8 +105,8 @@ const getUsers = async () => {
                 info: doc.data().name + '/' + doc.data().email,
                 username: doc.data().username,
                 pricing: doc.data().pricing.toUpperCase(),
-                comments: doc.data().comments.toString(),
-                reviews: doc.data().reviews.toString(),
+                comments: doc.data().comments,
+                reviews: doc.data().reviews,
                 status: doc.data().status ? "APPROVED" : "BANNED",
                 creationDate: doc.data().creationDate.split(',')[0],
             }
@@ -132,7 +198,6 @@ const createReviews = async () => {
         const movieRef = doc(db, 'movies/1SoMx4v11KhZmHF26t7h');
         const movieRef2 = doc(db, 'movies/ah72UXJAGkj7CBxVgOjQ');
         const userRef = doc(db, 'users/4iJue1PpC2iRhdtOjXP5');
-        const userRef2 = doc(db, 'users/y9n6QxTefUKJP53klqlh');
 
         await setDoc(newReviewRef, {
             movie: movieRef2,
@@ -155,7 +220,6 @@ const createComments = async () => {
         const movieRef = doc(db, 'movies/1SoMx4v11KhZmHF26t7h');
         const movieRef2 = doc(db, 'movies/ah72UXJAGkj7CBxVgOjQ');
         const userRef = doc(db, 'users/4iJue1PpC2iRhdtOjXP5');
-        const userRef2 = doc(db, 'users/y9n6QxTefUKJP53klqlh');
 
         await setDoc(newCommentRef, {
             movie: movieRef,
@@ -226,7 +290,11 @@ const infoService = {
     updateUsers,
     deleteUsers,
     createReviews,
-    createComments
+    createComments,
+    getMovies,
+    deleteMovies,
+    updateMovies,
+    createMovies
 };
 
 export default infoService;

@@ -40,7 +40,6 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                         </td>
                                         {type == IPageType.USER && (
                                             <>
-                                                
                                                 <td className="flex items-center">
                                                     <article className="bg-white-light flex items-center px-6 my-1 -mx-1 min-w-full">
                                                         <section className="bg-blue bg-opacity-30 w-12 h-12 rounded-md items-center justify-center flex mr-2">
@@ -57,14 +56,31 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                     if ( index > 2 && index < length) {
                                                         return (
                                                             <td key={index}>
-                                                                <article className={`${(value.status === 'APPROVED' && index == 7) ? 'text-green' : (value.status === 'BANNED' && index == 7) ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 ${key == 'comments' || key == 'reviews' || key == 'username' ? 'text-center' : 'text-left'} text-center px-6 -mx-2 my-1`}>
+                                                                <article className={`${(value.status === 'APPROVED' && key == 'status') ? 'text-green' : (value.status === 'BANNED' && key == 'status') ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 ${key == 'comments' || key == 'reviews' || key == 'username' ? 'text-center' : 'text-left'} px-6 -mx-2 my-1`}>
                                                                     {value[key]}
                                                                 </article>
                                                             </td>
                                                         )
                                                     }
-                                                }
-                                                )}
+                                                })}
+                                            </>
+                                        )}
+                                        {type == IPageType.ITEM && (
+                                            <>
+                                                {Object.keys(value).map((key, index) => {
+                                                    return (
+                                                        <td key={index}>
+                                                            <article className={`${(value.status === 'VISIBLE' && key == 'status') ? 'text-green' : (value.status === 'HIDDEN' && key == 'status') ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 flex items-center justify-center whitespace-nowrap px-6 -mx-1 my-1`}>
+                                                                {value[key]}
+                                                                {key == 'rating' && (
+                                                                    <article className="pl-1">
+                                                                        <AiFillStar size={20} color="#0AC5CD"/>
+                                                                    </article>
+                                                                )}
+                                                            </article>
+                                                        </td>
+                                                    )
+                                                })}
                                             </>
                                         )}
                                         {(type == IPageType.REVIEW || type == IPageType.COMMENT) && (
@@ -79,7 +95,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                                         ) : key == 'creationDate' ? (
                                                                             value[key].split(',')[0]
                                                                         ) : (
-                                                                            value[key]
+                                                                            value[key] || '-'
                                                                         )}
                                                                         {key == 'rating' && (
                                                                             <article className="pl-1">

@@ -1,10 +1,4 @@
-import { useState } from "react";
-
-interface IActivityIndicatorProps {
-}
-
-
-export const ActivityIndicator: React.FC<IActivityIndicatorProps> = () => {
+export const ActivityIndicator: React.FC = () => {
     return (
         <div className="flex items-center justify-center w-full h-screen text-center">
             <svg role="status" className="inline mr-2 w-8 h-8 animate-spin fill-blue text-brown" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

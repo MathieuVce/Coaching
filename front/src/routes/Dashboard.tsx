@@ -5,6 +5,7 @@ import { RiUser3Line } from "react-icons/ri";
 import { NewItems } from "../components/NewItems";
 import { Table } from "../components/Table";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../store/hooks";
 
 const Dashboard: React.FunctionComponent = () => {
 
@@ -16,6 +17,7 @@ const Dashboard: React.FunctionComponent = () => {
     const valuesUsers = ['10', 'John Doe', 'john.doe@gmail.com', 'Jojo2d']
     const valuesReviews = ['10', 'Spider-Man', 'John Doe', '9.2']
     const valuesComments = ['10', 'Spider-Man', 'What a movie !!! So many visual effects...', 'John Doe']
+    const { reviews, comments, users, movies } = useAppSelector(state => state.info);
 
     const navigate = useNavigate();
 
@@ -27,10 +29,10 @@ const Dashboard: React.FunctionComponent = () => {
                 </div>
                 <div className="container mt-8">
                     <div className="flex flex-wrap sm:grid gap-6 lg:grid-cols-4 md:grid-cols-2">
-                        <NewItems title="New Items" count="14 500" icon={<MdOutlineDashboardCustomize color="#0AC5CD" size={35}/>}/>
-                        <NewItems title="New Reviews" count="10 122" icon={<AiOutlineStar color="#0AC5CD" size={36}/>}/>
-                        <NewItems title="New Users" count="4 392" icon={<RiUser3Line color="#0AC5CD" size={35}/>}/>
-                        <NewItems title="New Comments" count="21 122" icon={<FaRegCommentDots color="#0AC5CD" size={34}/>}/>
+                        <NewItems title="Items" count={movies.length.toString()} icon={<MdOutlineDashboardCustomize color="#0AC5CD" size={35}/>}/>
+                        <NewItems title="Reviews" count={reviews.length.toString()} icon={<AiOutlineStar color="#0AC5CD" size={36}/>}/>
+                        <NewItems title="Users" count={users.length.toString()} icon={<RiUser3Line color="#0AC5CD" size={35}/>}/>
+                        <NewItems title="Comments" count={comments.length.toString()} icon={<FaRegCommentDots color="#0AC5CD" size={34}/>}/>
                     </div>
         
                     <div className="grid gap-6 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-6">

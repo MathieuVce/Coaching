@@ -1,4 +1,3 @@
-import { MouseEventHandler, useState } from "react";
 
 interface IDropdownProps {
     title: string;
@@ -31,7 +30,7 @@ export const Dropdown: React.FC<IDropdownProps> = ({ title, color, values, displ
             </button>
             <ul className="bg-white border-b border-r border-l rounded-bl-lg rounded-br-lg transform scale-0 group-hover:scale-100 absolute w-72 transition duration-150 ease-in-out origin-top">
                 {values.map((value, index) => (
-                    <li key={index} className={`rounded-sm px-3 py-1 hover:${color} hover:bg-opacity-60 `} onClick={() => {setDisplay(value)}}>
+                    <li key={index} className={`rounded-sm px-3 py-1 hover:${color} hover:bg-opacity-60 text-center`} onClick={() => {setDisplay(value)}}>
                         <span className="font-sm">{value.toUpperCase()}</span>
                     </li>
                 ))}                                       
