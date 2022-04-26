@@ -11,6 +11,7 @@ import { Modal } from "./Modal";
 import { DragAndDrop } from "./DragAndDrop";
 import { uploadFile } from "../slices/file";
 import { Form } from "./Form";
+import { MdClose } from "react-icons/md";
 
 interface IPageProps {
    title: string;
@@ -144,13 +145,17 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                             <input
                                 value={toSearch.name}
                                 onChange={(e) => {handleChange('name', e.target.value)}}
-                                type='search'
+                                type='text'
                                 placeholder={`Find a ${title.toLowerCase().slice(0, -1)}...`}
-                                className="w-full px-3 py-1 outline-none rounded-3xl dark:bg-primary dark:text-white bg-white-light" 
+                                className="px-3 py-1 outline-none rounded-3xl dark:bg-primary-light dark:text-white bg-white-light" 
                                 maxLength={20}
                             />
-                            {!toSearch.name && (
-                                <AiOutlineSearch size={25} className='translate-y-1 -translate-x-8'/>
+                            {toSearch.name ? (
+                                <button type="button" className="translate-y -translate-x-8" onClick={() => handleChange('name', '')}>
+                                    <MdClose size={20}/>
+                                </button>
+                                ) : (
+                                <AiOutlineSearch size={20} className='translate-y-1.5 -translate-x-8'/>
                             )}
                         </article>
                         <button className={`bg-white-light dark:bg-primary-light h-8 flex items-center justify-center rounded-lg w-8 shadow-md ${onHover.add && 'shadow-inner'}`} onMouseDownCapture={() => handleChangeButton('add', true)} onMouseLeave={() => handleChangeButton('add', false)} onClick={handleClick}>

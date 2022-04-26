@@ -93,11 +93,11 @@ const Items: React.FunctionComponent = () => {
             :
                 <Page title={'Movies'} total={movies.length.toString()} values={movies} header={header} icon={<AiOutlinePlusCircle size={20}/>} setId={setMovieId} handleClick={handleClick}>
                     <div className="flex items-center space-x-5 justify-center"> 
-                        <button className="bg-green-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6 shadow-xs" onClick={() => {setDelete(false); setShowModal(true)}}>
-                            <AiOutlineLock size={18}/>
+                        <button className="bg-green-light h-6 flex items-center justify-center bg-opacity-20 rounded-lg w-6 shadow-xs" onClick={() => {setDelete(false); setShowModal(true)}}>
+                            <AiOutlineLock size={18} className='text-green-darker'/>
                         </button>
-                        <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center shadow-xs" onClick={() => {setDelete(true); setShowModal(true)}}>
-                            <BiTrash size={18}/>
+                        <button className="bg-red-light h-6 flex items-center bg-opacity-20 rounded-lg w-6 justify-center shadow-xs" onClick={() => {setDelete(true); setShowModal(true)}}>
+                            <BiTrash size={18} className='text-red-dark dark:text-red'/>
                         </button>
                     </div>
                 </Page>
