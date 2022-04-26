@@ -30,7 +30,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                 if (value !== 'title' || type === IPageType.ITEM) {
                                     return (
                                         <th className="px-4" key={i}>
-                                            <button onClick={() => {}} className="text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap hover:underline">
+                                            <button onClick={() => {sortValues(header[i])}} className="text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap hover:underline">
                                                 {value}
                                             </button>
                                         </th> 

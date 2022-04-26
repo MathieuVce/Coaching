@@ -1,7 +1,7 @@
 import { IconBaseProps } from "react-icons";
 import { ScrollView } from "./ScrollView";
-import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
-import { SetStateAction, useEffect, useState } from "react";
+import { IPageType } from "../../../common/page";
+import { SetStateAction, useState } from "react";
 import { Pagination } from "./PaginationList";
 import { CSVLink } from "react-csv";
 import { AiOutlineDownload, AiOutlineSearch, AiOutlineUpload } from "react-icons/ai";
@@ -35,7 +35,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
     const [showModal, setShowModal] = useState(false);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const [filteredArray, setFilteredArray] = useState<typeof values>(values);
+    const [filteredArray, setFilteredArray] = useState<typeof values>([...values]);
     let currentItems = filteredArray.slice(indexOfFirstItem, indexOfLastItem);
     const { valuesArr } = useAppSelector(state => state.file);
     const [onHover, setHover] = useState({'add': false, 'download': false, 'upload': false});
@@ -64,11 +64,35 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
     const paginateBack = () => setCurrentPage(currentPage - 1);
     const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
 
+    /////        FONCTION A CHANGER        \\\\\
     const sortValues = async (head: string) => {
-        
-        // sortArray.sort((a, b) => a.rating - b.rating);
-        // currentItems = sortArray.slice(indexOfFirstItem, indexOfLastItem);
-        // console.log(sortArray)
+        if (head === 'rating') {
+            setFilteredArray([...filteredArray.sort((a, b) => b.rating - a.rating)]) 
+        } else if (head === 'created date') {
+            setFilteredArray([...filteredArray.sort((a, b) => +new Date(b.creationDate) - +new Date(a.creationDate))]) 
+        } else if (head === 'author') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.user < b.user ? -1 : 1)]) 
+        } else if (head === 'item') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.item < b.item ? -1 : 1)]) 
+        } else if (head === 'title') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.title < b.title ? -1 : 1)]) 
+        } else if (head === 'category') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.category < b.category ? -1 : 1)]) 
+        } else if (head === 'status') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.status < b.status ? -1 : 1)]) 
+        } else if (head === 'views') {
+            setFilteredArray([...filteredArray.sort((a, b) => b.views - a.views)]) 
+        } else if (head === 'username') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.username < b.username ? -1 : 1)]) 
+        } else if (head === 'pricing') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.pricing < b.pricing ? -1 : 1)]) 
+        } else if (head === 'comments') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.comments > b.comments ? -1 : 1)]) 
+        } else if (head === 'reviews') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.reviews > b.reviews ? -1 : 1)]) 
+        } else if (head === 'basic info') {
+            setFilteredArray([...filteredArray.sort((a, b) => a.name < b.name ? -1 : 1)]) 
+        }
     };
 
     const handleOnChange = (e: any) => {

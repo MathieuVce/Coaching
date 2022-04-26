@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect } from "react";
+import { SetStateAction } from "react";
 
 interface IPaginationProps {
     itemsPerPage: number;
