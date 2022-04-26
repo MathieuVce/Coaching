@@ -53,3 +53,12 @@ export const getErrors = (keyWord: string) => {
   const parsedError  = keyWord.split('/')[1]
   return errorMapping[parsedError] || message
 };
+
+export const without = <T>(object: T) => <K extends keyof T>(...parts: Array<K>): Omit<T, K> => {
+  return (Object.keys(object) as Array<keyof T>).reduce((acc, key) => {
+      if (!parts.includes(key as any)) {
+          acc[key] = object[key];
+      }
+      return acc;
+  }, {} as T);
+};

@@ -15,7 +15,7 @@ const App: React.FunctionComponent = () => {
           <div className="container mx-auto flex flex-wrap items-center justify-between">
             <div className="w-full relative flex justify-between items-center lg:w-auto lg:static lg:block lg:justify-start">
               <div
-                className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
+                className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
               >
                 <Link to="/">
                   <img className='h-7' src={longlogo}/>
@@ -41,12 +41,12 @@ const App: React.FunctionComponent = () => {
             >
               <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                 <li className="nav-item">
-                  <div className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                  <div className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white dark:text-primary hover:opacity-75">
                     <Link to="/login">Login</Link>
                   </div>
                 </li>
                 <li className="nav-item">
-                  <div className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">
+                  <div className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white dark:text-primary hover:opacity-75">
                     <Link to="/register">Register</Link>
                   </div>
                 </li>
@@ -56,14 +56,14 @@ const App: React.FunctionComponent = () => {
         </nav>
         {location.pathname === '/' ?
         <div className="flex items-center justify-center w-full h-screen bg-gradient-to-b from-blue to-blue-light">
-          <div className=" bg-white rounded-md shadow-xl py-24 px-16 max-w-sm lg:max-w-3xl md:max-w-2xl sm:max-w-sm mx-5">
+          <div className=" bg-white dark:bg-primary rounded-md shadow-2xl dark:shadow-white  py-24 px-16 max-w-sm lg:max-w-3xl md:max-w-2xl sm:max-w-sm mx-5">
             <section className="flex flex-col items-center">
               <article className="flex flex-row">
-                <h1 className="font-bold text-primary text-7xl 2xl:text-9xl xl:text-9xl lg:text-8xl sm:text-7xl">
+                <h1 className="font-bold text-primary dark:text-white text-7xl 2xl:text-9xl xl:text-9xl lg:text-8xl sm:text-7xl">
                   W<span className="text-blue">e</span>lc<span className="text-blue">o</span>m<span className="text-blue">e</span>
                 </h1>
               </article>
-              <h6 className="mb-8 text-2xl font-bold text-center md:text-3xl">
+              <h6 className="mb-8 text-2xl font-bold text-center md:text-3xl dark:text-white">
                   to the Coaching Movie
               </h6>
               <p className="text-center text-brown md:text-lg">

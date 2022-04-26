@@ -39,12 +39,12 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, icon, titl
         <>
             <div className="flex flex-col">
                 <div className="py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                    <section className="inline-block overflow-x-auto align-middle shadow-md rounded-lg w-full bg-white-light pb-3">
+                    <section className="inline-block overflow-x-auto align-middle shadow-md dark:shadow-white rounded-lg w-full bg-white-light dark:bg-primary-light pb-3 dark:text-white">
                         <section className="w-full px-5 items-center py-4 flex flex-row">
                             {icon}
                             <label className="font-medium text-lg px-2">{title}</label>
                             <article className="flex flex-row items-center w-full justify-end">
-                                <button onClick={() => {handleRefresh()}} >
+                                <button onClick={() => {handleRefresh()}}>
                                     <IoMdRefresh/>
                                 </button>
                                 <article className="bg-brown bg-opacity-20 justify-center flex py-1 rounded-lg px-2 ml-5">
@@ -63,7 +63,7 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, icon, titl
                                     })}
                                 </tr>
                             </thead>
-                            <tbody className="bg-white-light border-t border-t-brown">
+                            <tbody className="bg-white-light dark:bg-primary-light border-t border-t-brown">
                                 {Array.from({ length: 5 }, (_, i) =>
                                     <TableRow head={head} values={values} key={i}/>
                                 )}

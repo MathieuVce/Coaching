@@ -83,7 +83,7 @@ const Items: React.FunctionComponent = () => {
                 <Dropdown color="bg-blue" display={final} setDisplay={setFinal} title='Category' values={category}/>
             </Modal>
             <Modal setShowModal={setShowModal} showModal={showModal} onApply={handleAction} buttons='no/confirm' title={toDelete ? "Delete movie" : "Change status"}>
-                <div>
+                <div className="dark:text-white">
                     {toDelete ? "Are you sure you want to delete this movie?" : "Are you sure you want to change the status of this movie?"}
                 </div>
             </Modal>
@@ -91,13 +91,13 @@ const Items: React.FunctionComponent = () => {
                 <ActivityIndicator/>
             )
             :
-                <Page title={'Movies'} total={movies.length.toString()} values={movies} header={header} icon={<AiOutlinePlusCircle color='black' size={20}/>} setId={setMovieId} handleClick={handleClick}>
+                <Page title={'Movies'} total={movies.length.toString()} values={movies} header={header} icon={<AiOutlinePlusCircle size={20}/>} setId={setMovieId} handleClick={handleClick}>
                     <div className="flex items-center space-x-5 justify-center"> 
                         <button className="bg-green-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6 shadow-xs" onClick={() => {setDelete(false); setShowModal(true)}}>
-                            <AiOutlineLock color='black' size={18}/>
+                            <AiOutlineLock size={18}/>
                         </button>
                         <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center shadow-xs" onClick={() => {setDelete(true); setShowModal(true)}}>
-                            <BiTrash color='black' size={18}/>
+                            <BiTrash size={18}/>
                         </button>
                     </div>
                 </Page>

@@ -38,6 +38,7 @@ module.exports = {
           },
           primary: {
               DEFAULT: '#24292E',
+              light: '#2D3740',
           },
           warning: {
               DEFAULT: '#D1711C',

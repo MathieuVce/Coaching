@@ -86,7 +86,7 @@ const Reviews: React.FunctionComponent = () => {
             <Modal setShowModal={setCreateReviewModal} showModal={createReviewModal} buttons='cancel/add review' onApply={handleCreateReview} title="Add a review">
                 <Form name="Title" type='text' placeholder='Enter title' onChange={(e) => {handleChange('title', e.target.value)}} value={review.title}/>
                 <Form name="Review" type='text' placeholder='Enter review' onChange={(e) => {handleChange('review', e.target.value)}} value={review.review} maxLen={200}/>
-                <section className="my-2">
+                <section className="my-2 dark:text-white">
                     <label>Rating <span className="italic font-light ml-1">{rating + 1} stars</span></label>
                     <Stars color='text-blue' rating={rating} setRating={setRating}/>
                 </section>
@@ -95,7 +95,7 @@ const Reviews: React.FunctionComponent = () => {
             </Modal>
             <Modal setShowModal={setShowModal} showModal={showModal} onApply={handleAction} buttons={!show ? 'no/confirm' : 'go back/delete review'} title={!show ? "Delete review" : ""}>
             {!show ? (
-                <label>
+                <label className="dark:text-white">
                     Are you sure you want to delete this review ?
                 </label>
             ) : (
@@ -106,13 +106,13 @@ const Reviews: React.FunctionComponent = () => {
                 <ActivityIndicator/>
             )
             :
-            <Page title={'Reviews'} total={reviews.length.toString()} values={reviews} header={header} icon={<AiOutlinePlusCircle color='black' size={20}/>} setId={setReviewId} handleClick={handleClick}>
+            <Page title={'Reviews'} total={reviews.length.toString()} values={reviews} header={header} icon={<AiOutlinePlusCircle size={20}/>} setId={setReviewId} handleClick={handleClick}>
                 <div className="flex items-center space-x-5 justify-center">
                     <button className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6 shadow-xs" onClick={() => {setShow(true);  setShowModal(true)}}>
-                        <AiOutlineEye color='black' size={20}/>
+                        <AiOutlineEye size={20}/>
                     </button>
                     <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center shadow-xs" onClick={() => {setShow(false); setShowModal(true)}}>
-                        <BiTrash color='black' size={18}/>
+                        <BiTrash size={18}/>
                     </button>
                 </div>
             </Page>

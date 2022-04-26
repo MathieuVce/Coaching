@@ -59,7 +59,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
             navigate("/home/dashboard");
         } else {
             // await alert.error(message)
-            setColor('red');
+            setColor('bg-red');
             setShowAlert(true);
         }
     };
@@ -70,7 +70,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
             navigate("/login");
         } else {
             // await alert.error(message)
-            setColor('red');
+            setColor('bg-red');
             setShowAlert(true);
         }
     };
@@ -78,9 +78,9 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     const handlePasswordFormSubmit = async () => {
         await dispatch(password({email: values.email}))
         if (reset) {
-            setColor('green');
+            setColor('bg-green');
         } else {
-            setColor('red')
+            setColor('bg-red')
         }
         setShowAlert(true);
     };
@@ -89,13 +89,12 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
 
 
     return (
-         <div className='h-screen w-full flex justify-center items-center flex-col'>
+         <div className='h-screen w-full flex justify-center items-center flex-col dark:bg-primary'>
             <Alert color={color} message={message} setShowAlert={setShowAlert} showAlert={showAlert}/>
-            <div className='w-full max-w-2xl m-auto rounded-lg border border-solid shadow-default py-10 px-16'>
-                <h1 className='text-2xl font-medium text-primary mt-4 mb-8 text-center'>
+            <div className='w-full max-w-2xl m-auto rounded-lg border border-solid dark:border-white dark:shadow-white shadow-default py-10 px-16'>
+                <h1 className='text-2xl font-medium text-primary dark:text-white mt-4 mb-8 text-center'>
                     {header}
                 </h1>
-                {/* <label>{message}</label> */}
                 <section className="max-w-md px-4 mx-auto">
                     {children}
                     <article className='flex justify-center items-center mt-6'
@@ -107,7 +106,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
                     </article>
                 </section>
                 <section className="flex items-center mt-8 justify-center">
-                     <article className={"justify-center text-blue-500 hover:underline"}>
+                     <article className={"justify-center text-blue-500 hover:underline dark:text-white"}>
                         {links[type]}
                      </article>
                 </section>

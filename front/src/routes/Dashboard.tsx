@@ -42,8 +42,8 @@ const Dashboard: React.FunctionComponent = () => {
     return(
         <>
             <div className="w-full mx-6 py-2 pr-4 pb-8">
-                <div className="border-b py-3">
-                    <label className="text-primary text-4xl font-bold">Dashboard</label>
+                <div className="border-b dark:border-b-white py-3">
+                    <label className="text-primary dark:text-white text-4xl font-bold">Dashboard</label>
                 </div>
                 {isLoading ? (
                     <ActivityIndicator/>

@@ -24,7 +24,7 @@ export const Stars: React.FC<IStarsProps> = ({ color, rating, setRating }) => {
         setRating(i);
     }
     return (
-        <div className="flex items-center">
+        <div className="flex items-center justify-start">
             {Array.from({ length: 10 }, (_, i) =>
                 <button onClick={() => {handleClick(i)}}
                     onMouseEnter={() => {onHover(i)}}
