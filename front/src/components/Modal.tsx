@@ -43,7 +43,7 @@ export const Modal: React.FC<IModalProps> = ({showModal, setShowModal, title, on
               </div>
             </div>
           </div>
-          <div className="opacity-50 fixed inset-0 z-40 bg-primary"></div>
+          <div className="opacity-50 fixed inset-0 z-40 bg-primary dark:bg-brown"></div>
         </>
       )}
     </>

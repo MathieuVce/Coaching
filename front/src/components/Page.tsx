@@ -1,6 +1,6 @@
 import { IconBaseProps } from "react-icons";
 import { ScrollView } from "./ScrollView";
-import { IPageType } from "../../../common/page";
+import { IMovie, IPageType, IUser } from "../../../common/page";
 import { SetStateAction, useState } from "react";
 import { Pagination } from "./PaginationList";
 import { CSVLink } from "react-csv";
@@ -10,8 +10,9 @@ import { ActivityIndicator } from "./ActivityIndicator";
 import { Modal } from "./Modal";
 import { DragAndDrop } from "./DragAndDrop";
 import { uploadFile } from "../slices/file";
-import { Form } from "./Form";
 import { MdClose } from "react-icons/md";
+import { ICreateComment, ICreateReview } from "../../../common/info";
+import { createComments, createReviews, createUsers, createMovies } from "../slices/info";
 
 interface IPageProps {
    title: string;
@@ -105,15 +106,44 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
         setFile(e.target.files[0]);
     };
 
+    
+    const createInfo = async (callback: string) => {
+        const callbackList: {[key: string]: Function} = {
+            movies: async function createUser(movie: IMovie[]) {
+                for (let i = 0; i < movie.length; i++) {
+                    await dispatch(createMovies({movie: movie[i]}));
+                }
+            },
+            comments: async function createComment(comment: ICreateComment[]) {
+                for (let i = 0; i < comment.length; i++) {
+                    await dispatch(createComments({comment: comment[i]}));
+                }
+            },
+              reviews: async function createReview(review: ICreateReview[]) {
+                for (let i = 0; i < review.length; i++) {
+                    await dispatch(createReviews({review: review[i]}));
+                }
+            },
+              users: async function createUser(user: IUser[]) {
+                for (let i = 0; i < user.length; i++) {
+                    await dispatch(createUsers({user: user[i]}));
+                }
+            },
+        } 
+
+        if (callbackList.hasOwnProperty(callback) && typeof(callbackList[callback]) === 'function')  {
+            callbackList[callback](valuesArr);
+        }
+    };
+
     const handleOnSubmit = async (e: any) => {
         e.preventDefault();
         setLoading(true);
         if (file) {
             await dispatch(uploadFile({file: file, type: tab[title.toLowerCase()]}));
-            console.log(valuesArr);
-            // await dispatch(createReviews({review: review}));
-            // await dispatch(createUsers({user: obj}));
-            // await dispatch(createMovies({movie: obj}));
+            console.log(valuesArr, 'la liste des valeurs');
+            //valuesarr not update on time
+            await createInfo(title.toLowerCase());
         }
         setShowModal(false);
         setFile(undefined);
@@ -141,6 +171,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
     };
 
     const searchType = (title: string) => {
+        //date not filtered
         setFilteredArray(values.filter(i => i.name.toLowerCase().includes(title.toLowerCase())));
     }
 
@@ -197,17 +228,17 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     <ActivityIndicator/>
                 )
                 : (
-                    <section className="border-t mx-4 px-4">
+                    <section className="border-t dark:border-t-primary-light mx-4 px-4">
                         <DragAndDrop onUpload={onUpload}/>
                         <ScrollView sortValues={sortValues} header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
                         {/* <Pagination
                             itemsPerPage={itemsPerPage}
-                            totalItems={values.length}
+                            totalItems={filteredArray.length}
                             paginateBack={paginateBack}
                             paginateFront={paginateFront}
                             currentPage={currentPage}
                         /> */}
-                        {values.length !== 0 && (
+                        {filteredArray.length !== 0 && (
                             <Pagination
                             itemsPerPage={itemsPerPage}
                             totalItems={filteredArray.length}

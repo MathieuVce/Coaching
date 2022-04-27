@@ -24,13 +24,13 @@ export interface reviewPayload {
 }
 
 export interface uploadState {
-    valuesArr?: ICreateComment[] | ICreateReview[] | IUser[] | IMovie[];
+    valuesArr?: (ICreateComment | ICreateReview | IUser | IMovie)[];
 }
 
 export interface uplaodFilePayload {
     file: File;
     type: IPageType;
-    valuesArr?: ICreateComment[] | ICreateReview[] | IUser[] | IMovie[];
+    valuesArr?: (ICreateComment | ICreateReview | IUser | IMovie)[];
 }
 
 export interface ICreateComment {

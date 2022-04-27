@@ -15,6 +15,7 @@ const csvFileToArray = async (string: string, type: IPageType) => {
         return obj;
     });
 
+    const finalArr: (ICreateReview | ICreateComment | IMovie | IUser)[] = []
 
     array.map(async (item) => {
         const obj: {[key: string]: string | number | boolean} = {
@@ -38,28 +39,37 @@ const csvFileToArray = async (string: string, type: IPageType) => {
         };
         Object.keys(obj).forEach(key => (obj[key] === undefined || Number.isNaN(obj[key])) ? delete obj[key] : {});
 
+        console.log(obj as unknown as IMovie)
         const review: ICreateReview = without(obj)('comment', 'status') as unknown as ICreateReview;
         const comment: ICreateComment = without(obj)('review', 'status') as unknown as ICreateComment;
         const movie: IMovie = obj as unknown as IMovie;
         const user: IUser = obj as unknown as IUser;
 
         const typeArr = [user, comment, review, movie];
-        return typeArr[type];
+        finalArr.push(typeArr[type]);
     });
-    return array;
+    console.log(finalArr)
+    return finalArr;
 };
 
 const uploadFile = async (file: File, type: IPageType) => {
     const fileReader = new FileReader();
-    let valuesArr = {};
 
-    fileReader.onload = async function (event) {
-        const csvOutput = event.target?.result;
-        valuesArr = (await csvFileToArray(csvOutput?.toString()!, type)) as uploadState
-    };
-    fileReader.readAsText(file);
-    console.log(valuesArr);
-    return valuesArr;
+    //array not updated
+    // fileReader.onload = async function (event) {
+    //     const csvOutput = event.target?.result;
+    //     const values = await csvFileToArray(csvOutput?.toString()!, type);
+    //     return values
+    //     // valuesArr.push.apply(valuesArr, values);
+    //     // console.log(valuesArr)
+    // };
+
+    fileReader.readAsText(file)
+    const arrayOfValues = (await Promise.all(await file.text())).join('');
+    const values = await csvFileToArray(arrayOfValues?.toString()!, type);
+    console.log(values)
+
+    return values as uploadState;
 };
 
 const fileService = {

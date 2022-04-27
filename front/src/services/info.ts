@@ -34,6 +34,7 @@ const createMovies = async (movie: IMovie) => {
         await setDoc(newMovieRef,movie);
 
     } catch(error) {
+        console.log(error)
         const firebaseError = error as FirebaseError
         throw { message: getErrors(firebaseError.code) }
     }
@@ -62,6 +63,7 @@ const getMovies = async () => {
 
         return arrayOfValues;
     } catch(error) {
+        console.log(error)
         const firebaseError = error as FirebaseError
         throw { message: getErrors(firebaseError.code) }
     }
