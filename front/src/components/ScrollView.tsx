@@ -34,7 +34,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                 {value}
                                             </button>
                                         </th> 
-                                        )
+                                    )
                                 }
                             })}
                             </tr>

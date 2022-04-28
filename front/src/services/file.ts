@@ -39,7 +39,6 @@ const csvFileToArray = async (string: string, type: IPageType) => {
         };
         Object.keys(obj).forEach(key => (obj[key] === undefined || Number.isNaN(obj[key])) ? delete obj[key] : {});
 
-        console.log(obj as unknown as IMovie)
         const review: ICreateReview = without(obj)('comment', 'status') as unknown as ICreateReview;
         const comment: ICreateComment = without(obj)('review', 'status') as unknown as ICreateComment;
         const movie: IMovie = obj as unknown as IMovie;
@@ -48,7 +47,6 @@ const csvFileToArray = async (string: string, type: IPageType) => {
         const typeArr = [user, comment, review, movie];
         finalArr.push(typeArr[type]);
     });
-    console.log(finalArr)
     return finalArr;
 };
 
