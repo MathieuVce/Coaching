@@ -14,7 +14,7 @@ import { IComment, IMovie, IReview, IUser } from "../../../common/page";
 
 const Dashboard: React.FunctionComponent = () => {
 
-    const headItems = ['id', 'title', 'rating', 'category']
+    const headItems = ['id', 'title', 'category', 'rating']
     const headUsers = ['id', 'fullname', 'email', 'username']
     const headReviews = ['id', 'item', 'author', 'rating']
     const headComments = ['id', 'item', 'author', 'text']

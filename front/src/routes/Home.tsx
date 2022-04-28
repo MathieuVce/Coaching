@@ -19,7 +19,7 @@ import longlogo3 from "../assets/longlogo3.svg"
 
 const Home: React.FunctionComponent = () => {
 
-    const { user } = useSelector((state: RootState) => state.auth);
+    const { user, authenticated } = useSelector((state: RootState) => state.auth);
     const [mode, setMode] = useState<"light" | "dark" | undefined>(
         window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" :"light"
     );
@@ -31,10 +31,12 @@ const Home: React.FunctionComponent = () => {
 
     const handleLogout = () => {
         dispatch(logout())
+        if (!authenticated) {
+            navigate("/login")
+        }
             // alert.success(
             //     <label className='text-blue'>Successfully logged out</label>
             // )
-        navigate("/login")
     };
 
     useEffect(() => {
@@ -57,7 +59,7 @@ const Home: React.FunctionComponent = () => {
                                 <GiHamburgerMenu className="text-primary dark:text-white" size={24}/>
                             }
                     </button>
-                    <section className={"lg:block flex-col" + (navbarOpen ? "flex" : " hidden")}>
+                    <section className={"lg:block flex-row h-screen" + (navbarOpen ? "flex" : " hidden")}>
                         <article className="mb-6 border-b border-b-blue-light dark:border-b-white pb-6">
                             <img className='h-10' src={mode === 'dark' ? longlogo3 : longlogo2}/>
                         </article>
@@ -85,7 +87,7 @@ const Home: React.FunctionComponent = () => {
                             <Drawer title="Comments" isSelected={false} outlineIcon={<FaRegCommentDots size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<FaCommentDots size={24} className="fill-primary dark:fill-white"/>}/>
                             <Drawer title="Reviews" isSelected={false} outlineIcon={<AiOutlineStar size={26}/>} selectedIcon={<AiFillStar size={26} />}/>
                         </ul>
-                        <article className="fixed mt-40 flex flex-col justify-center text-base font-thin">
+                        <article className="flex flex-col text-base font-thin dark:text-white">
                             <label>© Coaching Studio, 2021.</label>
                             <label>Created by the Creative Studio</label>
                         </article>

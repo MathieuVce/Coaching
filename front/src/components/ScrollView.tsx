@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { RiUser3Line } from "react-icons/ri";
 import { IPageType } from "../../../common/page";

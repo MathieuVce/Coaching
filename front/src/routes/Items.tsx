@@ -12,7 +12,7 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 
 
 const Items: React.FunctionComponent = () => {
-    const header = ['id', 'title', 'rating', 'category', 'views', 'status', 'created date', 'actions'];
+    const header = ['id', 'title', 'category', 'rating', 'views', 'status', 'created date', 'actions'];
     const [movieId, setMovieId] = useState<IMovie>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);

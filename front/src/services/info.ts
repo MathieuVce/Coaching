@@ -50,8 +50,8 @@ const getMovies = async () => {
             const obj = 
             {
                 title: doc.data().title,
-                rating: doc.data().rating.toFixed(1),
                 category: doc.data().category.toUpperCase(),
+                rating: doc.data().rating.toFixed(1),
                 views: doc.data().views,
                 status: doc.data().status ? "VISIBLE" : "HIDDEN",
                 creationDate: doc.data().creationDate.split(',')[0],

@@ -25,7 +25,6 @@ interface IPageProps {
 }
 
 export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon, setId, handleClick, fetchInfo, children }) => {
-    
     const tab: {[key: string]: IPageType} = {"comments": IPageType.COMMENT, "users": IPageType.USER, "reviews": IPageType.REVIEW, "movies": IPageType.ITEM};
     const [sortName, setSortName] = useState<string>("")
     const [currentPage, setCurrentPage] = useState(1);

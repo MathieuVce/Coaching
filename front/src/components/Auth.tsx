@@ -53,7 +53,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
         };
         await callbackList[callback]();
     };
-
+      
     const handleFormSubmit = async (callback: string) => {
         const callbackList: {[key: string]: Function} = {
             'Login': async function loginUser() {

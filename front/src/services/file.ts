@@ -35,7 +35,6 @@ const csvFileToArray = async (string: string, type: IPageType) => {
             comments: parseFloat(item['comments']),
             reviews: parseFloat(item['reviews']),
             pricing: item['pricing'],
-
         };
         Object.keys(obj).forEach(key => (obj[key] === undefined || Number.isNaN(obj[key])) ? delete obj[key] : {});
 
@@ -54,13 +53,13 @@ const uploadFile = async (file: File, type: IPageType) => {
     const fileReader = new FileReader();
 
     //array not updated
-    // fileReader.onload = async function (event) {
-    //     const csvOutput = event.target?.result;
-    //     const values = await csvFileToArray(csvOutput?.toString()!, type);
-    //     return values
-    //     // valuesArr.push.apply(valuesArr, values);
-    //     // console.log(valuesArr)
-    // };
+    fileReader.onload = async function (event) {
+        const csvOutput = event.target?.result;
+        const values = await csvFileToArray(csvOutput?.toString()!, type);
+        return values
+        // valuesArr.push.apply(valuesArr, values);
+        // console.log(valuesArr)
+    };
 
     fileReader.readAsText(file)
     const arrayOfValues = (await Promise.all(await file.text())).join('');

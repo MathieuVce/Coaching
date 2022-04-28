@@ -18,6 +18,7 @@ export const login = createAsyncThunk<LoginState, LoginPayload>(
     async (req, thunkAPI) => {
         try {
             const user = await AuthService.loginUser(req.email, req.password);
+            // return thunkAPI.fulfillWithValue(user) as Loggn
             return {...req, user} as LoginPayload;
         } catch (error: any) {
             console.log(error.message)
@@ -68,6 +69,7 @@ export const authSlice = createSlice({
         builder.addCase(login.fulfilled, (state, action) => {
             state.user = action.payload.user;
             state.authenticated = true;
+            state.message = 'connecté';
         });
         builder.addCase(login.rejected, (state, action) => {
             state.authenticated = false;
