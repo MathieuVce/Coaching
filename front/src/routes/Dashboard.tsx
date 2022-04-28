@@ -9,19 +9,33 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useEffect, useState } from "react";
 import { getComments, getMovies, getReviews, getUsers } from "../slices/info";
 import { ActivityIndicator } from "../components/ActivityIndicator";
+import { without } from "../utils/Utils";
+import { IComment, IMovie, IReview, IUser } from "../../../common/page";
 
 const Dashboard: React.FunctionComponent = () => {
 
-    const headItems = ['id', 'title', 'category', 'rating']
+    const headItems = ['id', 'title', 'rating', 'category']
     const headUsers = ['id', 'fullname', 'email', 'username']
     const headReviews = ['id', 'item', 'author', 'rating']
-    const headComments = ['id', 'item', 'text', 'author']
-    const valuesItems = ['10', 'Spider-Man', 'Movie', '9.5']
-    const valuesUsers = ['10', 'John Doe', 'john.doe@gmail.com', 'Jojo2d']
-    const valuesReviews = ['10', 'Spider-Man', 'John Doe', '9.2']
-    const valuesComments = ['10', 'Spider-Man', 'What a movie !!! So many visual effects...', 'John Doe']
+    const headComments = ['id', 'item', 'author', 'text']
     const { reviews, comments, users, movies } = useAppSelector(state => state.info);
     const [isLoading, setLoading] = useState<boolean>(true);
+    const valuesItems: {[key: string]: string | number}[] = []
+    movies.map((movie: IMovie) => {
+        valuesItems.push(without(movie)('views', 'status', 'creationDate'));
+    });
+    const valuesReviews: {[key: string]: string | number}[] = []
+    reviews.map((review: IReview) => {
+        valuesReviews.push(without(review)('review', 'title', 'creationDate'));
+    });
+    const valuesComments: {[key: string]: string | number | undefined}[] = []
+    comments.map((comment: IComment) => {
+        valuesComments.push(without(comment)('title', 'creationDate'));
+    });
+    const valuesUsers: {[key: string]: string | number}[] = []
+    users.map((user: IUser) => {
+        valuesUsers.push(without(user)('comments', 'pricing', 'creationDate', 'reviews', 'status', 'creationDate', 'info'));
+    });
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -58,10 +72,10 @@ const Dashboard: React.FunctionComponent = () => {
                         </div>
             
                         <div className="grid gap-6 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-6">
-                            <Table title="Latest Items" onClick={() => {navigate("/home/items")}} head={headItems} values={valuesItems} icon={<MdOutlineDashboardCustomize size={40}/>}/>
-                            <Table title="Latest Reviews" onClick={() => {navigate("/home/reviews")}} head={headReviews} values={valuesReviews} icon={<AiOutlineStar size={40}/>}/>
-                            <Table title="Latest Users" onClick={() => {navigate("/home/users")}} head={headUsers} values={valuesUsers} icon={<RiUser3Line size={40}/>}/>
-                            <Table title="Latest Comments" onClick={() => {navigate("/home/comments")}} head={headComments} values={valuesComments} icon={<FaRegCommentDots size={40}/>}/>
+                            <Table title="Latest Items" onClick={() => {navigate("/home/items")}} head={headItems} getInfo={async () => {await dispatch(getMovies())}} values={valuesItems} icon={<MdOutlineDashboardCustomize size={40}/>}/>
+                            <Table title="Latest Reviews" onClick={() => {navigate("/home/reviews")}} head={headReviews} getInfo={async () => {await dispatch(getReviews())}} values={valuesReviews} icon={<AiOutlineStar size={40}/>}/>
+                            <Table title="Latest Users" onClick={() => {navigate("/home/users")}} head={headUsers} getInfo={async () => {await dispatch(getUsers())}} values={valuesUsers} icon={<RiUser3Line size={40}/>}/>
+                            <Table title="Latest Comments" onClick={() => {navigate("/home/comments")}} head={headComments} getInfo={async () => {await dispatch(getComments())}} values={valuesComments} icon={<FaRegCommentDots size={40}/>}/> 
                         </div>
                     </div>
                 )}
