@@ -65,44 +65,21 @@ export const without = <T>(object: T) => <K extends keyof T>(...parts: Array<K>)
   }, {} as T);
 };
 
-export         const sortBy: {[key: string]: Function} = {
-  'created date': function (a: { creationDate: string }, b: { creationDate: string }) {
-      return new Date(a.creationDate).getTime() < new Date(b.creationDate).getTime()  ? 1 : -1;
-  },
-  'rating': function (a: { rating: number }, b: { rating: number }) {
-      return b.rating - a.rating;
-  },
-  'author': function (a: { user: IUser }, b: { user: IUser }) {
-      return a.user < b.user ? -1 : 1
-  },
-  'item': function (a: { item: IMovie }, b: { item: IMovie }) {
-      return a.item < b.item ? -1 : 1
-  },
-  'title': function (a: { title: string }, b: { title: string }) {
-      return a.title < b.title ? -1 : 1
-  },
-  'category': function (a: { category: string }, b: { category: string }) {
-      return a.category < b.category ? -1 : 1
-  },
-  'status': function (a: { status: string }, b: { status: string }) {
-      return a.status < b.status ? -1 : 1
-  },
-  'views': function (a: { views: number }, b: { views: number }) {
-      return b.views - a.views
-  },
-  'username': function (a: { username: string }, b: { username: string }) {
-      return a.username < b.username ? -1 : 1
-  },
-  'pricing': function (a: { pricing: number }, b: { pricing: number }) {
-      return a.pricing < b.pricing ? -1 : 1
-  },
-  'comments': function (a: { comments: ICreateComment }, b: { comments: ICreateComment }) {
-      return a.comments > b.comments ? -1 : 1
-  },
-  'reviews': function (a: { reviews: ICreateReview }, b: { reviews: ICreateReview }) {
-      return a.reviews > b.reviews ? -1 : 1
-  },
-  'basic info': function (a: { name: string }, b: { name: string }) {
-      return a.name < b.name ? -1 : 1
-  }
+
+export const sortBy: {[key: string]: Function} = {
+    'created date': function (a: { creationDate: string }, b: { creationDate: string }) {
+        return new Date(a.creationDate).getTime() < new Date(b.creationDate).getTime()  ? 1 : -1;
+    },
+    'toSortAsc' : function (a: any, b: any, head: string) {
+        return a[head] < b[head] ? -1 : 1
+    },
+    'toSortDesc': function (a: any, b: any, head: string) {
+        return a[head] > b[head] ? -1 : 1
+    },
+    'toSortMinus': function (a: any, b: any, head: string) {
+        return b[head] - a[head]
+    },
+    'author': function (a: { user: IUser }, b: { user: IUser }) {
+        return a.user < b.user ? -1 : 1
+    }
 };

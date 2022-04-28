@@ -47,10 +47,21 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
 
     //            date not filtered
     const sortValues = async (head: string) => {
+        const toSortAsc = ["toSortAsc", ['item', 'title', 'category', 'status', 'username', 'pricing', 'basic info']];
+        const toSortDesc = ["toSortDesc", ['views', 'rating']];
+        const toSortMinus = ["toSortMinus", ['comments', 'reviews']];
+        const toSort = [toSortAsc, toSortDesc, toSortMinus];
+
+        toSort.map((array) => {
+            if (array[1].includes(head)) {
+                setFilteredArray([...filteredArray.sort((a, b) => sortBy[array[0].toString()](a,b,head))]);
+            }
+        })
         if (sortBy.hasOwnProperty(head) && typeof(sortBy[head]) === 'function')  {
-            setSortName(head);
             setFilteredArray([...filteredArray.sort((a, b) => sortBy[head](a,b))]);
-        }
+        } else
+            return;
+        setSortName(head);
     };
 
     const handleOnChange = (e: any) => {
@@ -65,22 +76,22 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
     
     const createInfo = async (callback: string) => {
         const callbackList: {[key: string]: Function} = {
-            movies: async function createUser(movie: IMovie[]) {
+            'movies': async function createUser(movie: IMovie[]) {
                 for (let i = 0; i < movie.length; i++) {
                     await dispatch(createMovies({movie: movie[i]}));
                 }
             },
-            comments: async function createComment(comment: ICreateComment[]) {
+            'comments': async function createComment(comment: ICreateComment[]) {
                 for (let i = 0; i < comment.length; i++) {
                     await dispatch(createComments({comment: comment[i]}));
                 }
             },
-              reviews: async function createReview(review: ICreateReview[]) {
+              'reviews': async function createReview(review: ICreateReview[]) {
                 for (let i = 0; i < review.length; i++) {
                     await dispatch(createReviews({review: review[i]}));
                 }
             },
-              users: async function createUser(user: IUser[]) {
+              'users': async function createUser(user: IUser[]) {
                 for (let i = 0; i < user.length; i++) {
                     await dispatch(createUsers({user: user[i]}));
                 }
@@ -88,7 +99,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
         } 
 
         if (callbackList.hasOwnProperty(callback) && typeof(callbackList[callback]) === 'function')  {
-            callbackList[callback](valuesArr);
+            await callbackList[callback](valuesArr);
             await fetchInfo();
         }
     };
@@ -139,7 +150,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     <ActivityIndicator/>
                 )
                 : (
-                    <section className="border-t dark:border-t-primary-light mx-4 px-4">
+                    <section className="border-t border-t-blue-light dark:border-t-primary-light mx-4 px-4">
                         <DragAndDrop onUpload={onUpload}/>
                         <ScrollView sortValues={sortValues} header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
                         {/* <Pagination
