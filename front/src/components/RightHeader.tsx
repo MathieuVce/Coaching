@@ -18,7 +18,7 @@ interface IRightHeaderProps {
  
  
  export const RightHeader: React.FC<IRightHeaderProps> = ({ sortName, title, handleClick, icon, header, values, setFilteredArray, handleUpload }) => {
-    const headers: {[key: string]: {key: string}} = {"created date": {key: 'creationDate'}, "basic info": {key: 'info'}, "author": {key: 'user'}, "text": {key: title.slice(0, -1).toLowerCase()}};
+    const headers: {[key: string]: {key: string}} = {"date": {key: 'creationDate'}, "basic info": {key: 'info'}, "author": {key: 'user'}, "text": {key: title.slice(0, -1).toLowerCase()}};
     const tabFilter: {[key: string]: string} = {"comments": 'item', "users": 'name', "reviews": 'item', "movies": 'title'};
     const [onHover, setHover] = useState({'add': false, 'download': false, 'upload': false});
     const [toSearch, setSearch] = useState({name: ""});
@@ -60,10 +60,13 @@ interface IRightHeaderProps {
    return (
      <>
         <article className="ml-auto flex justify-center items-center space-x-2">
+            {sortName && (
+                <section className="px-6 py-1 text-brown font-light whitespace-nowrap flex flex-col">
+                    <label>Sorted by: </label>
+                    <label>{sortName.toUpperCase()}</label>
+                </section>
+            )}
             <article className='flex'>
-                {sortName && (
-                    <label className="px-6 py-1 text-brown font-light whitespace-nowrap">Sorted by: {sortName.toUpperCase()}</label>
-                )}
                 <input
                     value={toSearch.name}
                     onChange={(e) => {handleChange('name', e.target.value)}}

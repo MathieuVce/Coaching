@@ -56,3 +56,10 @@ export interface AllState {
     reviews: IReview[];
     movies: IMovie[];
 }
+
+export interface ITMDBMovie {
+    title: string;
+    vote_count: number;
+    vote_average: number;
+    release_date: string;
+}

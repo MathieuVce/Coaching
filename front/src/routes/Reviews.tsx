@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 const Reviews: React.FunctionComponent = () => {
     
     const { users, movies, reviews } = useAppSelector(state => state.info);
-    const header = ['id', 'item', 'author', 'text', 'rating', 'created date', 'title', 'actions']
+    const header = ['id', 'item', 'author', 'text', 'rating', 'date', 'title', 'actions']
     const [reviewId, setReviewId] = useState<IReview>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);

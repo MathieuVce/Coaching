@@ -12,7 +12,7 @@ import { createUsers, deleteUsers, getUsers, updateUsers } from "../slices/info"
 
 
 const Users: React.FunctionComponent = () => {
-    const header = ['id', 'basic info', 'username', 'pricing', 'comments', 'reviews', 'status', 'created date', 'actions'];
+    const header = ['id', 'basic info', 'username', 'pricing', 'comments', 'reviews', 'status', 'date', 'actions'];
     const [userId, setUserId] = useState<IUser>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);

@@ -53,7 +53,7 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, getInfo, i
                                     <tr>
                                     {head.map((title, i) => {
                                         return (
-                                            <th className="px-6 py-3 text-xs font-light leading-4 thacking-wider text-left text-brown uppercase overflow-x-scroll" key={i}>{title}</th> 
+                                            <th className="px-6 py-3 text-xs font-light leading-4 thacking-wider text-center text-brown uppercase overflow-x-scroll" key={i}>{title}</th> 
                                             )
                                         })}
                                     </tr>

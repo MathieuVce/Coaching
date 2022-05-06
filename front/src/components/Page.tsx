@@ -26,7 +26,7 @@ interface IPageProps {
 
 export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon, setId, handleClick, fetchInfo, children }) => {
     const tab: {[key: string]: IPageType} = {"comments": IPageType.COMMENT, "users": IPageType.USER, "reviews": IPageType.REVIEW, "movies": IPageType.ITEM};
-    const [sortName, setSortName] = useState<string>("")
+    const [sortName, setSortName] = useState<string>("ID");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
     const [isLoading, setLoading] = useState<boolean>(false);
@@ -54,13 +54,14 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
         toSort.map((array) => {
             if (array[1].includes(head)) {
                 setFilteredArray([...filteredArray.sort((a, b) => sortBy[array[0].toString()](a,b,head))]);
+                setSortName(head);
             }
         })
         if (sortBy.hasOwnProperty(head) && typeof(sortBy[head]) === 'function')  {
             setFilteredArray([...filteredArray.sort((a, b) => sortBy[head](a,b))]);
+            setSortName(head);
         } else
             return;
-        setSortName(head);
     };
 
     const handleOnChange = (e: any) => {
@@ -139,7 +140,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     </section>
                 </form>
             </Modal>
-            <div className="flex flex-col mr-5 min-h-screen pb-5 dark:bg-primary">
+            <div className="flex flex-col mr-5 w-full pb-5 dark:bg-primary">
                 <section className="h-16 flex items-center justify-start flex-row mx-4 mt-2 pb-4 dark:text-white">
                     <h1 className="font-semibold text-3xl pr-2">{title}</h1>
                     <p className="font-light text-base pt-2 text-brown whitespace-nowrap">{total} total</p>

@@ -66,7 +66,7 @@ export const without = <T>(object: T) => <K extends keyof T>(...parts: Array<K>)
 };
 
 export const sortBy: {[key: string]: Function} = {
-    'created date': function (a: { creationDate: string }, b: { creationDate: string }) {
+    'date': function (a: { creationDate: string }, b: { creationDate: string }) {
         return new Date(a.creationDate).getTime() < new Date(b.creationDate).getTime()  ? 1 : -1;
     },
     'toSortAsc' : function (a: any, b: any, head: string) {

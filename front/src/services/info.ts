@@ -3,7 +3,8 @@ import { FirebaseError } from "../../../common/auth";
 import { getDocById, getErrors } from "../utils/Utils";
 import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc, query, orderBy, startAt, DocumentReference } from "firebase/firestore";
 import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
-import { ICreateComment, ICreateReview } from "../../../common/info";
+import { ICreateComment, ICreateReview, ITMDBMovie } from "../../../common/info";
+import axios from "axios"
 
 const getFirstDoc = async (what: string, type: IPageType) => {
     const typeArray = ["username", "comment", "review", "title"]
@@ -31,7 +32,7 @@ const createMovies = async (movie: IMovie) => {
     try {
         const newMovieRef = doc(collection(db, "movies"));
 
-        await setDoc(newMovieRef,movie);
+        await setDoc(newMovieRef, movie);
 
     } catch(error) {
         console.log(error)
@@ -40,28 +41,58 @@ const createMovies = async (movie: IMovie) => {
     }
 };
 
+const fetchData = async (url: string) => {
+    return await axios.get(url)
+};
+
 const getMovies = async () => {
     try {
-        const querySnapshot = query(collection(db, "movies"), orderBy('title'), startAt('A'));
+        // const querySnapshot = query(collection(db, "movies"), orderBy('title'), startAt('A'));
+        // const queryDocs = await getDocs(querySnapshot);
+
+        // const promiseArray = queryDocs.docs.map(async (doc) => {
+
+        //     const obj = 
+        //     {
+        //         title: doc.data().title,
+        //         category: doc.data().category.toUpperCase(),
+        //         rating: doc.data().rating.toFixed(1),
+        //         views: doc.data().views,
+        //         status: doc.data().status ? "VISIBLE" : "HIDDEN",
+        //         creationDate: doc.data().creationDate.split(',')[0],
+        //     }
+        //     return obj;
+        // });
+
+        // const arrayOfValues: IMovie[] = await Promise.all(promiseArray);
+
+        // return arrayOfValues;
+        const querySnapshot = query(collection(db, "api"));
         const queryDocs = await getDocs(querySnapshot);
 
-        const promiseArray = queryDocs.docs.map(async (doc) => {
-
+        const apiKey = queryDocs.docs[0].data().api_key
+        const popularURL = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
+        const discoverURL = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`
+        const results = (await fetchData(discoverURL)).data.results
+        console.log
+        const promiseArray = results.map(async (doc: ITMDBMovie) => {
             const obj = 
-            {
-                title: doc.data().title,
-                category: doc.data().category.toUpperCase(),
-                rating: doc.data().rating.toFixed(1),
-                views: doc.data().views,
-                status: doc.data().status ? "VISIBLE" : "HIDDEN",
-                creationDate: doc.data().creationDate.split(',')[0],
-            }
-            return obj;
+                {
+                    title: doc.title,
+                    category: "MOVIE",
+                    rating: doc.vote_average.toFixed(1),
+                    views: doc.vote_count,
+                    status: "VISIBLE",
+                    creationDate: doc.release_date.replaceAll('-', '/'),
+                }
+            // await createMovies({...obj, rating: parseFloat(obj.rating), status: true})
+            console.log(obj);
+            return obj
         });
+        const data: IMovie[] = await Promise.all(promiseArray);
 
-        const arrayOfValues: IMovie[] = await Promise.all(promiseArray);
-
-        return arrayOfValues;
+        console.log(data)
+        return (data)
     } catch(error) {
         console.log(error)
         const firebaseError = error as FirebaseError

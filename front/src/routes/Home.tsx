@@ -14,19 +14,21 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import longlogo2 from "../assets/longlogo2.svg"
 import longlogo3 from "../assets/longlogo3.svg"
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+
 
 
 
 const Home: React.FunctionComponent = () => {
 
-    const { user, authenticated } = useSelector((state: RootState) => state.auth);
+    const { user, authenticated } = useAppSelector((state) => state.auth);
     const [mode, setMode] = useState<"light" | "dark" | undefined>(
         window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" :"light"
     );
     const [navbarOpen, setNavbarOpen] = useState(false);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const alert = useAlert()
 
     const handleLogout = () => {
@@ -49,7 +51,7 @@ const Home: React.FunctionComponent = () => {
     
     return(
         <>
-            <div className="flex bg-white dark:bg-primary min-w-full">
+            <div className="flex bg-white dark:bg-primary min-w-full min-h-screen">
                 <div className="px-4 py-2 bg-white-light dark:bg-primary-light lg:w-1/4 md:1/3 sm:1/2">
                     <button className="inline w-8 h-8 lg:hidden" type="button"
                         onClick={() => setNavbarOpen(!navbarOpen)}>
@@ -87,7 +89,7 @@ const Home: React.FunctionComponent = () => {
                             <Drawer title="Comments" isSelected={false} outlineIcon={<FaRegCommentDots size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<FaCommentDots size={24} className="fill-primary dark:fill-white"/>}/>
                             <Drawer title="Reviews" isSelected={false} outlineIcon={<AiOutlineStar size={26}/>} selectedIcon={<AiFillStar size={26} />}/>
                         </ul>
-                        <article className="flex flex-col text-base font-thin dark:text-white">
+                        <article className="flex-col text-base font-thin dark:text-white hidden">
                             <label>© Coaching Studio, 2021.</label>
                             <label>Created by the Creative Studio</label>
                         </article>

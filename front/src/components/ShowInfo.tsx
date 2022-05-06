@@ -35,7 +35,7 @@ export const ShowInfo: React.FC<IShowInfoProps> = ({ title, type, creationDate, 
                 </article>
             )}
         </article>
-        <article className="border-t border-t-brown pt-4 whitespace-pre-wrap dark:text-white ">
+        <article className="border-t border-t-brown pt-4 whitespace-pre-wrap dark:text-white break-all">
             {text}
         </article>
         </>
