@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface IAlertProps {
    color: string;
    message: string | undefined;
