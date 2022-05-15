@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export interface IDrawerProps {
     title: string;
-    isSelected: boolean;
     selectedIcon: IconBaseProps;
     outlineIcon: IconBaseProps;
 }

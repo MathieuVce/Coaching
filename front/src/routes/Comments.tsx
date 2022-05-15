@@ -14,7 +14,7 @@ import { Dropdown } from "../components/Dropdown";
 const Comments: React.FunctionComponent = () => {
 
     const { users, movies, comments } = useAppSelector(state => state.info);
-    const header = ['id', 'item', 'author', 'text', 'created date', 'title', 'actions']
+    const header = ['id', 'item', 'author', 'text', 'date', 'title', 'actions']
     const [commentId, setCommentId] = useState<IComment>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);

@@ -1,8 +1,8 @@
 import { ICreateComment, ICreateReview, uploadState } from "../../../common/info";
 import { IMovie, IPageType, IUser } from "../../../common/page";
-import { without } from "../utils/Utils";
+import { removeFromObject } from "../utils/Utils";
 
-const csvFileToArray = async (string: string, type: IPageType) => {
+const csvFileToArray = (string: string, type: IPageType) => {
     const csvHeader = string.slice(0, string.indexOf("\n")).split(";");
     const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
 
@@ -17,7 +17,7 @@ const csvFileToArray = async (string: string, type: IPageType) => {
 
     const finalArr: (ICreateReview | ICreateComment | IMovie | IUser)[] = []
 
-    array.map(async (item) => {
+    array.map((item) => {
         const obj: {[key: string]: string | number | boolean} = {
             movie: item['item'],
             user: item['author'],
@@ -25,7 +25,7 @@ const csvFileToArray = async (string: string, type: IPageType) => {
             review : item['text'],
             comment: item['text'],
             rating: parseFloat(item['rating']),
-            creationDate: item['created date'],
+            creationDate: item['date'],
             category: item['category'],
             views: parseFloat(item['views']),
             status: (item['status'] === 'APPROVED' || item['status'] === 'VISIBLE') ? true : false,
@@ -35,12 +35,11 @@ const csvFileToArray = async (string: string, type: IPageType) => {
             comments: parseFloat(item['comments']),
             reviews: parseFloat(item['reviews']),
             pricing: item['pricing'],
-
         };
-        Object.keys(obj).forEach(key => (obj[key] === undefined || Number.isNaN(obj[key])) ? delete obj[key] : {});
+        Object.keys(obj).map(key => (obj[key] === undefined || Number.isNaN(obj[key])) ? delete obj[key] : {});
 
-        const review: ICreateReview = without(obj)('comment', 'status') as unknown as ICreateReview;
-        const comment: ICreateComment = without(obj)('review', 'status') as unknown as ICreateComment;
+        const review: ICreateReview = removeFromObject(obj)('comment', 'status') as unknown as ICreateReview;
+        const comment: ICreateComment = removeFromObject(obj)('review', 'status') as unknown as ICreateComment;
         const movie: IMovie = obj as unknown as IMovie;
         const user: IUser = obj as unknown as IUser;
 
@@ -56,15 +55,15 @@ const uploadFile = async (file: File, type: IPageType) => {
     //array not updated
     // fileReader.onload = async function (event) {
     //     const csvOutput = event.target?.result;
-    //     const values = await csvFileToArray(csvOutput?.toString()!, type);
+    //     const values = csvFileToArray(csvOutput?.toString()!, type);
     //     return values
-    //     // valuesArr.push.apply(valuesArr, values);
-    //     // console.log(valuesArr)
+        // valuesArr.push.apply(valuesArr, values);
+        // console.log(valuesArr)
     // };
 
     fileReader.readAsText(file)
     const arrayOfValues = (await Promise.all(await file.text())).join('');
-    const values = await csvFileToArray(arrayOfValues?.toString()!, type);
+    const values = csvFileToArray(arrayOfValues?.toString()!, type);
     console.log(values)
 
     return values as uploadState;

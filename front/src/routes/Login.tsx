@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Auth } from '../components/Auth';
 import { AuthTypes } from '../@types/auth';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Login: React.FunctionComponent = () => {
 

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import { LoginState, LoginPayload, RegisterPayload, RegisterState, AllState, PasswordState, PasswordPayload } from "../../../common/auth";
 import AuthService from "../services/auth";
 
@@ -18,6 +18,7 @@ export const login = createAsyncThunk<LoginState, LoginPayload>(
     async (req, thunkAPI) => {
         try {
             const user = await AuthService.loginUser(req.email, req.password);
+            // return thunkAPI.fulfillWithValue(user) as Login
             return {...req, user} as LoginPayload;
         } catch (error: any) {
             console.log(error.message)
@@ -60,40 +61,72 @@ export const logout = createAsyncThunk('logout', async (_, thunkAPI) => {
     }
 });
 
-export const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {},
-    extraReducers: builder => {
-        builder.addCase(login.fulfilled, (state, action) => {
-            state.user = action.payload.user;
-            state.authenticated = true;
-        });
-        builder.addCase(login.rejected, (state, action) => {
-            state.authenticated = false;
-            state.message = (action.payload as LoginPayload).error;
-        });
-        builder.addCase(register.fulfilled, state => {
-            state.registered = true;
-            state.authenticated = false;
-        });
-        builder.addCase(register.rejected, (state, action) => {
-            state.registered = false;
-            state.message = (action.payload as RegisterPayload).error;
-        });
-        builder.addCase(password.fulfilled, state => {
-            state.reset = true;
-            state.message = 'Go check your mails ;)'
-        });
-        builder.addCase(password.rejected, (state, action) => {
-            state.reset = false;
-            state.message = (action.payload as PasswordPayload).error;
+export const authSlice = createReducer(initialState, (builder) => {
+    builder.addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.authenticated = true;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+        state.authenticated = false;
+        state.message = (action.payload as LoginPayload).error;
+    });
+    builder.addCase(register.fulfilled, state => {
+        state.registered = true;
+        state.authenticated = false;
+    });
+    builder.addCase(register.rejected, (state, action) => {
+        state.registered = false;
+        state.message = (action.payload as RegisterPayload).error;
+    });
+    builder.addCase(password.fulfilled, state => {
+        state.reset = true;
+        state.message = 'Go check your mails ;)'
+    });
+    builder.addCase(password.rejected, (state, action) => {
+        state.reset = false;
+        state.message = (action.payload as PasswordPayload).error;
 
-        });
-        builder.addCase(logout.fulfilled, state => {
-            state.authenticated = false;
-        });
-    },
+    });
+    builder.addCase(logout.fulfilled, state => {
+        state.authenticated = false;
+    });
 });
 
-export default authSlice.reducer;
+// export const authSlice = createSlice({
+//     name: 'auth',
+//     initialState,
+//     reducers: {},
+//     extraReducers: builder => {
+//         builder.addCase(login.fulfilled, (state, action) => {
+//             state.user = action.payload.user;
+//             // state.authenticated = true;
+//             state.push({tmp: true})
+//         });
+//         builder.addCase(login.rejected, (state, action) => {
+//             state.authenticated = false;
+//             state.message = (action.payload as LoginPayload).error;
+//         });
+//         builder.addCase(register.fulfilled, state => {
+//             state.registered = true;
+//             state.authenticated = false;
+//         });
+//         builder.addCase(register.rejected, (state, action) => {
+//             state.registered = false;
+//             state.message = (action.payload as RegisterPayload).error;
+//         });
+//         builder.addCase(password.fulfilled, state => {
+//             state.reset = true;
+//             state.message = 'Go check your mails ;)'
+//         });
+//         builder.addCase(password.rejected, (state, action) => {
+//             state.reset = false;
+//             state.message = (action.payload as PasswordPayload).error;
+
+//         });
+//         builder.addCase(logout.fulfilled, state => {
+//             state.authenticated = false;
+//         });
+//     },
+// });
+
+export default authSlice;

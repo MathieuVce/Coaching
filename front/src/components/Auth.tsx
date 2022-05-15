@@ -7,6 +7,8 @@ import { login, password, register } from "../slices/auth";
 import { checkEmail } from "../utils/Utils";
 import { AuthTypes, AuthValues } from "../@types/auth";
 import { Alert } from "./Alert";
+import { useDispatch } from "react-redux";
+import { RootState, useSelector } from "../store/storee";
 
 interface IAuthProps {
     header: string;
@@ -20,7 +22,7 @@ interface IAuthProps {
 export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail, setValidPassword, children}) => {
     const [isDisabled, setDisabled] = useState<boolean>(false)
     const [color, setColor] = useState<string>('red')
-    const { authenticated, message, registered, reset } = useAppSelector(state => state.auth);
+    const { authenticated, message, registered, reset } =  useAppSelector((state) => state.auth);
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const location = useLocation();
     const path = location.state as LocationState
@@ -34,7 +36,7 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     const checkButton = async (callback: string) => {
         const callbackList: {[key: string]: Function} = {
             'Login':  function checkLogin() {
-                const isValid = checkEmail(values.email)
+                const isValid = checkEmail(values.email)    
                 setDisabled(values.password === "" || !isValid)
                 setValidEmail(isValid)
             },
@@ -53,11 +55,11 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
         };
         await callbackList[callback]();
     };
-
+      
     const handleFormSubmit = async (callback: string) => {
         const callbackList: {[key: string]: Function} = {
-            'Login': async function loginUser() {
-                await dispatch(login(values))
+            'Login': () => {
+                dispatch(login(values))
                 if (authenticated) {
                     navigate("/home/dashboard");
                 } else {
@@ -65,8 +67,8 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
                     setShowAlert(true);
                 }
             },
-            'Register': async function registerUser() {
-                await dispatch(register(values))
+            'Register': function registerUser() {
+                dispatch(register(values))
                 if (registered) {
                     navigate("/login");
                 } else {
@@ -74,8 +76,8 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
                     setShowAlert(true);
                 }
             },
-            'Reset Password': async function resetPassword() {
-                await dispatch(password({email: values.email}))
+            'Reset Password': function resetPassword() {
+                dispatch(password({email: values.email}))
                 if (reset) {
                     setColor('bg-green');
                 } else {

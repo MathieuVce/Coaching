@@ -9,7 +9,7 @@ interface IAlertProps {
 export const Alert: React.FC<IAlertProps> = ({ color, message, showAlert, setShowAlert }) => {
   return (
     <>
-      {showAlert && (
+      {showAlert && message && (
         <div
           className={
             `text-white hover:animate-pulse px-4 py-3 border-0 rounded fixed z-100 top-20 right-0 mb-4 ${color}`

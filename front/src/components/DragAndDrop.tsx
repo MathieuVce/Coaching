@@ -8,18 +8,18 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({ onUpload }) => {
     const drop = useRef(null);
     const drag = useRef(null);
     const [dragging, setDragging] = useState(false);
+    const eventListener = ['dragenter', 'dragover', 'dragleave', 'drop'];
 
     useEffect(() => {
-        drop.current?[addEventListener('dragover', handleDragOver)] : null;
-        drop.current?[addEventListener('drop', handleDrop)] : null;
-        drop.current?[addEventListener('dragenter', handleDragEnter)] : null;
-        drop.current?[addEventListener('dragleave', handleDragLeave)] : null;
+       
+        eventListener.forEach((event, index) => {
+            drop.current?[addEventListener(event, callbackListener[index])] : null;
+        });
       
         return () => {
-            drop.current?[removeEventListener('dragover', handleDragOver)] : null;
-            drop.current?[removeEventListener('drop', handleDrop)] : null;
-            drop.current?[removeEventListener('dragenter', handleDragEnter)] : null;
-            drop.current?[removeEventListener('dragleave', handleDragLeave)] : null;
+            eventListener.forEach((event, index) => {
+                drop.current?[removeEventListener(event, callbackListener[index])] : null;
+            });
         };
     }, []);
 
@@ -69,7 +69,8 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({ onUpload }) => {
 
         setDragging(false);
     };
-    
+    const callbackListener = [handleDragEnter, handleDragOver, handleDragLeave, handleDrop];
+
     return (
         <div ref={drop} onDragLeave={() => {setDragging(false)}} className={`${dragging ? 'bg-primary bg-opacity-70 w-full h-full border-dotted border-4 border-white' : 'bg-transparent'} absolute flex justify-center items-center rounded-lg`}>
             {dragging && (

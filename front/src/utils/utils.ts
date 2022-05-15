@@ -56,7 +56,7 @@ export const getErrors = (keyWord: string) => {
   return errorMapping[parsedError] || message
 };
 
-export const without = <T>(object: T) => <K extends keyof T>(...parts: Array<K>): Omit<T, K> => {
+export const removeFromObject = <T>(object: T) => <K extends keyof T>(...parts: Array<K>): Omit<T, K> => {
   return (Object.keys(object) as Array<keyof T>).reduce((acc, key) => {
       if (!parts.includes(key as any)) {
           acc[key] = object[key];
@@ -65,9 +65,8 @@ export const without = <T>(object: T) => <K extends keyof T>(...parts: Array<K>)
   }, {} as T);
 };
 
-
 export const sortBy: {[key: string]: Function} = {
-    'created date': function (a: { creationDate: string }, b: { creationDate: string }) {
+    'date': function (a: { creationDate: string }, b: { creationDate: string }) {
         return new Date(a.creationDate).getTime() < new Date(b.creationDate).getTime()  ? 1 : -1;
     },
     'toSortAsc' : function (a: any, b: any, head: string) {
