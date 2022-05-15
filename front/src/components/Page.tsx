@@ -65,34 +65,53 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
     const paginateBack = () => setCurrentPage(currentPage - 1);
     const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
 
-    /////        FONCTION A CHANGER        \\\\\
+    //            date not filtered
     const sortValues = async (head: string) => {
-        if (head === 'rating') {
-            setFilteredArray([...filteredArray.sort((a, b) => b.rating - a.rating)]) 
-        } else if (head === 'created date') {
-            setFilteredArray([...filteredArray.sort((a, b) => +new Date(b.creationDate) - +new Date(a.creationDate))]) 
-        } else if (head === 'author') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.user < b.user ? -1 : 1)]) 
-        } else if (head === 'item') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.item < b.item ? -1 : 1)]) 
-        } else if (head === 'title') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.title < b.title ? -1 : 1)]) 
-        } else if (head === 'category') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.category < b.category ? -1 : 1)]) 
-        } else if (head === 'status') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.status < b.status ? -1 : 1)]) 
-        } else if (head === 'views') {
-            setFilteredArray([...filteredArray.sort((a, b) => b.views - a.views)]) 
-        } else if (head === 'username') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.username < b.username ? -1 : 1)]) 
-        } else if (head === 'pricing') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.pricing < b.pricing ? -1 : 1)]) 
-        } else if (head === 'comments') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.comments > b.comments ? -1 : 1)]) 
-        } else if (head === 'reviews') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.reviews > b.reviews ? -1 : 1)]) 
-        } else if (head === 'basic info') {
-            setFilteredArray([...filteredArray.sort((a, b) => a.name < b.name ? -1 : 1)]) 
+
+        const sortBy: {[key: string]: Function} = {
+            'created date': function (a: { creationDate: string }, b: { creationDate: string }) {
+                return +new Date(b.creationDate) - +new Date(a.creationDate);
+            },
+            'rating': function (a: { rating: number }, b: { rating: number }) {
+                return b.rating - a.rating;
+            },
+            'author': function (a: { user: IUser }, b: { user: IUser }) {
+                return a.user < b.user ? -1 : 1
+            },
+            'item': function (a: { item: IMovie }, b: { item: IMovie }) {
+                return a.item < b.item ? -1 : 1
+            },
+            'title': function (a: { title: string }, b: { title: string }) {
+                return a.title < b.title ? -1 : 1
+            },
+            'category': function (a: { category: string }, b: { category: string }) {
+                return a.category < b.category ? -1 : 1
+            },
+            'status': function (a: { status: string }, b: { status: string }) {
+                return a.status < b.status ? -1 : 1
+            },
+            'views': function (a: { views: number }, b: { views: number }) {
+                return a.views < a.views
+            },
+            'username': function (a: { username: string }, b: { username: string }) {
+                return a.username < b.username ? -1 : 1
+            },
+            'pricing': function (a: { pricing: number }, b: { pricing: number }) {
+                return a.pricing < b.pricing ? -1 : 1
+            },
+            'comments': function (a: { comments: ICreateComment }, b: { comments: ICreateComment }) {
+                return a.comments > b.comments ? -1 : 1
+            },
+            'reviews': function (a: { reviews: ICreateReview }, b: { reviews: ICreateReview }) {
+                return a.reviews > b.reviews ? -1 : 1
+            },
+            'basic info': function (a: { name: string }, b: { name: string }) {
+                return a.name < b.name ? -1 : 1
+            }
+        }
+
+        if (sortBy.hasOwnProperty(head) && typeof(sortBy[head]) === 'function')  {
+            setFilteredArray([...filteredArray.sort((a, b) => sortBy[head](a,b))]);
         }
     };
 
@@ -170,9 +189,8 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
         searchType(value);
     };
 
-    const searchType = (title: string) => {
-        //date not filtered
-        setFilteredArray(values.filter(i => i.name.toLowerCase().includes(title.toLowerCase())));
+    const searchType = (value: string) => {
+        setFilteredArray(values.filter(i => i[tabFilter[title.toLowerCase()]].toLowerCase().includes(value.toLowerCase())));
     }
 
     return (
