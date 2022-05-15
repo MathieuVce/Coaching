@@ -14,12 +14,12 @@ export const Pagination: React.FC<IPaginationProps> = ({ itemsPerPage, totalItem
             <div className="my-1">
                 <p className='text-sm text-gray-700'>
                 Showing
-                <span className='font-medium'> {currentPage * itemsPerPage - (itemsPerPage - 1)} </span>
+                <span className='font-medium'> {totalItems == 0 ? 0 :currentPage * itemsPerPage - (itemsPerPage - 1)} </span>
                 to
                 <span className='font-medium'> {(currentPage * itemsPerPage) > totalItems ? totalItems : currentPage * itemsPerPage} </span>
                 of
                 <span className='font-medium'> {totalItems} </span>
-                    {totalItems < 2 ? 'item' : 'items'}
+                    {totalItems < 2 ? 'result' : 'results'}
                 </p>
             </div>
             <nav className='block'></nav>

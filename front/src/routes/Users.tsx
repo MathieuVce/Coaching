@@ -86,7 +86,7 @@ const Users: React.FunctionComponent = () => {
                 <Dropdown color="bg-blue" display={final} setDisplay={setFinal} title='Pricing' values={pricing}/>
             </Modal>
             <Modal setShowModal={setShowModal} showModal={showModal} onApply={handleAction} buttons='no/confirm' title={toDelete ? "Delete user" : "Change status"}>
-                <div>
+                <div className="dark:text-white">
                     {toDelete ? "Are you sure you want to delete this user?" : "Are you sure you want to change the status of this user?"}
                 </div>
             </Modal>
@@ -94,13 +94,13 @@ const Users: React.FunctionComponent = () => {
                 <ActivityIndicator/>
             )
             :
-                <Page title={'Users'} total={users.length.toString()} values={users} header={header} icon={<AiOutlineUserAdd color='black' size={20}/>} setId={setUserId} handleClick={handleClick}>
+                <Page title={'Users'} total={users.length.toString()} values={users} header={header} icon={<AiOutlineUserAdd size={20}/>} setId={setUserId} handleClick={handleClick}>
                     <div className="flex items-center space-x-5 justify-center"> 
-                        <button className="bg-green-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6" onClick={() => {setDelete(false); setShowModal(true)}}>
-                            <AiOutlineLock color='black' size={18}/>
+                        <button className="bg-green-light h-6 flex items-center justify-center bg-opacity-20 rounded-lg w-6 shadow-xs" onClick={() => {setDelete(false); setShowModal(true)}}>
+                            <AiOutlineLock size={18} className='text-green-darker'/>
                         </button>
-                        <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center" onClick={() => {setDelete(true); setShowModal(true)}}>
-                            <BiTrash color='black' size={18}/>
+                        <button className="bg-red-light h-6 flex items-center bg-opacity-20 rounded-lg w-6 justify-center shadow-xs" onClick={() => {setDelete(true); setShowModal(true)}}>
+                            <BiTrash size={18} className='text-red-dark dark:text-red'/>
                         </button>
                     </div>
                 </Page>

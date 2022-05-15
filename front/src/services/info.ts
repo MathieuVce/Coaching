@@ -34,6 +34,7 @@ const createMovies = async (movie: IMovie) => {
         await setDoc(newMovieRef,movie);
 
     } catch(error) {
+        console.log(error)
         const firebaseError = error as FirebaseError
         throw { message: getErrors(firebaseError.code) }
     }
@@ -41,7 +42,7 @@ const createMovies = async (movie: IMovie) => {
 
 const getMovies = async () => {
     try {
-        const querySnapshot = query(collection(db, "movies"), orderBy("title"), startAt('A'));
+        const querySnapshot = query(collection(db, "movies"), orderBy('title'), startAt('A'));
         const queryDocs = await getDocs(querySnapshot);
 
         const promiseArray = queryDocs.docs.map(async (doc) => {
@@ -62,6 +63,7 @@ const getMovies = async () => {
 
         return arrayOfValues;
     } catch(error) {
+        console.log(error)
         const firebaseError = error as FirebaseError
         throw { message: getErrors(firebaseError.code) }
     }
@@ -210,7 +212,6 @@ const updateMovieRating = async (movieRef: DocumentReference<DocumentData>) => {
     await updateDoc(document, {
         rating: rating/refRating.docs.length
     });
-    console.log(rating, refRating.docs.length, rating/refRating.docs.length)
 };
 
 const updateUserReview = async (userRef: DocumentReference<DocumentData>) => {

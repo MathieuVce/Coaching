@@ -1,4 +1,4 @@
-import { IComment, IMovie, IReview, IUser } from './page'
+import { IComment, IMovie, IPageType, IReview, IUser } from './page'
 
 export interface pageState {
 }
@@ -21,6 +21,16 @@ export interface commentPayload {
 
 export interface reviewPayload {
     review: ICreateReview;
+}
+
+export interface uploadState {
+    valuesArr?: (ICreateComment | ICreateReview | IUser | IMovie)[];
+}
+
+export interface uplaodFilePayload {
+    file: File;
+    type: IPageType;
+    valuesArr?: (ICreateComment | ICreateReview | IUser | IMovie)[];
 }
 
 export interface ICreateComment {

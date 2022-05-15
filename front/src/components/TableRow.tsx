@@ -9,7 +9,7 @@ export interface ITableRowProps {
 
 export const TableRow: React.FC<ITableRowProps> = ({ head, values }) => {
 
-    const basicStyle = "text-lg md:text-sm sm:text-xs font-medium text-primary flex items-center justify-start px-5 h-10"
+    const basicStyle = "text-lg md:text-sm sm:text-xs font-medium text-primary flex items-center justify-start px-5 h-10 dark:text-white"
     const emailStyle = "text-sm font-light text-blue-light flex items-center justify-start pl-5"
 
     return (

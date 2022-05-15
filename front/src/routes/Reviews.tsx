@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 const Reviews: React.FunctionComponent = () => {
     
     const { users, movies, reviews } = useAppSelector(state => state.info);
-    const header = ['id', 'item', 'author', 'text', 'rating', 'created date', 'actions']
+    const header = ['id', 'item', 'author', 'text', 'rating', 'created date', 'title', 'actions']
     const [reviewId, setReviewId] = useState<IReview>();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState(false);
@@ -54,7 +54,7 @@ const Reviews: React.FunctionComponent = () => {
                 ...review,
                 movie: finalMovie,
                 user: finalUser,
-                rating: (rating + 1) * 2,
+                rating: rating + 1,
                 creationDate: new Date().toLocaleString()
             }
             await dispatch(createReviews({review: obj}))
@@ -86,8 +86,8 @@ const Reviews: React.FunctionComponent = () => {
             <Modal setShowModal={setCreateReviewModal} showModal={createReviewModal} buttons='cancel/add review' onApply={handleCreateReview} title="Add a review">
                 <Form name="Title" type='text' placeholder='Enter title' onChange={(e) => {handleChange('title', e.target.value)}} value={review.title}/>
                 <Form name="Review" type='text' placeholder='Enter review' onChange={(e) => {handleChange('review', e.target.value)}} value={review.review} maxLen={200}/>
-                <section className="my-2">
-                    <label>Rating</label>
+                <section className="my-2 dark:text-white">
+                    <label>Rating <span className="italic font-light ml-1">{rating + 1} stars</span></label>
                     <Stars color='text-blue' rating={rating} setRating={setRating}/>
                 </section>
                 <Dropdown color="bg-blue" display={finalMovie} setDisplay={setFinalMovie} title='Movie' values={movie}/>
@@ -95,7 +95,7 @@ const Reviews: React.FunctionComponent = () => {
             </Modal>
             <Modal setShowModal={setShowModal} showModal={showModal} onApply={handleAction} buttons={!show ? 'no/confirm' : 'go back/delete review'} title={!show ? "Delete review" : ""}>
             {!show ? (
-                <label>
+                <label className="dark:text-white">
                     Are you sure you want to delete this review ?
                 </label>
             ) : (
@@ -106,13 +106,13 @@ const Reviews: React.FunctionComponent = () => {
                 <ActivityIndicator/>
             )
             :
-            <Page title={'Reviews'} total={reviews.length.toString()} values={reviews} header={header} icon={<AiOutlinePlusCircle color='black' size={20}/>} setId={setReviewId} handleClick={handleClick}>
+            <Page title={'Reviews'} total={reviews.length.toString()} values={reviews} header={header} icon={<AiOutlinePlusCircle size={20}/>} setId={setReviewId} handleClick={handleClick}>
                 <div className="flex items-center space-x-5 justify-center">
-                    <button className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-50 rounded-lg w-6" onClick={() => {setShow(true);  setShowModal(true)}}>
-                        <AiOutlineEye color='black' size={20}/>
+                    <button className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-20 rounded-lg w-6 shadow-xs" onClick={() => {setShow(true);  setShowModal(true)}}>
+                        <AiOutlineEye size={20} className='text-yellow-light'/>
                     </button>
-                    <button className="bg-red-light h-6 flex items-center bg-opacity-40 rounded-lg w-6 justify-center" onClick={() => {setShow(false); setShowModal(true)}}>
-                        <BiTrash color='black' size={18}/>
+                    <button className="bg-red-light h-6 flex items-center bg-opacity-20 rounded-lg w-6 justify-center shadow-xs" onClick={() => {setShow(false); setShowModal(true)}}>
+                        <BiTrash size={18} className='text-red-dark dark:text-red'/>
                     </button>
                 </div>
             </Page>
