@@ -11,7 +11,7 @@ interface IDropdownProps {
 export const Dropdown: React.FC<IDropdownProps> = ({ title, color, values, display, setDisplay}) => {
 
     return (
-        <div className="group inline-block">
+        <div className="group inline-block mx-2">
             <label className="block py-1">
                 {title}
             </label>
@@ -31,7 +31,7 @@ export const Dropdown: React.FC<IDropdownProps> = ({ title, color, values, displ
             <ul className="bg-white border-b border-r border-l rounded-bl-lg rounded-br-lg transform scale-0 group-hover:scale-100 absolute w-72 transition duration-150 ease-in-out origin-top">
                 {values.map((value, index) => (
                     <li key={index} className={`rounded-sm px-3 py-1 hover:${color} hover:bg-opacity-60 text-center`} onClick={() => {setDisplay(value)}}>
-                        <span className="font-sm">{value.toUpperCase()}</span>
+                        <span className="font-sm">{value}</span>
                     </li>
                 ))}                                       
             </ul>

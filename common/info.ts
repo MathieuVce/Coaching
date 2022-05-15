@@ -15,6 +15,31 @@ export interface moviePayload {
     movie: IMovie;
 }
 
+export interface commentPayload {
+    comment: ICreateComment;
+}
+
+export interface reviewPayload {
+    review: ICreateReview;
+}
+
+export interface ICreateComment {
+    movie: string,
+    user: string,
+    title: string;
+    comment : string,
+    creationDate: string,
+}
+
+export interface ICreateReview {
+    movie: string,
+    user: string,
+    title: string;
+    review : string,
+    rating: number,
+    creationDate: string,
+}
+
 export interface AllState {
     comments: IComment[];
     users: IUser[];

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { RiUser3Line } from "react-icons/ri";
 import { IPageType } from "../../../common/page";
@@ -11,9 +12,10 @@ export interface IScrollViewProps {
     setId: React.Dispatch<React.SetStateAction<any>>;
     currentPage: number;
     itemsPerPage: number;
+    sortValues: (head: string) => void
 }
 
-export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, type, child, itemsPerPage, currentPage }) => {
+export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, type, child, itemsPerPage, currentPage, sortValues }) => {
 
     const {isXs, isSm, isMd, isLg} = useBreakpoints();
 
@@ -26,7 +28,11 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                             <tr>
                             {header?.map((value, i) => {
                                 return (
-                                    <th className="pl-5 before:py-4 text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap" key={i}>{value}</th> 
+                                    <th className="px-4" key={i}>
+                                        <button onClick={() => {}} className="text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap hover:underline">
+                                            {value}
+                                        </button>
+                                    </th> 
                                     )
                             })}
                             </tr>
@@ -58,7 +64,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                     if ( index > 2 && index < length) {
                                                         return (
                                                             <td key={index}>
-                                                                <article className={`${(value.status === 'APPROVED' && key == 'status') ? 'text-green' : (value.status === 'BANNED' && key == 'status') ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 ${key == 'comments' || key == 'reviews' || key == 'username' ? 'text-center' : 'text-left'} px-6 -mx-2 my-1`}>
+                                                                <article className={`${(value.status === 'APPROVED' && key == 'status') ? 'text-green' : (value.status === 'BANNED' && key == 'status') ? 'text-red-dark' : 'text-primary'} bg-white-light py-6 text-center px-6 -mx-2 my-1`}>
                                                                     {value[key]}
                                                                 </article>
                                                             </td>
@@ -97,7 +103,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                                         ) : key == 'creationDate' ? (
                                                                             value[key].split(',')[0]
                                                                         ) : (
-                                                                            value[key] || '-'
+                                                                            value[key] || '--no user--'
                                                                         )}
                                                                         {key == 'rating' && (
                                                                             <article className="pl-1">

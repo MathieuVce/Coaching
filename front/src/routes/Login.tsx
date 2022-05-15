@@ -37,7 +37,7 @@ const Login: React.FunctionComponent = () => {
                     </label>
                 ) }
                 <Form name="Password" type={visible ? 'text' : 'password'} placeholder='Enter password' onChange={(e) => { handleChange("password", e.target.value)}} value={values.password}>
-                    <button className="pr-2 hover:opacity-75" onClick={() => {setVisible(!visible)}}>
+                    <button className="hover:opacity-75" onClick={() => {setVisible(!visible)}}>
                         {visible ? 
                             <AiFillEyeInvisible color='#0AC5CD' size={24}/>
                             

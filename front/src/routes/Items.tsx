@@ -80,7 +80,7 @@ const Items: React.FunctionComponent = () => {
         <>
             <Modal setShowModal={setCreateMovieModal} showModal={createMovieModal} buttons='cancel/add movie' onApply={handleCreateMovie} title="Add a movie">
                 <Form name="Title" type='text' placeholder='Enter title' onChange={(e) => {handleChange('title', e.target.value)}} value={movie.title}/>
-                <Dropdown color="bg-blue" display={final} setDisplay={setFinal} title='category' values={category}/>
+                <Dropdown color="bg-blue" display={final} setDisplay={setFinal} title='Category' values={category}/>
             </Modal>
             <Modal setShowModal={setShowModal} showModal={showModal} onApply={handleAction} buttons='no/confirm' title={toDelete ? "Delete movie" : "Change status"}>
                 <div>

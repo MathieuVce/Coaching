@@ -41,7 +41,7 @@ export const useBreakpoints = () => {
     return breakpoints;
 }
 
-export const getDocIdBy = async (what: string, name: string, who: any) => {
+export const getDocById = async (what: string, name: string, who: any) => {
   const q = query(collection(db, name), where(what, "==", who));
   const querySnapshot = await getDocs(q);
   return querySnapshot

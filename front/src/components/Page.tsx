@@ -20,14 +20,24 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
     const tab: {[key: string]: IPageType} = {"comments": IPageType.COMMENT, "users": IPageType.USER, "reviews": IPageType.REVIEW, "movies": IPageType.ITEM};
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(7);
+    const sortArray = [...values];
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = values.slice(indexOfFirstItem, indexOfLastItem);
+    let currentItems = values.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginateFront = () => setCurrentPage(currentPage + 1);
     const paginateBack = () => setCurrentPage(currentPage - 1);
     const paginate = (pageNumber: SetStateAction<number>) => setCurrentPage(pageNumber);
+
+    const sortValues = async (head: string) => {
+        
+        sortArray.sort((a, b) => a.rating - b.rating);
+        // currentItems = sortArray.slice(indexOfFirstItem, indexOfLastItem);
+
+        console.log(sortArray)
+       
+    }
     return (
         <>
             <div className="h-screen  flex flex-col mr-5">
@@ -41,7 +51,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     </article>
                 </section>
                 <section className="border-t mx-4 px-4">
-                    <ScrollView header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
+                    <ScrollView sortValues={sortValues} header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
                     {/* <Pagination
                         itemsPerPage={itemsPerPage}
                         totalItems={values.length}

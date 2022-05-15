@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import InfoService from "../services/info";
-import { AllState, pageState, pagePayload, userPayload, moviePayload } from '../../../common/info'
+import { AllState, pageState, pagePayload, moviePayload, commentPayload, userPayload, reviewPayload } from '../../../common/info'
 
 const initialState: AllState =  {
     comments: [],
@@ -53,22 +53,26 @@ export const updateMovies = createAsyncThunk<pageState, pagePayload>(
     }
 );
 
-export const createComments = createAsyncThunk('createComments', async (_, thunkAPI) => {
-    try {
-        await InfoService.createComments();
-        return;
-    } catch (error: any) {
-        return thunkAPI.rejectWithValue({ error: error.message });
-    }
+export const createComments = createAsyncThunk<pageState, commentPayload>(
+    'createComments',
+    async (req, thunkAPI) => {
+        try{
+            await InfoService.createComments(req.comment);
+            return;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+        }
 });
 
-export const createReviews = createAsyncThunk('createReviews', async (_, thunkAPI) => {
-    try {
-        await InfoService.createReviews();
-        return;
-    } catch (error: any) {
-        return thunkAPI.rejectWithValue({ error: error.message });
-    }
+export const createReviews = createAsyncThunk<pageState, reviewPayload>(
+    'createReviews',
+    async (req, thunkAPI) => {
+        try{
+            await InfoService.createReviews(req.review);
+            return;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+        }
 });
 
 export const getComments = createAsyncThunk('getComments', async (_, thunkAPI) => {
