@@ -1,6 +1,6 @@
 import { ICreateComment, ICreateReview, uploadState } from "../../../common/info";
 import { IMovie, IPageType, IUser } from "../../../common/page";
-import { without } from "../utils/Utils";
+import { removeFromObject } from "../utils/Utils";
 
 const csvFileToArray = (string: string, type: IPageType) => {
     const csvHeader = string.slice(0, string.indexOf("\n")).split(";");
@@ -38,8 +38,8 @@ const csvFileToArray = (string: string, type: IPageType) => {
         };
         Object.keys(obj).map(key => (obj[key] === undefined || Number.isNaN(obj[key])) ? delete obj[key] : {});
 
-        const review: ICreateReview = without(obj)('comment', 'status') as unknown as ICreateReview;
-        const comment: ICreateComment = without(obj)('review', 'status') as unknown as ICreateComment;
+        const review: ICreateReview = removeFromObject(obj)('comment', 'status') as unknown as ICreateReview;
+        const comment: ICreateComment = removeFromObject(obj)('review', 'status') as unknown as ICreateComment;
         const movie: IMovie = obj as unknown as IMovie;
         const user: IUser = obj as unknown as IUser;
 

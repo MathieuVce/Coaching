@@ -50,11 +50,6 @@ const Login: React.FunctionComponent = () => {
                 <section className="text-right text-brown text-base">
                     <Link to="/password">Forgot your password ?</Link>
                 </section>
-                <button onClick={async () => {
-                    
-                }}>
-                    test
-                </button>
             </Auth>
         </>
     );

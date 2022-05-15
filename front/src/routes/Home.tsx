@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import longlogo2 from "../assets/longlogo2.svg"
 import longlogo3 from "../assets/longlogo3.svg"
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { IconBaseProps } from "react-icons";
 
 
 
@@ -48,6 +49,15 @@ const Home: React.FunctionComponent = () => {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', modeMe);
         return window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', modeMe);
     }, []);
+    
+    const drawerItems: {[key: string]: {[key: string] : IconBaseProps}} = {
+        "Dashboard": {'outlineIcon': <AiOutlineHome size={24}/>, 'selectedIcon': <AiFillHome size={24}/>},
+        "Items": {'outlineIcon':<MdOutlineDashboardCustomize size={24}/>, 'selectedIcon': <MdDashboardCustomize size={24}/>},
+        "Users": {'outlineIcon': <RiUser3Line size={24}/>, 'selectedIcon': <RiUser3Fill size={24}/>},
+        "Comments": {'outlineIcon': <FaRegCommentDots size={24}/>, 'selectedIcon': <FaCommentDots size={24}/>},
+        "Reviews": {'outlineIcon': <AiOutlineStar size={26}/>, 'selectedIcon': <AiFillStar size={26}/>}
+    }
+
     
     return(
         <>
@@ -83,11 +93,11 @@ const Home: React.FunctionComponent = () => {
                             </button>
                         </article>
                         <ul className="mt-8 border-t border-t-blue-light dark:border-t-white pt-8">
-                            <Drawer title="Dashboard" isSelected={false} outlineIcon={<AiOutlineHome size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<AiFillHome size={24} className="fill-primary dark:fill-white"/>}/>
-                            <Drawer title="Items" isSelected={false} outlineIcon={<MdOutlineDashboardCustomize size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<MdDashboardCustomize size={24} className="fill-primary dark:fill-white"/>}/>
-                            <Drawer title="Users" isSelected={false} outlineIcon={<RiUser3Line size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<RiUser3Fill size={24} className="fill-primary dark:fill-white"/>}/>
-                            <Drawer title="Comments" isSelected={false} outlineIcon={<FaRegCommentDots size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<FaCommentDots size={24} className="fill-primary dark:fill-white"/>}/>
-                            <Drawer title="Reviews" isSelected={false} outlineIcon={<AiOutlineStar size={26}/>} selectedIcon={<AiFillStar size={26} />}/>
+                            {Object.keys(drawerItems).map((item, index) => {
+                                return (
+                                    <Drawer key={index} title={item} outlineIcon={drawerItems[item].outlineIcon} selectedIcon={drawerItems[item].selectedIcon}/>
+                                )
+                            })}
                         </ul>
                         <article className="flex-col text-base font-thin dark:text-white hidden">
                             <label>© Coaching Studio, 2021.</label>

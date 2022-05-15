@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useEffect, useState } from "react";
 import { getComments, getMovies, getReviews, getUsers } from "../slices/info";
 import { ActivityIndicator } from "../components/ActivityIndicator";
-import { without } from "../utils/Utils";
+import { removeFromObject } from "../utils/Utils";
 import { IComment, IMovie, IReview, IUser } from "../../../common/page";
 
 const Dashboard: React.FunctionComponent = () => {
@@ -22,19 +22,19 @@ const Dashboard: React.FunctionComponent = () => {
     const [isLoading, setLoading] = useState<boolean>(true);
     const valuesItems: {[key: string]: string | number}[] = []
     movies.map((movie: IMovie) => {
-        valuesItems.push(without(movie)('views', 'status', 'creationDate'));
+        valuesItems.push(removeFromObject(movie)('views', 'status', 'creationDate'));
     });
     const valuesReviews: {[key: string]: string | number}[] = []
     reviews.map((review: IReview) => {
-        valuesReviews.push(without(review)('review', 'title', 'creationDate'));
+        valuesReviews.push(removeFromObject(review)('review', 'title', 'creationDate'));
     });
     const valuesComments: {[key: string]: string | number | undefined}[] = []
     comments.map((comment: IComment) => {
-        valuesComments.push(without(comment)('title', 'creationDate'));
+        valuesComments.push(removeFromObject(comment)('title', 'creationDate'));
     });
     const valuesUsers: {[key: string]: string | number}[] = []
     users.map((user: IUser) => {
-        valuesUsers.push(without(user)('comments', 'pricing', 'creationDate', 'reviews', 'status', 'creationDate', 'info'));
+        valuesUsers.push(removeFromObject(user)('comments', 'pricing', 'creationDate', 'reviews', 'status', 'creationDate', 'info'));
     });
 
     const navigate = useNavigate();
