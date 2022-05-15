@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from "react";
 interface IDragAndDropProps {
     onUpload: (file: File) => void;
 }
- 
- 
+
 export const DragAndDrop: React.FC<IDragAndDropProps> = ({ onUpload }) => {
     const drop = useRef(null);
     const drag = useRef(null);
@@ -33,7 +32,7 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({ onUpload }) => {
         }
     };
       
-      const handleDragLeave = (e: any) => {
+    const handleDragLeave = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
         
@@ -58,22 +57,20 @@ export const DragAndDrop: React.FC<IDragAndDropProps> = ({ onUpload }) => {
             setDragging(false);
             return;
         }
-
         if (files.some((file) => file.name.toLowerCase().endsWith('.csv')) === false) {
             alert('Only following file format is acceptable: .csv');
             setDragging(false);
             return;
-          }
-
+        }
         if (files) {
             setDragging(false);
             onUpload(files[0]);
         }
+
         setDragging(false);
     };
     
     return (
-
         <div ref={drop} onDragLeave={() => {setDragging(false)}} className={`${dragging ? 'bg-primary bg-opacity-70 w-full h-full border-dotted border-4 border-white' : 'bg-transparent'} absolute flex justify-center items-center rounded-lg`}>
             {dragging && (
                 <section ref={drag} className="rounded-lg py-24 px-16 max-w-sm lg:max-w-3xl md:max-w-2xl sm:max-w-sm mx-5 ">

@@ -22,7 +22,6 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     const [color, setColor] = useState<string>('red')
     const { authenticated, message, registered, reset } = useAppSelector(state => state.auth);
     const [showAlert, setShowAlert] = useState<boolean>(false);
-   
     const location = useLocation();
     const path = location.state as LocationState
     const names = ['Login', 'Register', 'Reset Password']
@@ -32,61 +31,61 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
     const navigate = useNavigate();
     const alert = useAlert()
     
-    const checkLoginButton = () => {
-        const isValid = checkEmail(values.email)
-        setDisabled(values.password === "" || !isValid)
-        setValidEmail(isValid)
-    };
-    
-    const checkPasswordButton = () => {
-        const isValid = checkEmail(values.email)
-        setDisabled(!isValid)
-        setValidEmail(isValid)
-    };
-
-    const checkRegisterButton = () => {
-        const isValidE = checkEmail(values.email)
-        const isValidP = values.password === values.confirmedPassword
-        setDisabled( !isValidP || !isValidE || values.password === "" || values.displayName === "")
-        setValidPassword(isValidP)
-        setValidEmail(isValidE)
-    };
-
-    const handleLoginFormSubmit = async () => {
-        await dispatch(login(values))
-        if (authenticated) {
-            // navigate(path.path || "/home/dashboard");
-            navigate("/home/dashboard");
-        } else {
-            // await alert.error(message)
-            setColor('bg-red');
-            setShowAlert(true);
-        }
+    const checkButton = async (callback: string) => {
+        const callbackList: {[key: string]: Function} = {
+            'Login':  function checkLogin() {
+                const isValid = checkEmail(values.email)
+                setDisabled(values.password === "" || !isValid)
+                setValidEmail(isValid)
+            },
+            'Register': function checkRegister() {
+                const isValidE = checkEmail(values.email)
+                const isValidP = values.password === values.confirmedPassword
+                setDisabled( !isValidP || !isValidE || values.password === "" || values.displayName === "")
+                setValidPassword(isValidP)
+                setValidEmail(isValidE)
+            },
+            'Reset Password': function checkPassword() {
+                const isValid = checkEmail(values.email)
+                setDisabled(!isValid)
+                setValidEmail(isValid)
+            }
+        };
+        await callbackList[callback]();
     };
 
-    const handleRegisterFormSubmit = async () => {
-        await dispatch(register(values))
-        if (registered) {
-            navigate("/login");
-        } else {
-            // await alert.error(message)
-            setColor('bg-red');
-            setShowAlert(true);
-        }
+    const handleFormSubmit = async (callback: string) => {
+        const callbackList: {[key: string]: Function} = {
+            'Login': async function loginUser() {
+                await dispatch(login(values))
+                if (authenticated) {
+                    navigate("/home/dashboard");
+                } else {
+                    setColor('bg-red');
+                    setShowAlert(true);
+                }
+            },
+            'Register': async function registerUser() {
+                await dispatch(register(values))
+                if (registered) {
+                    navigate("/login");
+                } else {
+                    setColor('bg-red');
+                    setShowAlert(true);
+                }
+            },
+            'Reset Password': async function resetPassword() {
+                await dispatch(password({email: values.email}))
+                if (reset) {
+                    setColor('bg-green');
+                } else {
+                    setColor('bg-red');
+                    setShowAlert(true);
+                }
+            }
+        };
+        await callbackList[callback]();
     };
-
-    const handlePasswordFormSubmit = async () => {
-        await dispatch(password({email: values.email}))
-        if (reset) {
-            setColor('bg-green');
-        } else {
-            setColor('bg-red')
-        }
-        setShowAlert(true);
-    };
-    const buttons = [checkLoginButton, checkRegisterButton, checkPasswordButton]
-    const form = [handleLoginFormSubmit, handleRegisterFormSubmit, handlePasswordFormSubmit]
-
 
     return (
          <div className='h-screen w-full flex justify-center items-center flex-col dark:bg-primary'>
@@ -98,9 +97,9 @@ export const Auth: React.FC<IAuthProps> = ({ header, type, values, setValidEmail
                 <section className="max-w-md px-4 mx-auto">
                     {children}
                     <article className='flex justify-center items-center mt-6'
-                        onMouseEnter={buttons[type]}
+                        onMouseEnter={() => checkButton(names[type])}
                     >
-                        <button onClick={form[type]} disabled={isDisabled} className={`bg-blue py-2 w-full text-sm text-white rounded border border-blue-light focus:outline-none hover:opacity-75`}>
+                        <button onClick={() => handleFormSubmit(names[type])} disabled={isDisabled} className={`bg-blue py-2 w-full text-sm text-white rounded border border-blue-light focus:outline-none hover:opacity-75`}>
                             {names[type]}
                         </button>
                     </article>

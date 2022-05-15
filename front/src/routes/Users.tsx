@@ -94,7 +94,7 @@ const Users: React.FunctionComponent = () => {
                 <ActivityIndicator/>
             )
             :
-                <Page title={'Users'} total={users.length.toString()} values={users} header={header} icon={<AiOutlineUserAdd size={20}/>} setId={setUserId} handleClick={handleClick}>
+                <Page fetchInfo={() => fetchUsers()} title={'Users'} total={users.length.toString()} values={users} header={header} icon={<AiOutlineUserAdd size={20}/>} setId={setUserId} handleClick={handleClick}>
                     <div className="flex items-center space-x-5 justify-center"> 
                         <button className="bg-green-light h-6 flex items-center justify-center bg-opacity-20 rounded-lg w-6 shadow-xs" onClick={() => {setDelete(false); setShowModal(true)}}>
                             <AiOutlineLock size={18} className='text-green-darker'/>

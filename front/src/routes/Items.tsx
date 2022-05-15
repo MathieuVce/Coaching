@@ -91,7 +91,7 @@ const Items: React.FunctionComponent = () => {
                 <ActivityIndicator/>
             )
             :
-                <Page title={'Movies'} total={movies.length.toString()} values={movies} header={header} icon={<AiOutlinePlusCircle size={20}/>} setId={setMovieId} handleClick={handleClick}>
+                <Page fetchInfo={() => fetchMovies()} title={'Movies'} total={movies.length.toString()} values={movies} header={header} icon={<AiOutlinePlusCircle size={20}/>} setId={setMovieId} handleClick={handleClick}>
                     <div className="flex items-center space-x-5 justify-center"> 
                         <button className="bg-green-light h-6 flex items-center justify-center bg-opacity-20 rounded-lg w-6 shadow-xs" onClick={() => {setDelete(false); setShowModal(true)}}>
                             <AiOutlineLock size={18} className='text-green-darker'/>

@@ -9,7 +9,7 @@ export interface INewItemsProps {
 export const NewItems: React.FC<INewItemsProps> = ({ title, icon, count }) => {
     return (
         <>
-            <div className="flex w-full py-3 bg-white-light dark:bg-primary-light overflow-x-hidden rounded-xl shadow-md">
+            <div className="flex w-full py-3 bg-white-light dark:bg-primary-light overflow-x-hidden rounded-xl shadow-md dark:shadow-white">
                 <div className="flex flex-row w-full justify-between">
                     <div className="pl-3 flex flex-col justify-start">
                         <div>

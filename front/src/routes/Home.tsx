@@ -58,7 +58,7 @@ const Home: React.FunctionComponent = () => {
                             }
                     </button>
                     <section className={"lg:block flex-col" + (navbarOpen ? "flex" : " hidden")}>
-                        <article className="mb-6 border-b border-b-primary dark:border-b-white pb-6">
+                        <article className="mb-6 border-b border-b-blue-light dark:border-b-white pb-6">
                             <img className='h-10' src={mode === 'dark' ? longlogo3 : longlogo2}/>
                         </article>
                         
@@ -74,21 +74,21 @@ const Home: React.FunctionComponent = () => {
                                 </label>
                             </section>
 
-                            <button className="flex items-center justify-end ml-auto" type='button' onClick={handleLogout}>
+                            <button className="flex items-center justify-end ml-auto md:pr-4" type='button' onClick={handleLogout}>
                                 <FiLogOut size={30} className="text-primary dark:text-white"/>
                             </button>
                         </article>
-                        <ul className="mt-8 border-t border-t-primary dark:border-t-white pt-8">
+                        <ul className="mt-8 border-t border-t-blue-light dark:border-t-white pt-8">
                             <Drawer title="Dashboard" isSelected={false} outlineIcon={<AiOutlineHome size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<AiFillHome size={24} className="fill-primary dark:fill-white"/>}/>
                             <Drawer title="Items" isSelected={false} outlineIcon={<MdOutlineDashboardCustomize size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<MdDashboardCustomize size={24} className="fill-primary dark:fill-white"/>}/>
                             <Drawer title="Users" isSelected={false} outlineIcon={<RiUser3Line size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<RiUser3Fill size={24} className="fill-primary dark:fill-white"/>}/>
                             <Drawer title="Comments" isSelected={false} outlineIcon={<FaRegCommentDots size={24} className="fill-primary dark:fill-white"/>} selectedIcon={<FaCommentDots size={24} className="fill-primary dark:fill-white"/>}/>
                             <Drawer title="Reviews" isSelected={false} outlineIcon={<AiOutlineStar size={26}/>} selectedIcon={<AiFillStar size={26} />}/>
                         </ul>
-                        {/* <div className="inset-x-0 bottom-0 absolute items-center bg-blue-light">
+                        <article className="fixed mt-40 flex flex-col justify-center text-base font-thin">
                             <label>© Coaching Studio, 2021.</label>
-                            <label>Create by the Creative Studio</label>
-                        </div> */}
+                            <label>Created by the Creative Studio</label>
+                        </article>
                     </section>
                 </div>
                 <Outlet />

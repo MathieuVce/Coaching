@@ -18,6 +18,7 @@ export interface IScrollViewProps {
 export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, type, child, itemsPerPage, currentPage, sortValues }) => {
 
     const {isXs, isSm, isMd, isLg} = useBreakpoints();
+    const toSort = header.filter(item => !['id', 'text', 'actions'].includes(item));
 
     return (
         <>
@@ -30,11 +31,11 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                 if (value !== 'title' || type === IPageType.ITEM) {
                                     return (
                                         <th className="px-4" key={i}>
-                                            <button onClick={() => {sortValues(header[i])}} className="text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap hover:underline">
+                                            <button onClick={() => {sortValues(header[i])}} className={`text-left text-sm font-light uppercase text-brown tracking-wider whitespace-nowrap ${toSort.includes(header[i]) ? 'hover:underline' : 'cursor-default'}`}>
                                                 {value}
                                             </button>
                                         </th> 
-                                        )
+                                    )
                                 }
                             })}
                             </tr>

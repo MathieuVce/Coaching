@@ -99,7 +99,7 @@ const Comments: React.FunctionComponent = () => {
                 <ActivityIndicator/>
             )
             :
-                <Page title={'Comments'} total={comments.length.toString()} values={comments} header={header} icon={<AiOutlinePlusCircle size={0}/>} setId={setCommentId} handleClick={handleClick}>
+                <Page fetchInfo={() => fetchComments()} title={'Comments'} total={comments.length.toString()} values={comments} header={header} icon={<AiOutlinePlusCircle size={0}/>} setId={setCommentId} handleClick={handleClick}>
                     <div className="flex items-center space-x-5 justify-center">
                         <button className="bg-yellow-light h-6 flex items-center justify-center bg-opacity-20 rounded-lg w-6 shadow-xs" onClick={() => {setShow(true); setShowModal(true)}}>
                             <AiOutlineEye size={20} className='text-yellow-light'/>

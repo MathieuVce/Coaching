@@ -1,6 +1,8 @@
 import { query, collection, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { errorMapping } from "../../../common/firebaseErrors";
+import { ICreateComment, ICreateReview } from "../../../common/info";
+import { IUser, IMovie } from "../../../common/page";
 import { db } from "../services/firebase";
 
 export const checkEmail = (input: string) => {
@@ -61,4 +63,23 @@ export const without = <T>(object: T) => <K extends keyof T>(...parts: Array<K>)
       }
       return acc;
   }, {} as T);
+};
+
+
+export const sortBy: {[key: string]: Function} = {
+    'created date': function (a: { creationDate: string }, b: { creationDate: string }) {
+        return new Date(a.creationDate).getTime() < new Date(b.creationDate).getTime()  ? 1 : -1;
+    },
+    'toSortAsc' : function (a: any, b: any, head: string) {
+        return a[head] < b[head] ? -1 : 1
+    },
+    'toSortDesc': function (a: any, b: any, head: string) {
+        return a[head] > b[head] ? -1 : 1
+    },
+    'toSortMinus': function (a: any, b: any, head: string) {
+        return b[head] - a[head]
+    },
+    'author': function (a: { user: IUser }, b: { user: IUser }) {
+        return a.user < b.user ? -1 : 1
+    }
 };
