@@ -99,7 +99,7 @@ const Home: React.FunctionComponent = () => {
                                 )
                             })}
                         </ul>
-                        <article className="flex-col text-base font-thin dark:text-white hidden">
+                        <article className="flex-col text-base font-thin dark:text-white fixed mt-40 flex justify-center">
                             <label>© Coaching Studio, 2021.</label>
                             <label>Created by the Creative Studio</label>
                         </article>

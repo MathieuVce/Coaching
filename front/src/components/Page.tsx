@@ -141,7 +141,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                 </form>
             </Modal>
             <div className="flex flex-col mr-5 w-full pb-5 dark:bg-primary">
-                <section className="h-16 flex items-center justify-start flex-row mx-4 mt-2 pb-4 dark:text-white">
+                <section className="h-16 flex items-center justify-start flex-row mx-4 mt-2 pb-4 dark:text-white sticky top-0 z-100 bg-white dark:bg-primary border-b border-b-blue-light dark:border-b-primary-light">
                     <h1 className="font-semibold text-3xl pr-2">{title}</h1>
                     <p className="font-light text-base pt-2 text-brown whitespace-nowrap">{total} total</p>
                     <RightHeader sortName={sortName} title={title} handleClick={handleClick} icon={icon} header={header} values={values} setFilteredArray={setFilteredArray} handleUpload={() => {setShowModal(true);setFile(undefined);}} />
@@ -150,7 +150,7 @@ export const Page: React.FC<IPageProps> = ({ title, total, header, values, icon,
                     <ActivityIndicator/>
                 )
                 : (
-                    <section className="border-t border-t-blue-light dark:border-t-primary-light mx-4 px-4">
+                    <section className="mx-4 px-4">
                         <DragAndDrop onUpload={onUpload}/>
                         <ScrollView sortValues={sortValues} header={header} body={currentItems} child={children} setId={setId} type={tab[title.toLowerCase()]} currentPage={currentPage} itemsPerPage={itemsPerPage}/>
                         {/* <Pagination

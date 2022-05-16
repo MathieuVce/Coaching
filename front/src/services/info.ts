@@ -47,52 +47,52 @@ const fetchData = async (url: string) => {
 
 const getMovies = async () => {
     try {
-        // const querySnapshot = query(collection(db, "movies"), orderBy('title'), startAt('A'));
-        // const queryDocs = await getDocs(querySnapshot);
-
-        // const promiseArray = queryDocs.docs.map(async (doc) => {
-
-        //     const obj = 
-        //     {
-        //         title: doc.data().title,
-        //         category: doc.data().category.toUpperCase(),
-        //         rating: doc.data().rating.toFixed(1),
-        //         views: doc.data().views,
-        //         status: doc.data().status ? "VISIBLE" : "HIDDEN",
-        //         creationDate: doc.data().creationDate.split(',')[0],
-        //     }
-        //     return obj;
-        // });
-
-        // const arrayOfValues: IMovie[] = await Promise.all(promiseArray);
-
-        // return arrayOfValues;
-        const querySnapshot = query(collection(db, "api"));
+        const querySnapshot = query(collection(db, "movies"), orderBy('title'), startAt('A'));
         const queryDocs = await getDocs(querySnapshot);
 
-        const apiKey = queryDocs.docs[0].data().api_key
-        const popularURL = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
-        const discoverURL = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`
-        const results = (await fetchData(discoverURL)).data.results
-        console.log
-        const promiseArray = results.map(async (doc: ITmdbMovieMovie) => {
-            const obj = 
-                {
-                    title: doc.title,
-                    category: "MOVIE",
-                    rating: doc.vote_average.toFixed(1),
-                    views: doc.vote_count,
-                    status: "VISIBLE",
-                    creationDate: doc.release_date.replaceAll('-', '/'),
-                }
-            // await createMovies({...obj, rating: parseFloat(obj.rating), status: true})
-            console.log(obj);
-            return obj
-        });
-        const data: IMovie[] = await Promise.all(promiseArray);
+        const promiseArray = queryDocs.docs.map(async (doc) => {
 
-        console.log(data)
-        return (data)
+            const obj = 
+            {
+                title: doc.data().title,
+                category: doc.data().category.toUpperCase(),
+                rating: doc.data().rating.toFixed(1),
+                views: doc.data().views,
+                status: doc.data().status ? "VISIBLE" : "HIDDEN",
+                creationDate: doc.data().creationDate.split(',')[0],
+            }
+            return obj;
+        });
+
+        const arrayOfValues: IMovie[] = await Promise.all(promiseArray);
+
+        return arrayOfValues;
+        // const querySnapshot = query(collection(db, "api"));
+        // const queryDocs = await getDocs(querySnapshot);
+
+        // const apiKey = queryDocs.docs[0].data().api_key
+        // const popularURL = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
+        // const discoverURL = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`
+        // const results = (await fetchData(discoverURL)).data.results
+        // console.log
+        // const promiseArray = results.map(async (doc: ITmdbMovieMovie) => {
+        //     const obj = 
+        //         {
+        //             title: doc.title,
+        //             category: "MOVIE",
+        //             rating: doc.vote_average.toFixed(1),
+        //             views: doc.vote_count,
+        //             status: "VISIBLE",
+        //             creationDate: doc.release_date.replaceAll('-', '/'),
+        //         }
+        //     // await createMovies({...obj, rating: parseFloat(obj.rating), status: true})
+        //     console.log(obj);
+        //     return obj
+        // });
+        // const data: IMovie[] = await Promise.all(promiseArray);
+
+        // console.log(data)
+        // return (data)
     } catch(error) {
         console.log(error)
         const firebaseError = error as FirebaseError

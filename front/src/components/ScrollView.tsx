@@ -23,7 +23,7 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
         <>
             <div className="py-4 flex flex-grow">
                 <div className="inline-block">
-                    <table className="w-full leading-normal table-fixed ">
+                    <table className="min-w-full w-full leading-normal table-fixed">
                         <thead>
                             <tr>
                             {header?.map((value, i) => {
@@ -83,7 +83,9 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
                                                             <article className={`${(value.status === 'VISIBLE' && key == 'status') ? 'text-green-darker' : (value.status === 'HIDDEN' && key == 'status') ? 'text-red' : 'text-primary dark:text-white-light'} bg-white-light dark:bg-primary-light py-6 flex items-center justify-center whitespace-nowrap px-6 -mx-1 my-1`}>
                                                                 {(key === 'title') ? (
                                                                     truncateString(value[key], isXs ? 5 : isSm ? 8 : isMd ? 10 : isLg ? 13 : 15)
-                                                                ) : (
+                                                                ) : (key === 'views')  ? (
+                                                                    value[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                                                ): (
                                                                     value[key]
                                                                 )}
                                                                 {key == 'rating' && (
