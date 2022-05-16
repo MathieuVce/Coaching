@@ -11,6 +11,7 @@ import { getComments, getMovies, getReviews, getUsers } from "../slices/info";
 import { ActivityIndicator } from "../components/ActivityIndicator";
 import { removeFromObject } from "../utils/Utils";
 import { IComment, IMovie, IReview, IUser } from "../../../common/page";
+import { IconBaseProps } from "react-icons";
 
 const Dashboard: React.FunctionComponent = () => {
 
@@ -37,6 +38,7 @@ const Dashboard: React.FunctionComponent = () => {
         valuesUsers.push(removeFromObject(user)('comments', 'pricing', 'creationDate', 'reviews', 'status', 'creationDate', 'info'));
     });
 
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     
@@ -51,6 +53,13 @@ const Dashboard: React.FunctionComponent = () => {
         await dispatch(getUsers());
         await dispatch(getMovies());
         setLoading(false);
+    };
+
+    const tableItems: {[key: string]: {[key: string] : any}} = {
+        "Items": {'array': movies, 'icon': <MdOutlineDashboardCustomize size={35}/>, 'head': headItems, 'values': valuesItems, getInfo: getMovies},
+        "Reviews": {'array': reviews, 'icon': <AiOutlineStar size={36}/> , 'head': headReviews, 'values': valuesReviews, getInfo: getReviews},
+        "Users": {'array': users, 'icon': <RiUser3Line size={35}/>, 'head': headUsers, 'values': valuesUsers, getInfo: getUsers},
+        "Comments": {'array': comments, 'icon': <FaRegCommentDots size={32}/>, 'head': headComments, 'values': valuesComments, getInfo: getComments}
     }
 
     return(
@@ -65,17 +74,15 @@ const Dashboard: React.FunctionComponent = () => {
                 : (
                     <div className="container mt-8">
                         <div className="flex flex-wrap sm:grid gap-6 lg:grid-cols-4 md:grid-cols-2">
-                            <NewItems title="Items" count={movies.length.toString()} icon={<MdOutlineDashboardCustomize color="#0AC5CD" size={35}/>}/>
-                            <NewItems title="Reviews" count={reviews.length.toString()} icon={<AiOutlineStar color="#0AC5CD" size={36}/>}/>
-                            <NewItems title="Users" count={users.length.toString()} icon={<RiUser3Line color="#0AC5CD" size={35}/>}/>
-                            <NewItems title="Comments" count={comments.length.toString()} icon={<FaRegCommentDots color="#0AC5CD" size={34}/>}/>
+                            {Object.keys(tableItems).map((key: string) => (
+                                <NewItems title={key} count={tableItems[key].array.length.toString()} icon={tableItems[key].icon}/>
+                            ))}
                         </div>
             
                         <div className="grid gap-6 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mt-6">
-                            <Table title="Latest Items" onClick={() => {navigate("/home/items")}} head={headItems} getInfo={async () => {await dispatch(getMovies())}} values={valuesItems} icon={<MdOutlineDashboardCustomize size={40}/>}/>
-                            <Table title="Latest Reviews" onClick={() => {navigate("/home/reviews")}} head={headReviews} getInfo={async () => {await dispatch(getReviews())}} values={valuesReviews} icon={<AiOutlineStar size={40}/>}/>
-                            <Table title="Latest Users" onClick={() => {navigate("/home/users")}} head={headUsers} getInfo={async () => {await dispatch(getUsers())}} values={valuesUsers} icon={<RiUser3Line size={40}/>}/>
-                            <Table title="Latest Comments" onClick={() => {navigate("/home/comments")}} head={headComments} getInfo={async () => {await dispatch(getComments())}} values={valuesComments} icon={<FaRegCommentDots size={40}/>}/> 
+                            {Object.keys(tableItems).map((key: string) => (
+                                <Table title={`Latest ${key}`} onClick={() => {navigate(`/home/${key.toLowerCase()}`)}} head={tableItems[key].head} getInfo={async () => {await dispatch(tableItems[key].getInfo())}} values={tableItems[key].values} icon={tableItems[key].icon}/>
+                            ))}
                         </div>
                     </div>
                 )}

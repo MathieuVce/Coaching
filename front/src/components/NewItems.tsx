@@ -2,7 +2,7 @@ import { IconBaseProps } from "react-icons";
 
 export interface INewItemsProps {
     title: string;
-    count: string;
+    count: number;
     icon: IconBaseProps
 }
 
@@ -19,7 +19,7 @@ export const NewItems: React.FC<INewItemsProps> = ({ title, icon, count }) => {
                             <h4 className="text-2xl font-semibold text-primary dark:text-white">{count}</h4>
                         </div>
                     </div>
-                    <div className="flex items-end mr-2">
+                    <div className="flex items-center mr-2 text-blue">
                         {icon}
                     </div>
                 </div>

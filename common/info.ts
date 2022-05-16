@@ -57,7 +57,7 @@ export interface AllState {
     movies: IMovie[];
 }
 
-export interface ITMDBMovie {
+export interface ITmdbMovieMovie {
     title: string;
     vote_count: number;
     vote_average: number;

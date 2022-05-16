@@ -21,61 +21,6 @@ export const ScrollView: React.FC<IScrollViewProps> = ({ header, body, setId, ty
 
     return (
         <>
-            {/* <div className="col-span-full xl:col-span-6 bg-white shadow-lg rounded-sm border border-slate-200">
-                <div className="overflow-x-scroll">
-                    <table className="table-auto w-full">
-                        <thead className="text-xs font-semibold uppercase text-slate-400 bg-slate-50">
-                            <tr>
-                                <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Name</div>
-                                </th>
-                                <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Email</div>
-                                </th>
-                                <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Spent</div>
-                                </th>
-                                <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-center">Country</div>
-                                </th> 
-                                {header?.map((value, i) => {
-                                    if (value !== 'title' || type === IPageType.ITEM) {
-                                        return (
-                                            <th className="p-2 whitespace-nowrap" key={i}>
-                                                <button onClick={() => {sortValues(header[i])}} className={`text-left text-sm font-light uppercase text-brown tracking-wider ${toSort.includes(header[i]) ? 'hover:underline' : 'cursor-default'}`}>
-                                                    {value}
-                                                </button>
-                                            </th> 
-                                        )
-                                    }
-                                })}
-                            </tr>
-                        </thead>
-                        <tbody className="text-sm divide-y divide-slate-100">
-                            <tr>
-                                <td className="p-2 whitespace-nowrap">
-                                    <div className="flex items-center">
-                                        <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
-                                        </div>
-                                        <div className="font-medium text-slate-800">Alex Shatov</div>
-                                    </div>
-                                </td>
-                                <td className="p-2 whitespace-nowrap">
-                                    <div className="text-left">alexshatov@gmail.com</div>
-                                </td>
-                                <td className="p-2 whitespace-nowrap">
-                                    <div className="text-left font-medium text-green-500">$2,890.66</div>
-                                </td>
-                                <td className="p-2 whitespace-nowrap">
-                                    <div className="text-lg text-center">🇺🇸</div>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div> */}
-
             <div className="py-4 flex flex-grow">
                 <div className="inline-block">
                     <table className="w-full leading-normal table-fixed ">
