@@ -33,7 +33,7 @@ export const Table: React.FC<ITableProps> = ({ head, values, onClick, getInfo, i
                             <label className="font-medium text-lg px-2">{title}</label>
                             <article className="flex flex-row items-center w-full justify-end">
                                 <button onClick={() => {handleRefresh()}}>
-                                    <IoMdRefresh/>
+                                    <IoMdRefresh size={22}/>
                                 </button>
                                 <article className="bg-brown bg-opacity-20 justify-center flex py-1 rounded-lg px-2 ml-5">
                                     <button className="text-xs" onClick={onClick}>View all</button>

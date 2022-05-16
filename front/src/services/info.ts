@@ -3,7 +3,7 @@ import { FirebaseError } from "../../../common/auth";
 import { getDocById, getErrors } from "../utils/Utils";
 import { getDocs, collection, deleteDoc, doc, updateDoc, DocumentData, DocumentSnapshot, getDoc, setDoc, query, orderBy, startAt, DocumentReference } from "firebase/firestore";
 import { IComment, IMovie, IPageType, IReview, IUser } from "../../../common/page";
-import { ICreateComment, ICreateReview, ITMDBMovie } from "../../../common/info";
+import { ICreateComment, ICreateReview, ITmdbMovieMovie } from "../../../common/info";
 import axios from "axios"
 
 const getFirstDoc = async (what: string, type: IPageType) => {
@@ -75,7 +75,7 @@ const getMovies = async () => {
         const discoverURL = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`
         const results = (await fetchData(discoverURL)).data.results
         console.log
-        const promiseArray = results.map(async (doc: ITMDBMovie) => {
+        const promiseArray = results.map(async (doc: ITmdbMovieMovie) => {
             const obj = 
                 {
                     title: doc.title,
